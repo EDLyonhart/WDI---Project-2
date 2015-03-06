@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   def self.from_omniauth(auth, provider) 
-    where(uid: auth[:uid], name: auth[:info][:nickname]).first || create_from_omniauth(auth,provider)
+    find_by(uid: auth[:uid]) || create_from_omniauth(auth,provider)
+    binding.pry
   end
     
   def self.create_from_omniauth(auth,provider)
