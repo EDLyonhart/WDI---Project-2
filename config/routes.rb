@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
-  get 'users/home'
+  root 'users#signup'
+  get '/home', to: 'users#home', as: "home"
 
-  get 'users/login'
+  get '/login', to: 'users#login', as: "login"
 
-  get 'users/signup'
+  get '/signup', to: 'users#signup', as: "signup"
+
+  get '/auth/:provider/callback', to: 'users#create', as: "create"
+
+  get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
+
+  delete '/logout', to: 'users#logout', as: "logout"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

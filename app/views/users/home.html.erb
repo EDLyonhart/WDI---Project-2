@@ -1,2 +1,2 @@
-<h1>Users#home</h1>
-<p>Find me in app/views/users/home.html.erb</p>
+<h1>Welcome <%= @user.name %></h1>
+<%= link_to "Sign out", logout_path, method: :delete %>
