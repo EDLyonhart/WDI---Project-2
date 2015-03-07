@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   def profile
-    binding.pry
     @user = User.find(session[:user_id])
   end
 
@@ -32,13 +31,11 @@ class UsersController < ApplicationController
     session[:user_id] = @user.id
     redirect_to profile_path(@user.id), notice: "signed in!"
     else
-    binding.pry
     redirect_to login_path, notice: "sign in Error!"
     end
   end
 
   def logout
-    binding.pry
   session[:user_id] = nil
   redirect_to login_path, notice: "You are now logged out!"
   end

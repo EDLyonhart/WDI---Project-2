@@ -15,6 +15,5 @@ class User < ActiveRecord::Base
   new(uid: auth["uid"],nickname: auth["info"]["nickname"],email: auth["info"]["email"],
     name: auth["info"]["name"],first_name: auth["info"]["first_name"],last_name: auth["info"]["last_name"],
     profile_pic: auth["info"]["image"], location: auth["info"]["location"], gender: auth["extra"]["gender"]  )
-  binding.pry
   end
 end
