@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150307021917) do
+=======
+ActiveRecord::Schema.define(version: 20150307032433) do
+>>>>>>> ad15c13818b91c674e083b28fefd057f3fc040d5
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +28,11 @@ ActiveRecord::Schema.define(version: 20150307021917) do
   end
 
   create_table "likes", force: :cascade do |t|
+<<<<<<< HEAD
     t.integer  "liker"
+=======
+    t.integer  "user_id"
+>>>>>>> ad15c13818b91c674e083b28fefd057f3fc040d5
     t.integer  "likee"
     t.boolean  "is_matched"
     t.datetime "created_at", null: false
