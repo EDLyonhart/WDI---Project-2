@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :friends, through: :users_friends
   has_many :resources
   has_many :likes
+  has_many :reviews, as: :reviewable 
 
   validates_presence_of :uid, :email, :name, :location
 
