@@ -3,12 +3,12 @@
     <div class ="col-md-10 col-md-offset-1">
       <table class ="table table-striped">
         <tr>
-          <th>Presence (true/false, have/want)</th>
+          <th>Have?</th>
           <th>Category</th>
         </tr>
         <% @resources.each do |resource| %>
           <tr >
-            <td><%= resource.presence  %></td>
+            <td><%= resource.has %></td>
             <td><%= resource.category %></td>
           </tr>
         <% end %>
