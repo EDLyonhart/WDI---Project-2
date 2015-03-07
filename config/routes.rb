@@ -1,12 +1,4 @@
 Rails.application.routes.draw do
-  get 'resources/index'
-
-  get 'resources/show'
-
-  get 'resources/edit'
-
-  get 'resources/new'
-
   #Users Routes
   root 'users#login'
   get '/login', to: 'users#login', as: "login"

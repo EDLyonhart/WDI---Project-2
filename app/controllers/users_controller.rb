@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   def profile
-    binding.pry
     @user = User.find(session[:user_id])
   end
 
@@ -16,18 +15,11 @@ class UsersController < ApplicationController
   end
   def matches
   @user = user.find(params[:id])
-  @matches = @user.likes
+  @matches = @user.likes.where(is_matched:true)
   end
 
-  def signup
-  end
-  
   def edit
-    render :edit 
-  end
-
-  def update
-
+     @user = User.find(session[:user_id])
   end
 
   def create 
@@ -40,9 +32,25 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+     @user = User.find(session[:user_id])
+
+  end
+
   def logout
-    binding.pry
   session[:user_id] = nil
   redirect_to login_path, notice: "You are now logged out!"
   end
+
+  private
+  def user_params
+    params.require(:user).permit(:nickname,:name,:location)
+  end  
 end
+
+
+
+
+
+
+
