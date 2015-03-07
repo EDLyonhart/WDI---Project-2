@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   end
 
   def login
+    if session[:user_id] != nil
+      redirect_to profile_path(session[:user_id])
+    else
+    end  
   end
 
   def snippet
