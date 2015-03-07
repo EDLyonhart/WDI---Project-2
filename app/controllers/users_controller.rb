@@ -10,6 +10,9 @@ class UsersController < ApplicationController
   def snippet
   end
 
+  def matches
+  end
+
   def signup
   end
   
