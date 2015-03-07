@@ -15,7 +15,8 @@ class UsersController < ApplicationController
   end
   def matches
   @user = user.find(params[:id])
-  @matches = @user.likes.where(is_matched:true)
+  @likes = @user.likes
+  @matches = @likes.where(is_matched:true)
   end
 
   def edit
