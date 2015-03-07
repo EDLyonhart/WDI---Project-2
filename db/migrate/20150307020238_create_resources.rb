@@ -3,8 +3,8 @@ class CreateResources < ActiveRecord::Migration
     create_table :resources do |t|
       t.integer :user_id
       t.string :category
-      t.boolean :wants
-      t.boolean :has
+      t.boolean :presence
+      
 
       t.timestamps null: false
     end
