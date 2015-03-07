@@ -1,5 +1,7 @@
 class ResourcesController < ApplicationController
+
   def index
+    @resources = User.find(session[:user_id]).resources
   end
 
   def show
@@ -19,5 +21,5 @@ class ResourcesController < ApplicationController
 
   def destroy
   end
-  
+
 end

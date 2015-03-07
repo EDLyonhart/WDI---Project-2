@@ -1,4 +1,11 @@
 <h1>Welcome <%= @user.name %></h1>
+
 <%= link_to "Sign out", logout_path, method: :delete %>
 
-<%= link_to "Edit Profile", edit_profile_path(@user), method: :get%>
+<%= link_to "Edit Profile", edit_profile_path(@user), method: :get %>
+
+<%= link_to "My resources", user_resources_path(@user), method: :get %>
+
+
+
+

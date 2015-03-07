@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
   def profile
     @user = User.find(session[:user_id])
   end
@@ -7,7 +8,7 @@ class UsersController < ApplicationController
     if session[:user_id] != nil
       redirect_to profile_path(session[:user_id])
     else
-    end  
+    end
   end
 
   def snippet
