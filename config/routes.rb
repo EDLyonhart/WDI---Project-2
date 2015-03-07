@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
-  root 'users#signup'
+  root 'users#login'
   get '/home', to: 'users#home', as: "home"
 
   get '/login', to: 'users#login', as: "login"
-
-  get '/signup', to: 'users#signup', as: "signup"
 
   get '/auth/:provider/callback', to: 'users#create', as: "create"
 
