@@ -14,7 +14,9 @@ class UsersController < ApplicationController
     session[:user_id] = user.id 
     redirect_to home_path, notice: "signed in!"
   end
+
   def logout
+    binding.pry
   session[:user_id] = nil
   redirect_to signup_path, notice: "You are now logged out!"
   end
