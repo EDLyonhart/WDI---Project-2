@@ -29,8 +29,8 @@ class UsersController < ApplicationController
   def create 
     @user = User.from_omniauth(env["omniauth.auth"], params[:provider])
     if @user.save
-    session[:user_id] = user.id 
-    redirect_to profile_path(user.id), notice: "signed in!"
+    session[:user_id] = @user.id 
+    redirect_to profile_path(@user.id), notice: "signed in!"
     else
     binding.pry
     redirect_to login_path, notice: "sign in Error!"
