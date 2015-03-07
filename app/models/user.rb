@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :users_friends
   has_many :friends, through: :users_friends
+  has_many :resources
 
   def self.from_omniauth(auth, provider)
     find_by(uid: auth[:uid]) || create_from_omniauth(auth,provider)
