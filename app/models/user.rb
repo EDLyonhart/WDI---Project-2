@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_many :users_friends
   has_many :friends, through: :users_friends
 
-  validates_presence_of :uid, :email, :name
+  validates_presence_of :uid, :email, :name, :location
 
   def self.from_omniauth(auth, provider)
     find_by(uid: auth[:uid]) || create_from_omniauth(auth,provider)
