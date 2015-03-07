@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :users_friends
   has_many :friends, through: :users_friends
+  has_many :resources
 
   validates_presence_of :uid, :email, :name
 
