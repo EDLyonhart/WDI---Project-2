@@ -8,9 +8,11 @@ class UsersController < ApplicationController
   end
 
   def snippet
+  @user = user.find(params[:id])
   end
-
   def matches
+  @user = user.find(params[:id])
+  @matches = @user.likes
   end
 
   def signup
@@ -25,10 +27,14 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.from_omniauth(env["omniauth.auth"], params[:provider])
+    @user = User.from_omniauth(env["omniauth.auth"], params[:provider])
+    if @user.save
+    session[:user_id] = @user.id
+    redirect_to profile_path(@user.id), notice: "signed in!"
+    else
     binding.pry
-    session[:user_id] = user.id
-    redirect_to profile_path(user.id), notice: "signed in!"
+    redirect_to login_path, notice: "sign in Error!"
+    end
   end
 
   def logout
