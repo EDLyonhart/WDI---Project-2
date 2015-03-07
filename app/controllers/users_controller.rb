@@ -18,6 +18,6 @@ class UsersController < ApplicationController
   def logout
     binding.pry
   session[:user_id] = nil
-  redirect_to signup_path, notice: "You are now logged out!"
+  redirect_to login_path, notice: "You are now logged out!"
   end
 end
