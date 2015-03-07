@@ -1,18 +1,30 @@
 class UsersController < ApplicationController
-  def home
+  def profile
+    binding.pry
     @user = User.find(session[:user_id])
   end
 
   def login
   end
 
+  def snippet
+  end
+
   def signup
+  end
+  
+  def edit
+    render :edit 
+  end
+
+  def update
+
   end
 
   def create 
     user = User.from_omniauth(env["omniauth.auth"], params[:provider])
     session[:user_id] = user.id 
-    redirect_to home_path, notice: "signed in!"
+    redirect_to profile_path(user.id), notice: "signed in!"
   end
 
   def logout
