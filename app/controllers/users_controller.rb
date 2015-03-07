@@ -5,6 +5,10 @@ class UsersController < ApplicationController
   end
 
   def login
+    if session[:user_id] != nil
+      redirect_to profile_path(session[:user_id])
+    else
+    end  
   end
 
   def snippet
@@ -32,7 +36,6 @@ class UsersController < ApplicationController
     session[:user_id] = @user.id 
     redirect_to profile_path(@user.id), notice: "signed in!"
     else
-    binding.pry
     redirect_to login_path, notice: "sign in Error!"
     end
   end
