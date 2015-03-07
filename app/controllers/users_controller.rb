@@ -15,18 +15,19 @@ class UsersController < ApplicationController
 
   def signup
   end
-  
+
   def edit
-    render :edit 
+    render :edit
   end
 
   def update
 
   end
 
-  def create 
+  def create
     user = User.from_omniauth(env["omniauth.auth"], params[:provider])
-    session[:user_id] = user.id 
+    binding.pry
+    session[:user_id] = user.id
     redirect_to profile_path(user.id), notice: "signed in!"
   end
 
