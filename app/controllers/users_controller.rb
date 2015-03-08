@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   def profile
     @user = User.find(session[:user_id])
   end
@@ -8,11 +7,16 @@ class UsersController < ApplicationController
     if session[:user_id] != nil
       redirect_to profile_path(session[:user_id])
     else
-    end
+    end  
   end
 
   def snippet
-  @user = user.find(params[:id])
+  @user = User.find(params[:id])
+  user_array = []
+  user_array << @user
+  @users = User.all - user_array 
+  @users = @users.each {|user| user[:score] = (@user[:has_tags] & user[:want_tags]).length + (@user[:want_tags] & user[:has_tags]).length}
+  @users = @user.sort_by {|user| user[:score]}.reverse
   end
   def matches
   @user = user.find(params[:id])
@@ -24,10 +28,10 @@ class UsersController < ApplicationController
      @user = User.find(session[:user_id])
   end
 
-  def create
+  def create 
     @user = User.from_omniauth(env["omniauth.auth"], params[:provider])
     if @user.save
-    session[:user_id] = @user.id
+    session[:user_id] = @user.id 
     redirect_to profile_path(@user.id), notice: "signed in!"
     else
     redirect_to login_path, notice: "sign in Error!"
@@ -47,7 +51,7 @@ class UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:nickname,:name,:location)
-  end
+  end  
 end
 
 
