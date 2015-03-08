@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(version: 20150308085356) do
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.integer  "uid",         limit: 8
-    t.text     "has_tags",              default: "{}"
-    t.text     "want_tags",             default: "{}"
+    t.string   "has_tags",              default: "[]"
+    t.string   "want_tags",             default: "[]"
     t.integer  "score",                 default: 1
   end
 
