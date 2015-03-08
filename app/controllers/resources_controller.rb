@@ -3,16 +3,16 @@ class ResourcesController < ApplicationController
   before_action :find_user, only: [:index, :new, :create, :destroy, :update_user_table]
 
   def index
-    @resources = User.find(session[:user_id]).resources
-  end
-
-  def show
-    @user = User.find params[:profile_id]
-    @resource = Resource.find params[:id]
+    @resources = @user.resources
   end
 
   def new
     @resource = Resource.new
+  end
+
+  def show
+    @user = User.find params[:user_id]
+    @resource = Resource.find params[:id]
   end
 
   def create
