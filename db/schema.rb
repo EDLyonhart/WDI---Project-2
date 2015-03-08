@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308021643) do
+ActiveRecord::Schema.define(version: 20150308085356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,11 +56,11 @@ ActiveRecord::Schema.define(version: 20150308021643) do
     t.string   "profile_pic"
     t.string   "location"
     t.string   "gender"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "uid",         limit: 8
-    t.string   "has_tags",              default: [],              array: true
-    t.string   "want_tags",             default: [],              array: true
+    t.text     "has_tags",              default: "{}"
+    t.text     "want_tags",             default: "{}"
     t.integer  "score",                 default: 1
   end
 
