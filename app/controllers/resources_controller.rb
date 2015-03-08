@@ -47,6 +47,7 @@ class ResourcesController < ApplicationController
 
   def resource_exists user, new_resource
     unless user.resources.empty?
+      binding.pry
       user.resources.each do |resource|
         if resource.category == new_resource.category && resource.has == new_resource.has
           return true
@@ -61,6 +62,7 @@ class ResourcesController < ApplicationController
 
   def update_user_table user, resource
     # add the resource to user.has_tags[] or user.want_tags[] as appropriate
+    binding.pry
     @user = user
     if resource.has
       @user.has_tags << resource.category
