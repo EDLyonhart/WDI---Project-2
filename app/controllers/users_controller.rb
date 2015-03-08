@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   @users = @users.each {|user| user[:score] = (@user[:has_tags] & user[:want_tags]).length + (@user[:want_tags] & user[:has_tags]).length}
   @users = @users.sort_by {|user| user[:score]}.reverse
   end
+
   def matches
   @user = user.find(params[:id])
   @likes = @user.likes
@@ -51,7 +52,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:nickname,:name,:location)
+    params.require(:user).permit(:nickname,:name,:location, :has_tags, :want_tags)
   end  
 end
 
