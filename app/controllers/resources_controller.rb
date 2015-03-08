@@ -50,7 +50,6 @@ class ResourcesController < ApplicationController
 
   def resource_exists user, new_resource
     unless user.resources.empty?
-      binding.pry
       user.resources.each do |resource|
         if resource.category == new_resource.category && resource.has == new_resource.has
           return true
@@ -65,7 +64,6 @@ class ResourcesController < ApplicationController
 
   def update_user_table user, resource, add_or_remove
     # add the resource to user.has_tags[] or user.want_tags[] as appropriate
-    binding.pry
     @user = user
     if add_or_remove == "add"
       if resource.has
@@ -83,8 +81,9 @@ class ResourcesController < ApplicationController
         @user.want_tags.delete resource.category
         @user.save
       end
+    else
+      flash[:alert] = "Something bad happened when updating user table"
     end
-    flash[:alert] = "Something bad happened when updating user table"
   end
 
   def find_user
