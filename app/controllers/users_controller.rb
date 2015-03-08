@@ -1,55 +1,85 @@
 class UsersController < ApplicationController
+
+  before_action :find_session_user, only: [:index, :edit, :update]
+  before_action :find_user_by_route, only: [:matches, :show]
+  before_action :find_user_likes, only: [:index, :matches]
+
   def index
-  @user = User.find(session[:user_id])
-  @likes = @user.likes
-  @matches = @likes.where(is_matched:true)
+    @matches = @likes.where(is_matched:true)
   end
 
   def login
     if session[:user_id] != nil
       redirect_to user_home_path(session[:user_id])
-    else
     end
   end
 
   def matches
-  @user = User.find(params[:id])
-  @likes = @user.likes
-  user_array = []
-  user_array << @user
-  @users = User.all - user_array - @likes
-  @users = @users.each {|user| user[:score] = (@user[:has_tags] & user[:want_tags]).length + (@user[:want_tags] & user[:has_tags]).length}
-  @users = @users.sort_by {|user| user[:score]}.reverse
+    user_array = []
+    user_array << @user
+    @users = User.all - user_array - @likes
+    @users = @users.each {|user| user[:score] = (@user[:has_tags] & user[:want_tags]).length + (@user[:want_tags] & user[:has_tags]).length}
+    @users = @users.sort_by {|user| user[:score]}.reverse
+  end
 
+  def show
+    # need to pass a separate session_user in so we can re-direct to the right
+    # home page in the event this is one user checking out another
+    @session_user = User.find session[:user_id]
   end
 
   def edit
-     @user = User.find(session[:user_id])
   end
 
   def create
     @user = User.from_omniauth(env["omniauth.auth"], params[:provider])
     if @user.save
-    session[:user_id] = @user.id
-    redirect_to user_home_path(@user.id), notice: "signed in!"
+      session[:user_id] = @user.id
+      redirect_to user_home_path(@user), notice: "signed in!"
     else
-    redirect_to login_path, notice: "sign in Error!"
+      flash[:alert] = "Login Error"
+      redirect_to login_path
     end
   end
 
   def update
-     @user = User.find(session[:user_id])
+    @user.update_attributes user_params
+    full_name = @user.first_name + " " + @user.last_name
+    @user.update_attributes name:full_name
 
+    if @user.save
+      redirect_to user_show_path(@user)
+    else
+      flash.now[:alert] = "Please correct the following input errors"
+      render :edit
+    end
   end
 
   def logout
-  session[:user_id] = nil
-  redirect_to login_path, notice: "You are now logged out!"
+    session[:user_id] = nil
+    redirect_to login_path, notice: "You are now logged out!"
   end
 
   private
+
+  def full_name
+
+  end
+
+  def find_session_user
+    @user = User.find session[:user_id]
+  end
+
+  def find_user_by_route
+    @user = User.find params[:id]
+  end
+
+  def find_user_likes
+    @likes = @user.likes
+  end
+
   def user_params
-    params.require(:user).permit(:nickname,:name,:location, :has_tags, :want_tags)
+    params.require(:user).permit(:nickname, :name, :first_name, :last_name, :location, :email, :has_tags, :want_tags)
   end
 end
 
