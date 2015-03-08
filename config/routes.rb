@@ -19,5 +19,8 @@ get '/profile/:id/resources/new', to: 'resources#new', as: "new_user_resource"
 get '/profile/:profile_id/resource/:id', to: 'resources#show', as: "user_resource"
 delete '/profile/:profile_id/resource/:id', to: 'resources#destroy'
 
+#Likes Routes
+post '/profile/:id/snippet/:likee_id', to: 'likes#check', as: "like_check"
+
 
 end
