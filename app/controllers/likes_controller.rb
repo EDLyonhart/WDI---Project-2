@@ -9,6 +9,7 @@ def like_check
       @like = Likes.new(user_id:params[:id],likee:params[:likee_id],is_matched:true)
       Like.find_by(user_id:params[:likee_id]).update_attribute(is_matched:true)
       #redirect to profile page - New Like
+      flash[:alert] = "You have a match!"
       redirect_to user_home_path (params[:id])
   else 
       #if there is no match yet - add row to likes table and redirect back into the carousel 
