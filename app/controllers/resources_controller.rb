@@ -1,6 +1,6 @@
 class ResourcesController < ApplicationController
 
-  before_action :find_user, only: [:index, :new, :create]
+  before_action :find_user, only: [:index, :new, :create, :update_user_table]
 
   def index
     @resources = User.find(session[:user_id]).resources
@@ -17,11 +17,17 @@ class ResourcesController < ApplicationController
 
   def create
     @resource = Resource.new resource_params
-    if @resource.save
-      @user.resources << @resource
-      redirect_to user_resources_path(@user)
+    # don't allow user to save identical resources
+    unless resource_exists @user, @resource
+      if @resource.save
+        update_user_table @user, @resource
+        redirect_to user_resources_path @user
+      else
+        flash.now[:alert] = "Please correct the following input errors"
+        render :new
+      end
     else
-      flash.now[:alert] = "Please correct the following input errors"
+      flash.now[:alert] = "You have already created that resource"
       render :new
     end
   end
@@ -38,6 +44,32 @@ class ResourcesController < ApplicationController
   end
 
   private
+
+  def resource_exists user, new_resource
+    unless user.resources.empty?
+      user.resources.each do |resource|
+        if resource.category == new_resource.category && resource.has == new_resource.has
+          return true
+        else
+          return false
+        end
+      end
+    else
+      return false
+    end
+  end
+
+  def update_user_table user, resource
+    # add the resource to user.has_tags[] or user.want_tags[] as appropriate
+    @user = user
+    if resource.has
+      @user.has_tags << resource.category
+      @user.save
+    else
+      @user.want_tags << resource.category
+      @user.save
+    end
+  end
 
   def find_user
     @user = User.find session[:user_id]
