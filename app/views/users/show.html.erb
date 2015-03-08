@@ -4,14 +4,29 @@
   <br>
   <%= simple_form_for(@user, url: user_update_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f|%>
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-2">
         <%= f.input :first_name, label: "First name: ", readonly: true%>
         <br>
       </div>
-      <div class="col-md-3" col-md-offset-1>
+      <div class="col-md-2" col-md-offset-1>
         <%= f.input :last_name, label: "Last name: ", readonly: true%>
         <br>
       </div>
+      <div class ="col-md-6">
+        <% binding.pry %>
+        <%= form_for [@user, Review.new] do |f| %>
+          <div>
+            <%= f.text_area :content, :rows => 3, :cols => 50 %>
+          </div>
+          <%= f.submit "Add review" %>
+        <% end %>
+        <br>
+        <% @reviews.each do |review| %>
+          <p>
+            <%= review.content %> - <%= time_ago_in_words review.created_at %> ago by <strong><%= User.find(review.user_id).name %></strong>
+          </p>
+        <% end %>
+    </div>
     </div>
     <div class="row">
       <div class="col-md-3">

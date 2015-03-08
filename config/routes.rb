@@ -10,7 +10,8 @@ get '/auth/:provider/callback', to: 'users#create', as: "create"
 get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
 
 get '/users/:id', to: 'users#index', as: "user_home" #Home_page - Where user initially provieds has and wants info
-get '/users/:id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
+# We need :user_id below to allow the find_reviewable method to do it's work
+get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
 get '/users/:id/edit', to: 'users#edit', as: "user_edit" #Allows a user to edit profile page
 get '/users/:id/matches', to: 'users#matches', as: "matches" #Carousel - where swiping will occur (id used to populate queue)
 get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
@@ -29,5 +30,8 @@ delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route nam
 #Likes Routes
 post '/user/:id/home/:likee_id', to: 'likes#check', as: "like_check"
 
+# Reviews
+post '/users/:user_id/reviews' => 'reviews#create_review', as: 'user_reviews'
+post '/users/:some_user/resources/:resource_id/reviews' => 'reviews#create_review', as: 'user_resource_reviews'
 
 end
