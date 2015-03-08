@@ -12,11 +12,12 @@ class UsersController < ApplicationController
 
   def snippet
   @user = User.find(params[:id])
+  @likes = @user.likes
   user_array = []
-  user_array << @user
-  @users = User.all - user_array 
+  user_array << @user 
+  @users = User.all - user_array - @likes
   @users = @users.each {|user| user[:score] = (@user[:has_tags] & user[:want_tags]).length + (@user[:want_tags] & user[:has_tags]).length}
-  @users = @user.sort_by {|user| user[:score]}.reverse
+  @users = @users.sort_by {|user| user[:score]}.reverse
   end
   def matches
   @user = user.find(params[:id])
