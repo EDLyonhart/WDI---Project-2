@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  def profile
+  def index
     @user = User.find(session[:user_id])
+  @likes = @user.likes
+  @matches = @likes.where(is_matched:true)
   end
 
   def login
@@ -10,7 +12,7 @@ class UsersController < ApplicationController
     end  
   end
 
-  def snippet
+  def matches
   @user = User.find(params[:id])
   @likes = @user.likes
   user_array = []
@@ -18,12 +20,7 @@ class UsersController < ApplicationController
   @users = User.all - user_array - @likes
   @users = @users.each {|user| user[:score] = (@user[:has_tags] & user[:want_tags]).length + (@user[:want_tags] & user[:has_tags]).length}
   @users = @users.sort_by {|user| user[:score]}.reverse
-  end
-
-  def matches
-  @user = user.find(params[:id])
-  @likes = @user.likes
-  @matches = @likes.where(is_matched:true)
+ 
   end
 
   def edit
