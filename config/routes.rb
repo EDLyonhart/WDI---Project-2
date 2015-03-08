@@ -14,5 +14,10 @@ delete '/logout', to: 'users#logout', as: "logout"
 
 #Resources Routes
 get '/profile/:id/resources', to: 'resources#index', as: "user_resources"
+post '/profile/:id/resources', to: 'resources#create'
+get '/profile/:id/resources/new', to: 'resources#new', as: "new_user_resource"
+get '/profile/:profile_id/resource/:id', to: 'resources#show', as: "user_resource"
+delete '/profile/:profile_id/resource/:id', to: 'resources#destroy'
+
 
 end
