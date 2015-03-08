@@ -1,6 +1,6 @@
 class ResourcesController < ApplicationController
 
-  before_action :find_user, only: [:index, :new, :create, :update_user_table]
+  before_action :find_user, only: [:index, :new, :create, :destroy, :update_user_table]
 
   def index
     @resources = User.find(session[:user_id]).resources
@@ -20,7 +20,7 @@ class ResourcesController < ApplicationController
     # don't allow user to save identical resources
     unless resource_exists @user, @resource
       if @resource.save
-        update_user_table @user, @resource
+        update_user_table @user, @resource, "add"
         redirect_to user_resources_path @user
       else
         flash.now[:alert] = "Please correct the following input errors"
@@ -33,11 +33,14 @@ class ResourcesController < ApplicationController
   end
 
   def destroy
-    resource = Resource.find params[:id] # No need for instance var here #
+    resource = Resource.find params[:id] # No need for instance var here
+    # is this check even going to be necessary?
+    # when will one user be able to directly examine another user's resources?
     if session[:user_id] != resource.user_id
       flash[:alert] = "You are not authorized to delete this itinerary"
       redirect_to user_resources_path
     else
+      update_user_table @user, resource, "remove"
       resource.destroy
       redirect_to user_resources_path
     end
@@ -60,17 +63,28 @@ class ResourcesController < ApplicationController
     end
   end
 
-  def update_user_table user, resource
+  def update_user_table user, resource, add_or_remove
     # add the resource to user.has_tags[] or user.want_tags[] as appropriate
     binding.pry
     @user = user
-    if resource.has
-      @user.has_tags << resource.category
-      @user.save
-    else
-      @user.want_tags << resource.category
-      @user.save
+    if add_or_remove == "add"
+      if resource.has
+        @user.has_tags << resource.category
+        @user.save
+      else
+        @user.want_tags << resource.category
+        @user.save
+      end
+    elsif add_or_remove == "remove"
+      if resource.has
+        @user.has_tags.delete resource.category
+        @user.save
+      else
+        @user.want_tags.delete resource.category
+        @user.save
+      end
     end
+    flash[:alert] = "Something bad happened when updating user table"
   end
 
   def find_user
