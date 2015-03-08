@@ -1,0 +1,42 @@
+<div class="container">
+
+  <h2>My resources:</h2>
+  <br>
+
+  <div class="row">
+    <div class ="col-md-10 col-md-offset-1">
+      <table class ="table table-striped">
+        <tr>
+          <th>Have?</th>
+          <th>Category</th>
+          <th>Info</th>
+          <th>Delete</th>
+        </tr>
+        <% @resources.each do |resource| %>
+          <tr >
+            <td><%= resource.has %></td>
+            <td><%= resource.category %></td>
+            <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
+            <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class ="col-md-2">
+      <%=  link_to('Add new ', new_user_resource_path(@user), {class: "btn btn-primary"}) %>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class ="col-md-2">
+      <%= link_to('Back to User', profile_path(@user), {class: "btn btn-primary"}) %>
+    </div>
+  </div>
+
+
+</div>
+
+
