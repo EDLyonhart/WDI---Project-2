@@ -1,3 +1,21 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.container-fluid {
+  border: 2px solid black
+}
+
+.container {
+  border: 2px solid red
+}
+
+.connectionStatus, .matchName {
+  border: 2px solid blue
+}
+
+.carousel {
+  border: 2px solid green;
+  height: 400px;
+}

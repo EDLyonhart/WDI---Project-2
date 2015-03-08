@@ -1,2 +1,41 @@
 <h1>Welcome <%= @user.name %></h1>
 <%= link_to "Sign out", logout_path, method: :delete %>
+
+
+<div class="container-fluid">         <!-- User Resource Info -->
+  <div class="col-xs-2 status">       <!-- Wants // Haves -->
+    <%= label_tag(:want_tag, "I Want") %>
+    <%= check_box_tag(:want_tag, "I Want") %> | 
+    <%= check_box_tag(:has_tag, "I Have") %>
+    <%= label_tag(:has_tag, "I have") %>
+  </div>                              <!-- End Wants // Haves -->
+  <div class="col-xs-3 category">     <!-- Category Dropdown -->
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Category<span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Bike Share</a></li>
+          <li><a href="#">Car Share</a></li>
+          <li><a href="#">House Share</a></li>
+          <li><a href="#">Pets</a></li>
+          <li><a href="#">Passions</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <input type="text" class="form-control" aria-label="...">
+    </div><!-- /input-group -->
+  </div>                              <!-- End Category Dropdown -->
+  <div class="col-sm-5 description">Description text field</div>
+  <div class="col-xs-1 dateField">Date Field</div>
+  <div class="col-xs-1 delete">Delete</div>
+</div>                                <!-- End User Resource Info -->
+
+<div class="container-fluid">         <!-- Matches Info -->
+  <div class="col-md-6">             <!-- Connections Info -->
+    <div class="col-sm-4 connectionStatus">Connection Status</div>
+    <div class="col-sm-8 matchName">Match Name</div>
+  </div>                              <!-- End Connections Info -->
+  <div class="col-md-6">             <!-- Link to Carousel -->
+    <div class="col-sm-12 carousel">Carousel</div>
+  </div>                              <!-- End Link to Carousel -->
+  
+</div>                                <!-- End Matches Info -->
