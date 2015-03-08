@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def index
-    @user = User.find(session[:user_id])
+  @user = User.find(session[:user_id])
   @likes = @user.likes
   @matches = @likes.where(is_matched:true)
   end
