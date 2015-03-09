@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   before_action :find_session_user, only: [:index, :edit, :update]
-  before_action :find_user_by_route, only: [:matches, :show]
+  before_action :find_user_by_route, only: [:matches]
   before_action :find_user_likes, only: [:index, :matches]
 
   def index
@@ -23,7 +23,12 @@ class UsersController < ApplicationController
   end
 
   def show
-    # need to pass a separate session_user in so we can re-direct to the right
+    # We have to use :user_id instead of just :id because the find_reviewable
+    # method will be looking for something called *_id
+    @user = User.find params[:user_id]
+    # grab the reviews for the user to be shown
+    @reviews = @user.reviews
+    # need to pass a separate @session_user in so we can re-direct to the right
     # home page in the event this is one user checking out another
     @session_user = User.find session[:user_id]
   end
@@ -61,10 +66,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def full_name
-
-  end
 
   def find_session_user
     @user = User.find session[:user_id]
