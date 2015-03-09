@@ -21,19 +21,15 @@
     </div><!-- /input-group -->
   </div>                              <!-- End Category Dropdown -->
 
-  <div class="col-sm-5 description">  <!-- Description Field -->
-    <%= text_area_tag :description, nil, :size => "50x2" %>
-    <button type="button" class="btn btn-default btn-sm" placeholder="Enter Description Here">Save</button>
+  <div class="col-sm-6 description">  <!-- Description Field -->
+    <%= text_area_tag :description, nil, :size => "56x2" %>
   </div>                              <!-- End Description Field -->
 
   <div class="col-xs-2 dateField">    <!-- Date Range Field -->
-    <span>
-      <%= label_tag(:start_date, "Available Starting: ") %><%= date_field_tag(:start_date) %>
-      <%= label_tag(:end_date, "Available Until: ") %><%= date_field_tag(:end_date) %>
-    </span>
+      <%= date_field_tag :start_date, nil, size: 50  %>
+      <%= label_tag(:start_date, "Available Starting ") %>
   </div>                              <!-- End Date Range Field -->
 
-  <div class="col-xs-2 save_delete">  <!-- Save, Delete -->
+  <div class="col-xs-1 save_delete">  <!-- Save, Delete -->
     <button type="button" class="btn btn-default btn-success">Save</button>
-    <button type="button" class="btn btn-default btn-danger">Remove</button>
   </div>                              <!-- End Save, Delete -->

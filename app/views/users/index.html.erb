@@ -11,14 +11,23 @@
 <!-- Resource Index Section -->
 <div class="container-fluid user_resource_area well">         <!-- User Resource Info -->
   <%= render "partials/user_resource_index" %>
-  <!-- ul -->
-  <!-- % for each have/want  do |f|% -->
-  <!-- li -->
-  <!-- %= render "partials/resource_show" = -->
-  <!-- /li -->
-  <!-- % end %-->
-  <!-- /ul -->
-</div>                                <!-- End User Resource Info -->
+  <table class ="table table-striped">
+    <tr>
+      <th>Have?</th>
+      <th>Category</th>
+      <th>Info</th>
+      <th>Delete</th>
+    </tr>
+    <% @resources.each do |resource| %>
+    <tr >
+      <td><%= resource.has %></td>
+      <td><%= resource.category %></td>
+      <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
+      <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>                                                        <!-- End User Resource Info -->
 
 
 
