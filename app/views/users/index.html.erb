@@ -43,7 +43,12 @@
 <!-- Matches Index Section -->
 <div class="container-fluid">                           <!-- Matches Info -->
   <div class="col-md-6 user_match_index">               <!-- Connections Info -->
-
+  <table class ="table table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Location</th>
+      <th>View</th>
+    </tr>
   <% @users.each do |match| %>
     <tr>
       <td><%= match.name %></td>
