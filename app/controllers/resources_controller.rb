@@ -21,7 +21,7 @@ class ResourcesController < ApplicationController
     unless resource_exists @user, @resource
       if @resource.save
         update_user_table @user, @resource, "add"
-        redirect_to user_resources_path @user
+        redirect_to user_home_path @user
       else
         flash.now[:alert] = "Please correct the following input errors"
         render :new
@@ -38,11 +38,11 @@ class ResourcesController < ApplicationController
     # when will one user be able to directly examine another user's resources?
     if session[:user_id] != resource.user_id
       flash[:alert] = "You are not authorized to delete this itinerary"
-      redirect_to user_resources_path
+      redirect_to user_home_path
     else
       update_user_table @user, resource, "remove"
       resource.destroy
-      redirect_to user_resources_path
+      redirect_to user_home_path
     end
   end
 
