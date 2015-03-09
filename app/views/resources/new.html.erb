@@ -3,21 +3,24 @@
   <h2>New resource:</h2>
 
   <%= simple_form_for(@resource, url: user_resources_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
-    <div class="row">
-      <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-      <div class="col-md-3">
-        <%= f.input :has, label: "Check if you have this resource to share"%>
-      </div>
-      <div class="col-md-3 col-md-offset-1">
+  <div class="row">
+    <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+    <div class="col-md-3">
+      <%= f.input :has, label: "Check if you have this resource to share"%>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
         <!-- The datalist below is not working properly, not turning input into a dropdown
         simple_form_for doesn't support? -->
         <%= f.input :category, label:"Category: ", list:"categories" %>
-        <datalist id="categories">
-          <option>Transportation</option>
-          <option>Housing</option>
-          <option>Pet-sitting</option>
-          <option>Topical interest</option>
-        </datalist>
+        <div class="dropdown">
+        <select name="category_drop" id="categories" selected="<%=session[:category]%>" >
+          <option value="bike">Bike Share</option>
+          <option value="car">Car Share</option>
+          <option value="house">House Share</option>
+          <option value="Pets">Pets</option>
+          <option value="Passions">Passions</option>
+        </select>
+        </div>
       </div>
     </div>
     <br>
@@ -32,7 +35,7 @@
         <%= link_to('Cancel', user_resources_path(@user), {class: "btn btn-primary"}) %>
       </div>
     </div>
-  <% end %>
+    <% end %>
 
-</div>
+  </div>
 
