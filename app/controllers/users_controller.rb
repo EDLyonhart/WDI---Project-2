@@ -3,7 +3,10 @@ class UsersController < ApplicationController
   before_action :find_session_user, only: [:index, :edit, :update]
   before_action :find_user_by_route, only: [:matches]
   before_action :find_user_likes, only: [:index, :matches]
-
+  def carousel.html
+    match_list
+  end  
+  
   def index
     @matches = @likes.where(is_matched:true)
   end
@@ -81,6 +84,13 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:nickname, :name, :first_name, :last_name, :location, :email, :has_tags, :want_tags)
+  end
+  def match_list
+    user_array = []
+    user_array << @user
+    @users = User.all - user_array - @likes
+    @users = @users.each {|user| user[:score] = (@user[:has_tags] & user[:want_tags]).length + (@user[:want_tags] & user[:has_tags]).length}
+    @users = @users.sort_by {|user| user[:score]}.reverse
   end
 end
 
