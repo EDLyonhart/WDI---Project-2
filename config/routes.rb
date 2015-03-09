@@ -1,67 +1,37 @@
 Rails.application.routes.draw do
-  root 'users#login'
-  get '/home', to: 'users#home', as: "home"
 
-  get '/login', to: 'users#login', as: "login"
+# Users Routes
+root 'users#login'
+get '/login', to: 'users#login', as: "login"
 
-  get '/auth/:provider/callback', to: 'users#create', as: "create"
 
-  get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
+# fb oauth
+get '/auth/:provider/callback', to: 'users#create', as: "create"
+get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
 
-  delete '/logout', to: 'users#logout', as: "logout"
+get '/users/:id', to: 'users#index', as: "user_home" #Home_page - Where user initially provieds has and wants info
+# We need :user_id below to allow the find_reviewable method to do it's work
+get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
+get '/users/:id/edit', to: 'users#edit', as: "user_edit" #Allows a user to edit profile page
+get '/users/:id/matches', to: 'users#matches', as: "matches" #Carousel - where swiping will occur (id used to populate queue)
+get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
 
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
+patch '/users/:id', to: 'users#update', as: "user_update"
+delete '/logout', to: 'users#logout', as: "logout"
 
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+# Resources Routes
+get '/users/:id/resources', to: 'resources#index', as: "user_resources"
+post '/users/:id/resources', to: 'resources#create'  #shares route name with above
+get '/users/:id/resources/new', to: 'resources#new', as: "new_user_resource"
+get '/users/:user_id/resource/:id', to: 'resources#show', as: "user_resource"
+delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route name with above
+# need to edit a resource?
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+#Likes Routes
+post '/user/:id/home/:likee_id', to: 'likes#check', as: "like_check"
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+# Reviews
+post '/users/:user_id/reviews', to: 'reviews#create_review', as: 'user_reviews'
+post '/users/:some_user/resources/:resource_id/reviews' => 'reviews#create_review', as: 'user_resource_reviews'
 
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end
