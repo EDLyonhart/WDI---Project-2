@@ -1,6 +1,6 @@
 <div class="container">
 
-  <h2 class ="text-center">User Profile</h2>
+  <h2 class ="text-center">User Public Profile</h2>
   <br>
   <%= simple_form_for(@user, url: user_update_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f|%>
     <div class="row">
@@ -50,6 +50,7 @@
   <div class="row">
     <div class="col-md-6">
       <h3>Reviews</h3>
+      <h4 style="color:red">NOTE: Only users who have matched with the profile user can leave reviews</h4>
       <%= form_for [@user, Review.new], url: user_reviews_path(@user) do |f| %>
         <%= f.text_area :content, :rows => 3, :cols => 50 %>
         <br>
@@ -65,7 +66,5 @@
       <% end %>
     </div>
   </div>
-
-
 
 </div>
