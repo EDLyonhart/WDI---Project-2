@@ -13,7 +13,6 @@ def like_check
 @likee = User.find(params[:likee_id])
 @likee_likes = @likee.likes 
   if @likee_likes.exists?(likee: params[:id])
-    binding.pry
     #if there is now a match - create new row in likes with boolean true; change other row's boolean to true as well
       @like = Like.new(user_id:params[:id],likee:params[:likee_id],is_matched:true)
       @like.save
@@ -21,10 +20,8 @@ def like_check
       #redirect to profile page - New Match/Send out Match Email
       flash[:alert] = "You have a match!"
       redirect_to user_home_path (params[:id])
-      binding.pry
       match_email
   else 
-    binding.pry
       #if there is no match yet - add row to likes table and redirect back into the carousel 
       @like = Like.new(user_id:params[:id],likee:params[:likee_id],is_matched:false)
       @like.save
@@ -38,7 +35,6 @@ end
 private
 
 def match_email
-  binding.pry
 
 require 'mandrill'
 m = Mandrill::API.new 
@@ -53,11 +49,10 @@ message = {
 }  
 sending = m.messages.send message  
 puts sending
-binding.pry
 end
 
 def like_email
-  binding.pry
+  
 require 'mandrill'
 m = Mandrill::API.new 
 @user1 = User.find(params[:likee_id])
@@ -71,7 +66,6 @@ message = {
 }  
 sending = m.messages.send message  
 puts sending
-binding.pry
 end
 
 end
