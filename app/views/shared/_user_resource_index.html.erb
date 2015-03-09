@@ -1,0 +1,40 @@
+<div class="container-fluid">         <!-- User Resource Info -->
+  <div class="col-xs-2 status">       <!-- Wants // Haves -->
+    <%= label_tag(:want_tag, "I Want") %>
+    <%= check_box_tag(:want_tag, "I Want") %> | 
+    <%= check_box_tag(:has_tag, "I Have") %>
+    <%= label_tag(:has_tag, "I have") %>  
+  </div>                              <!-- End Wants // Haves -->
+  <div class="col-xs-1 category">     <!-- Category Dropdown -->
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Category<span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Bike Share</a></li>
+          <li><a href="#">Car Share</a></li>
+          <li><a href="#">House Share</a></li>
+          <li><a href="#">Pets</a></li>
+          <li><a href="#">Passions</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+    </div><!-- /input-group -->
+  </div>                              <!-- End Category Dropdown -->
+  <div class="col-sm-5 description">
+    <%= text_area_tag(:description, nil, class: 'input-large') %>
+    <button type="button" class="btn btn-default btn-sm" placeholder="Enter Description Here">Save</button>
+  </div>
+  <div class="col-xs-2 dateField">
+    <%= label_tag(:start_date, "Available Starting: ") %><%= date_field_tag(:start_date, :size => "5") %>
+    <%= label_tag(:end_date, "Available Until: ") %><%= date_field_tag(:end_date) %>
+  </div>
+  <div class="col-xs-2 save_delete">
+    <button type="button" class="btn btn-default btn-success">Save</button>
+    <button type="button" class="btn btn-default btn-danger">Remove</button>
+  </div>
+</div>                                <!-- End User Resource Info -->
+</div>
+<div class="container-fluid">         <!-- Matches Info -->
+  <div class="col-md-6">             <!-- Connections Info -->
+    <div class="col-sm-4 connectionStatus">Connection Status</div>
+    <div class="col-sm-8 matchName">Match Name</div>
+  </div>                              <!-- End Connections Info -->
