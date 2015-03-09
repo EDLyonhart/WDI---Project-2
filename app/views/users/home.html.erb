@@ -1,0 +1,18 @@
+<h1>Welcome <%= @user.name %></h1>
+<%= link_to "Sign out", logout_path, method: :delete %>
+
+
+<div class="container-fluid">         <!-- Matches Info -->
+  <div class="col-md-6">             <!-- Connections Info -->
+    <div class="col-sm-4 connectionStatus">Connection Status</div>
+    <div class="col-sm-8 matchName">Match Name</div>
+  </div>                              <!-- End Connections Info -->
+
+
+
+
+  <div class="col-md-6">             <!-- Link to Carousel -->
+    <div class="col-sm-12 carousel">Carousel</div>
+  </div>                              <!-- End Link to Carousel -->
+  
+</div>                                <!-- End Matches Info -->

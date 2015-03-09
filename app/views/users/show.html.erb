@@ -32,7 +32,6 @@
     <div class="row">
       <div class ="col-md-6">
       <% end %>
-        <% binding.pry %>
         <%= form_for( [@user, Review.new], url: user_reviews_path(@user)) do |f| %>
           <div>
             <%= f.text_area :content, :rows => 3, :cols => 50 %>
