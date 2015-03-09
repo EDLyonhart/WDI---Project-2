@@ -27,9 +27,9 @@ get '/users/:user_id/resource/:id', to: 'resources#show', as: "user_resource"
 delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route name with above
 # do we need to edit a resource?
 
-
-# Likes
-post '/user/:id/home/:likee_id', to: 'likes#check', as: "like_check"
+#Likes Routes
+get '/users/:id/home/:likee_id', to: 'likes#test', as: "test"
+post '/users/:id/home/:likee_id', to: 'likes#like_check', as: "like_check"
 
 # Reviews
 post '/users/:user_id/reviews', to: 'reviews#create_review', as: 'user_reviews'
