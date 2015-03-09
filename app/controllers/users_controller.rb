@@ -31,7 +31,6 @@ class UsersController < ApplicationController
     # need to pass a separate @session_user in so we can re-direct to the right
     # home page in the event this is one user checking out another
     @session_user = User.find session[:user_id]
-    binding.pry
   end
 
   def edit
