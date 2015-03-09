@@ -10,22 +10,34 @@
     <%= label_tag(:has_tag, "I have") %>
   </div>                              <!-- End Wants // Haves -->
   <div class="col-xs-3 category">     <!-- Category Dropdown -->
-<div class="input-group">
-  <div class="input-group-btn">
-    <!-- Button and dropdown menu -->
-  </div>
-  <input type="text" class="form-control" aria-label="...">
-</div>
+    <div class="input-group">
+      <div class="input-group-btn">
+        <!-- Button and dropdown menu -->
+      </div>
+      <input type="text" class="form-control" aria-label="...">
+    </div>
 
-<div class="input-group">
-  <input type="text" class="form-control" aria-label="...">
-  <div class="input-group-btn">
-    <!-- Button and dropdown menu -->
-  </div>
-</div>
+    <div class="input-group">
+      <input type="text" class="form-control" aria-label="...">
+      <div class="input-group-btn">
+        <!-- Button and dropdown menu -->
+      </div>
+    </div>
   </div>                              <!-- End Category Dropdown -->
-  <div class="col-sm-5 description">Description text field</div>
-  <div class="col-xs-1 dateField">Date Field</div>
+  <div class="col-sm-5 description">
+
+    <!-- if it is a want -->
+    <%= text_field_tag 'description' %>
+    <%= submit_tag(value = 'save description') %>
+    <!-- if it is a have just use a <p>description</p> -->
+
+  </div>
+  <div class="col-xs-1 dateField">
+
+    <%= date_field_tag('available starting') %>
+    <%= date_field_tag('through') %>
+    
+  </div>
   <div class="col-xs-1 delete">Delete</div>
 </div>                                <!-- End User Resource Info -->
 
