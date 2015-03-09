@@ -1,0 +1,47 @@
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<div class="container-fluid">
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval = "5000">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+  </ol>
+ 
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+    <div class = "col-md-offset-5">
+      <img src="<%=@user.profile_pic %>" alt="...">
+     </div>
+    
+    <h3 class = "text-center"><%=@user.name %></h3>
+      
+    </div>
+    <div class="item">
+        <div class = "col-md-offset-5">
+      <img src="<%=@user.profile_pic %>" alt="...">
+     </div>
+    
+    <h3 class = "text-center"><%=@user.name %></h3>
+      
+    </div>
+    <div class="item">
+       <div class = "col-md-offset-5">
+      <img src="<%=@user.profile_pic %>" alt="...">
+     </div>
+    
+    <h3 class = "text-center"><%=@user.name %></h3>
+      
+    </div>
+ 
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+   <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div> <!-- Carousel -->
+</div> <!-- container-fluid -->
