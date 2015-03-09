@@ -2,16 +2,14 @@ class UsersController < ApplicationController
 
   before_action :find_session_user, only: [:index, :edit, :update]
   before_action :find_user_by_route, only: [:matches]
-<<<<<<< HEAD
+
   before_action :find_user_likes, only: [:index, :matches]
   def carousel.html
     match_list
   end  
-  
-=======
+
   before_action :find_user_likes, only: [:index]
 
->>>>>>> e0fe3b58d25bddcc8cc9e4b0aedbb690d7975ce2
   def index
     @matches = @likes.where(is_matched:true)
   end
