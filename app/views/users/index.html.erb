@@ -1,10 +1,19 @@
-<h1>Welcome <%= @user.name %></h1>
+<div class="container">
 
-<%= link_to "Sign out", logout_path, method: :delete %>
+  <h1>Welcome <%= @user.name %></h1>
+  <br><br>
+  <%= link_to "My resources", user_resources_path(@user), method: :get %>
+  <br><br>
+  <%= link_to "Edit Profile", user_edit_path(@user), method: :get %>
+  <br><br>
+  <%= link_to "View Potential Matches", user_matches_path(@user), method: :get %>
+  <br><br>
+  <%= link_to "Sign out", logout_path, method: :delete %>
+  <br>
 
-<%= link_to "Edit Profile", user_edit_path(@user), method: :get %>
+</div>
 
-<%= link_to "My resources", user_resources_path(@user), method: :get %>
+
 
 
 
