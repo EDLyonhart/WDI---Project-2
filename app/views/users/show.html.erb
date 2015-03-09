@@ -12,22 +12,7 @@
         <%= f.input :last_name, label: "Last name: ", readonly: true%>
         <br>
       </div>
-      <div class ="col-md-6">
-        <% binding.pry %>
-        <%= form_for [@user, Review.new] do |f| %>
-          <div>
-            <%= f.text_area :content, :rows => 3, :cols => 50 %>
-          </div>
-          <%= f.submit "Add review" %>
-        <% end %>
-        <br>
-        <% @reviews.each do |review| %>
-          <p>
-            <%= review.content %> - <%= time_ago_in_words review.created_at %> ago by <strong><%= User.find(review.user_id).name %></strong>
-          </p>
-        <% end %>
-    </div>
-    </div>
+      </div>
     <div class="row">
       <div class="col-md-3">
         <%= f.input :location, label: "Location: ", readonly: true%>
@@ -44,7 +29,24 @@
         <br>
       </div>
     </div>
-  <% end %>
+    <div class="row">
+      <div class ="col-md-6">
+      <% end %>
+        <% binding.pry %>
+        <%= form_for( [@user, Review.new], url: user_reviews_path(@user)) do |f| %>
+          <div>
+            <%= f.text_area :content, :rows => 3, :cols => 50 %>
+          </div>
+          <%= f.submit "Add review" %>
+        <% end %>
+        <br>
+        <% @reviews.each do |review| %>
+          <p>
+            <%= review.content %> - <%= time_ago_in_words review.created_at %> ago by <strong><%= User.find(review.user_id).name %></strong>
+          </p>
+        <% end %>
+    </div>
+    </div>
 
   <div class="row"
     <div class="col-md-3">

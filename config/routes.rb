@@ -31,7 +31,7 @@ delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route nam
 post '/user/:id/home/:likee_id', to: 'likes#check', as: "like_check"
 
 # Reviews
-post '/users/:user_id/reviews' => 'reviews#create_review', as: 'user_reviews'
+post '/users/:user_id/reviews', to: 'reviews#create_review', as: 'user_reviews'
 post '/users/:some_user/resources/:resource_id/reviews' => 'reviews#create_review', as: 'user_resource_reviews'
 
 end
