@@ -6,27 +6,27 @@
     <div class="row">
       <div class="col-md-2">
         <%= f.input :first_name, label: "First name: ", readonly: true%>
-        <br>
       </div>
-      <div class="col-md-2" col-md-offset-1>
+      <div class="col-md-2">
         <%= f.input :last_name, label: "Last name: ", readonly: true%>
-        <br>
       </div>
+
+      <div class="col-md-2 col-md-offset-6" style="margin-top: 15px">
+          <%= link_to('Back Home', user_home_path(@session_user), {class: "btn btn-primary"}) %>
       </div>
+    </div>
+
     <div class="row">
       <div class="col-md-3">
         <%= f.input :location, label: "Location: ", readonly: true%>
-        <br>
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
         <%= f.input :email, label: "Email: ", readonly: true%>
-        <br>
       </div>
-      <div class="col-md-3" col-md-offset-1>
+      <div class="col-md-3">
         <%= f.input :nickname, label: "Nickname: ", readonly: true%>
-        <br>
       </div>
     </div>
     <div class="row">
@@ -48,9 +48,25 @@
     </div>
     </div>
 
-  <div class="row"
-    <div class="col-md-3">
-        <%= link_to('Back Home', user_home_path(@session_user), {class: "btn btn-primary"}) %>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Reviews</h3>
+      <%= form_for [@user, Review.new], url: user_reviews_path(@user) do |f| %>
+        <%= f.text_area :content, :rows => 3, :cols => 50 %>
+        <br>
+        <%= f.submit "Add review" %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <br><br>
+      <% @reviews.each do |review| %>
+        <p>
+          <%= review.content %> - <%= time_ago_in_words review.created_at %> ago by <strong><%= User.find(review.user_id).name %></strong>
+        </p>
+      <% end %>
     </div>
   </div>
+
+
+
 </div>
