@@ -1,35 +1,39 @@
 
-  <div class="col-xs-2 status">       <!-- Wants // Haves -->
+  <div class="col-xs-2 status jumbotron">       <!-- Wants // Haves -->
     <b><%= label_tag(:want_tag, "I Want") %></b>
     <%= check_box_tag(:want_tag, "I Want") %> | 
     <b><%= check_box_tag(:has_tag, "I Have") %></b>
     <%= label_tag(:has_tag, "I have") %>  
   </div>                              <!-- End Wants // Haves -->
+
   <div class="col-xs-1 category">     <!-- Category Dropdown -->
     <div class="input-group">
       <div class="input-group-btn">
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">Category<span class="caret"></span></button>
         <ul class="dropdown-menu" role="menu">
-          <li><a href="#">Bike Share</a></li>
-          <li><a href="#">Car Share</a></li>
-          <li><a href="#">House Share</a></li>
-          <li><a href="#">Pets</a></li>
-          <li><a href="#">Passions</a></li>
+          <li>Bike Share</li>
+          <li>Car Share</li>
+          <li>House Share</li>
+          <li>Pets</li>
+          <li>Passions</li>
         </ul>
       </div><!-- /btn-group -->
     </div><!-- /input-group -->
   </div>                              <!-- End Category Dropdown -->
-  <div class="col-sm-5 description">
+
+  <div class="col-sm-5 description">  <!-- Description Field -->
     <%= text_area_tag(:description, nil, class: 'input-large') %>
     <button type="button" class="btn btn-default btn-sm" placeholder="Enter Description Here">Save</button>
-  </div>
-  <div class="col-xs-2 dateField">
+  </div>                              <!-- End Description Field -->
+
+  <div class="col-xs-2 dateField">    <!-- Date Range Field -->
     <span>
       <%= label_tag(:start_date, "Available Starting: ") %><%= date_field_tag(:start_date, :size => "5") %>
       <%= label_tag(:end_date, "Available Until: ") %><%= date_field_tag(:end_date, :size => "5") %>
     </span>
-  </div>
-  <div class="col-xs-2 save_delete">
+  </div>                              <!-- End Date Range Field -->
+
+  <div class="col-xs-2 save_delete">  <!-- Save, Delete -->
     <button type="button" class="btn btn-default btn-success">Save</button>
     <button type="button" class="btn btn-default btn-danger">Remove</button>
-  </div>
+  </div>                              <!-- End Save, Delete -->

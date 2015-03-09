@@ -3,6 +3,15 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+.user_resource_area {
+  height: 250px;
+  overflow-x: scroll;
+}
+.user_match_index {
+  height: 250px;
+  overflow-x: scroll;
+}
+
 .container-fluid {
   border: 2px solid black
 }
@@ -18,4 +27,15 @@
 .carousel {
   border: 2px solid green;
   height: 400px;
+}
+
+.description {
+  height: 50px;
+  width: 100px;
+  border: orange;
+}
+
+.dateField {
+  height: 25px;
+  width: 50px;
 }
