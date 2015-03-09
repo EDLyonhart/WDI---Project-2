@@ -2,6 +2,12 @@ class UsersController < ApplicationController
 
   before_action :find_session_user, only: [:index, :edit, :update]
   before_action :find_user_by_route, only: [:matches]
+
+  before_action :find_user_likes, only: [:index, :matches]
+  def carousel
+    match_list
+  end  
+
   before_action :find_user_likes, only: [:index]
 
   def index
@@ -29,6 +35,7 @@ class UsersController < ApplicationController
       user[:score] =
         (@user[:has_tags] & user[:want_tags]).length +
         (@user[:want_tags] & user[:has_tags]).length
+        binding.pry
     end
     @carousel_users = @carousel_users.sort_by do |user|
       user[:score]
@@ -105,6 +112,30 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:nickname, :name, :first_name, :last_name, :location, :email, :has_tags, :want_tags)
+  end
+
+  def match_list
+    # adds session user into an array for subsequent processing
+    @user = User.find session[:user_id]
+    user_array = []
+    user_array << @user
+    # put session user's likes into an array for subsequent processing
+    @likes = likes_to_users @user.likes
+    # create a list of potential matches (@users) by starting with User.all
+    # and subtracting session user and any other user who session user has already liked
+    @carousel_users = User.all - user_array - @likes
+    @carousel_users = @carousel_users.each do |user|
+      # each user in the carousel ranked in terms of mutual interests with the session user
+      user[:score] =
+        (@user[:has_tags] & user[:want_tags]).length +
+        (@user[:want_tags] & user[:has_tags]).length
+    end
+    @carousel_users = @carousel_users.sort_by do |user|
+      user[:score]
+    end
+    @carousel_users.reverse!
+    @match_list = @carousel_users - [@carousel_users[0]]
+    binding.pry
   end
 end
 
