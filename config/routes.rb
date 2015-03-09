@@ -15,6 +15,7 @@ get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other user
 get '/users/:id/edit', to: 'users#edit', as: "user_edit" #Allows a user to edit profile page
 get '/users/:id/matches', to: 'users#matches', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
 get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
+get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route 
 
 patch '/users/:id', to: 'users#update', as: "user_update"
 delete '/logout', to: 'users#logout', as: "logout"
@@ -30,7 +31,6 @@ delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route nam
 #Likes Routes
 get '/users/:id/home/:likee_id', to: 'likes#test', as: "test"
 post '/users/:id/home/:likee_id', to: 'likes#like_check', as: "like_check"
-get '/carousel', to: 'likes#carousel', as: "carousel"
 
 # Reviews
 post '/users/:user_id/reviews', to: 'reviews#create_review', as: 'user_reviews'

@@ -7,10 +7,6 @@ def test
 
 end
 
-def carousel
-  @user = User.last
-end
-
 def like_check
   binding.pry
   #checks to see if there is a match
