@@ -1,10 +1,9 @@
 <div class="col-sm-4 connectionStatus">
-  <!-- if connectionStatus == mutual -->
+  <% if @likee_likes == true %>
     <button type="button" class="btn btn-xs btn-default btn-success">Mutual</button>
-  <!-- else if connectionStatus == Ive liked but not been liked in return -->
+  <% elsif @likee == false %>
     <button type="button" class="btn btn-xs btn-default btn-info">Liked</button>
-  <!-- else connectionStatus == Ive been liked but not liked them back -->
-    <button type="button" class="btn btn-xs btn-default btn-warning">Like?</button>
+  <% end %>
 </div>
 <div class="col-sm-8 matchName">
   <h5>Match Name</h5>
