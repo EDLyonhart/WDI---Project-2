@@ -28,6 +28,7 @@ gem 'bootswatch-rails'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'figaro'
 gem 'omniauth-facebook'
+gem 'mandrill-api'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -1,0 +1,40 @@
+
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<div class="container-fluid">
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval = "5000">
+
+ 
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+    <div class = "jumbotron">
+    <div class = "col-md-offset-5">
+      <img src="<%=@carousel_users[0].profile_pic %>" alt="...">
+     </div>
+    
+    <h3 class = "text-center"><%=@carousel_users[0].name %></h3>
+      
+    </div>
+    </div>
+<% @match_list.each do |user| %>
+    <div class="item">
+    <div class = "jumbotron">
+        <div class = "col-md-offset-5">
+      <img src="<%=user.profile_pic %>" alt="...">
+     </div>
+    
+    <h3 class = "text-center"><%= user.name %></h3>
+      
+    </div>
+    </div>
+    <% end %>
+ 
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+   <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+  </a>
+</div> <!-- Carousel -->
+</div> <!-- container-fluid -->
