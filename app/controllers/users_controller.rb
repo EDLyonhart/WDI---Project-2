@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   before_action :find_user_likes, only: [:index]
 
   def index
+    @resources = @user.resources
     @matches = @likes.where(is_matched:true)
   end
 
@@ -29,7 +30,6 @@ class UsersController < ApplicationController
     # create a list of potential matches (@users) by starting with User.all
     # and subtracting session user and any other user who session user has already liked
     @carousel_users = User.all - user_array - @likes
-    binding.pry
     @carousel_users = @carousel_users.each do |user|
       # each user in the carousel ranked in terms of mutual interests with the session user
       user[:score] =
