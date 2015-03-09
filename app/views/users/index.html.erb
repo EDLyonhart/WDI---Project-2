@@ -36,21 +36,20 @@
     </tr>
     <% end %>
   </table>
-</div>                                                        <!-- End User Resource Info -->
+</div>                                                  <!-- End User Resource Info -->
 
 
 
 <!-- Matches Index Section -->
-<div class="container-fluid">         <!-- Matches Info -->
-  <div class="col-md-6 user_match_index">              <!-- Connections Info -->
+<div class="container-fluid">                           <!-- Matches Info -->
+  <div class="col-md-6 user_match_index">               <!-- Connections Info -->
 
-    <%= render "partials/matches_index" %>
-    <%= render "partials/matches_index" %>
-    <%= render "partials/matches_index" %>
-    <%= render "partials/matches_index" %>
-    <%= render "partials/matches_index" %>
-    <%= render "partials/matches_index" %>
-    <%= render "partials/matches_index" %>
-    <%= render "partials/carousel" %>
+    <% @user.each do |match| %>
+    <tr>
+      <td><%= match.name %></td>
+      <td><%= match.location %></a></td>
+      <td><%= link_to('Show', user_show_path(@user), class: "btn-xs btn-info") %></td>
+    </tr>
+    <% end %>
 
-</div>                                <!-- End Matches Info -->
+  </div>                                                  <!-- End Matches Info -->
