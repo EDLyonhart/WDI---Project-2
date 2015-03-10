@@ -10,15 +10,15 @@ get '/auth/:provider/callback', to: 'users#create', as: "create"
 get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
 
 get '/users/:id', to: 'users#index', as: "user_home"
-get '/users/:id/matches', to: 'users#matches', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
+get '/users/:id/matches', to: 'users#carousel', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
 get '/users/:id/profile', to: 'users#profile', as: "user_profile" # publicly viewable profile
 # We need :user_id below to allow the find_reviewable method to do it's work
 get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
 get '/users/:id/edit', to: 'users#edit', as: "user_edit" #Allows a user to edit profile page
 get '/users/:id/network', to: 'users#network', as: "user_network"
 
-get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
-get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route
+# get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
+# get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route
 
 patch '/users/:id', to: 'users#update', as: "user_update"
 delete '/logout', to: 'users#logout', as: "logout"
