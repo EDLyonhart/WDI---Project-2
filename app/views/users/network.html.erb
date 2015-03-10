@@ -14,7 +14,7 @@
   <%= @like_me.each do |like| %>
     <!-- we want user who owns the like, not session user -->
     <% @user = User.find(like.user_id) %>
-    <li><%= @user.name %></li><%= link_to("delete", delete_user_like_path(@user, like), method: :delete)%>
+    <li><%= @user.name %></li><%= link_to("reject", reject_user_like_path(@user, like), method: :patch)%>
   <% end %>
 </ul>
 

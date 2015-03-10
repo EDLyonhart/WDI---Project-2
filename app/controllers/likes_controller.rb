@@ -32,13 +32,21 @@ def like_check
   end
 end
 
+# Likes will be rejected via boolean column 'rejected'.  No need to ever delete a like.
+# Saving the like will allow us to manage which users are shown on the carousel and
+# displayed on the My Network page
 def destroy
-  binding.pry
-  like = Like.find params[:like_id] # No need for instance var here #
-  like.destroy
-  redirect_to user_network_path
 end
 
+def update
+  @user = User.find params[:id]
+  @like = Like.find params[:like_id]
+  @like.update_attributes(rejected:"true")
+  # need some way of knowing if this like rejection is coming from my network
+  # or the carousel, and redirect accordingly.
+  # currently assumes the rejection is coming from my_network
+  redirect_to user_network_path(@user)
+end
 
 private
 
