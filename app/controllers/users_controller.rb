@@ -35,7 +35,6 @@ class UsersController < ApplicationController
       user[:score] =
         (@user[:has_tags] & user[:want_tags]).length +
         (@user[:want_tags] & user[:has_tags]).length
-        binding.pry
     end
     @carousel_users = @carousel_users.sort_by do |user|
       user[:score]
@@ -135,7 +134,6 @@ class UsersController < ApplicationController
     end
     @carousel_users.reverse!
     @match_list = @carousel_users - [@carousel_users[0]]
-    binding.pry
   end
 end
 

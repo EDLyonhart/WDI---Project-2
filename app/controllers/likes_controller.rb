@@ -26,7 +26,7 @@ def like_check
       @like = Like.new(user_id:params[:id],likee:params[:likee_id],is_matched:false)
       @like.save
       #Redirect back to carousel page
-      redirect_to matches_path (params[:id])
+      redirect_to carousel_path (params[:id])
       #send like_email
       like_email 
   end
