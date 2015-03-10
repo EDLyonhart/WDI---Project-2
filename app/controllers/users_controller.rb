@@ -43,14 +43,14 @@ class UsersController < ApplicationController
   end
 
   def network
-    @matches = @likes.select do |like|
+    @matches = find_user_likes.select do |like|
       like.is_matched
     end
     @like_me = []
     User.all.each do |user|
       user.likes.each do |like|
         # @user is me
-        if like.likee.id == @user.id
+        if like.likee == @user.id && !like.is_matched
           @like_me << user.id
         end
       end
