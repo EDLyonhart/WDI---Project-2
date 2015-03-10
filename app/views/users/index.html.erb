@@ -14,9 +14,9 @@
   <h2>My resources:</h2>
   <br>
 
-  <div class="row">
+  <div class="row user_resources_show">
     <div class ="col-md-10 col-md-offset-1">
-      <table class ="table table-striped">Need to sort this by wants first
+      <table class ="table table-striped">
         <tr>
           <th>Have?</th>
           <th>Category</th>
@@ -24,7 +24,7 @@
           <th>Delete</th>
         </tr>
         <% @resources.each do |resource| %>
-          <tr >
+          <tr>
             <td><%= resource.has %></td>
             <td><%= resource.category %></td>
             <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
