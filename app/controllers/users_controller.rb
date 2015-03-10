@@ -11,6 +11,7 @@ class UsersController < ApplicationController
   before_action :find_user_likes, only: [:index]
 
   def index
+    @resources = @user.resources
     @matches = @likes.where(is_matched:true)
   end
 

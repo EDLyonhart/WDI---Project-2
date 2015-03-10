@@ -1,1 +1,11 @@
-<%= link_to("Login with Facebook", "/auth/facebook") %>
+<%= render 'partials/header' %>
+
+<h1 class = "loginHeading"> ShareIt</h1>
+
+<div>
+  <i class="fa fa-facebook-official">
+    <%= link_to("Login with Facebook", "/auth/facebook") %>
+  </i>
+</div>
+
+<%= render 'partials/footer' %>

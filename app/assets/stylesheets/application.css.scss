@@ -13,9 +13,9 @@
  *= require_tree .
  *= require_self
  */
-@import "bootswatch/cerulean/variables";
+@import "bootswatch/flatly/variables";
 @import "bootstrap";
 body { padding-top: 60px; }
-@import "bootswatch/cerulean/bootswatch";
+@import "bootswatch/flatly/bootswatch";
 // Whatever application styles you have go last
 @import "carousel"
