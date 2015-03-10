@@ -17,8 +17,8 @@ get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other user
 get '/users/:id/edit', to: 'users#edit', as: "user_edit" #Allows a user to edit profile page
 get '/users/:id/network', to: 'users#network', as: "user_network"
 
-get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
-get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route
+# get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
+# get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route
 
 patch '/users/:id', to: 'users#update', as: "user_update"
 delete '/logout', to: 'users#logout', as: "logout"
