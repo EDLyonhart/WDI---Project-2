@@ -9,24 +9,23 @@
       <%= f.input :has, label: "Check if you have this resource to share"%>
     </div>
     <div class="col-md-3 col-md-offset-1">
-        <!-- The datalist below is not working properly, not turning input into a dropdown
-        simple_form_for doesn't support? -->
-        <%= f.input :category, label:"Category: ", list:"categories", :collection => ['transportation', 'housing', 'pet-sitting', 'topical interests'] %>
-      </div>
+      <%= f.input :category, label:"Category: ", list:"categories", :collection => ['transportation', 'housing', 'pet-sitting', 'topical interests'] %>
+      <!-- create a description field -->
     </div>
-    <br>
-    <div class="row">
-      <div class ="col-md-2">
-        <%= f.submit "Create resource", class: 'btn btn-primary' %>
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class ="col-md-2">
-        <%= link_to('Cancel', user_home_path(@user), {class: "btn btn-primary"}) %>
-      </div>
-    </div>
-    <% end %>
-
   </div>
+  <br>
+  <div class="row">
+    <div class ="col-md-2">
+      <%= f.submit "Create resource", class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class ="col-md-2">
+      <%= link_to('Cancel', user_home_path(@user), {class: "btn btn-primary"}) %>
+    </div>
+  </div>
+  <% end %>
+
+</div>
 
