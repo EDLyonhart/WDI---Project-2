@@ -42,6 +42,7 @@ class UsersController < ApplicationController
     @carousel_users.reverse!
   end
 
+  # @matches and @like_me are both arrays of Like models
   def network
     @matches = find_user_likes.select do |like|
       like.is_matched
@@ -51,7 +52,7 @@ class UsersController < ApplicationController
       user.likes.each do |like|
         # @user is me
         if like.likee == @user.id && !like.is_matched
-          @like_me << user.id
+          @like_me << like
         end
       end
     end
