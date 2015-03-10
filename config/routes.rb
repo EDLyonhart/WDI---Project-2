@@ -15,9 +15,10 @@ get '/users/:id/profile', to: 'users#profile', as: "user_profile" # publicly vie
 # We need :user_id below to allow the find_reviewable method to do it's work
 get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
 get '/users/:id/edit', to: 'users#edit', as: "user_edit" #Allows a user to edit profile page
+get '/users/:id/network', to: 'users#network', as: "user_network"
 
 get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
-get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route 
+get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route
 
 patch '/users/:id', to: 'users#update', as: "user_update"
 delete '/logout', to: 'users#logout', as: "logout"
@@ -31,7 +32,7 @@ delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route nam
 # do we need to edit a resource?
 
 #Likes Routes
-get '/users/:id/home/:likee_id', to: 'likes#test', as: "test"
+# get '/users/:id/home/:likee_id', to: 'likes#test', as: "test"
 post '/users/:id/home/:likee_id', to: 'likes#like_check', as: "like_check"
 
 # Reviews
