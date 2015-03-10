@@ -1,10 +1,6 @@
-<nav class="navbar navbar-default"
-  <div class="container">
-    <div class="navbar-header">
-      <ul class="nav">
+<ul class="nav nav-pills">
   <li class="<%= 'active' if current_page?(user_home_path) %>"><%= link_to "My Profile", user_home_path %></li>
   <li class="<%= 'active' if current_page?(user_matches_path) %>"><%= link_to "My Network", user_matches_path %></li>
+  <li class="<%= 'active' if current_page?(logout_path) %>"><%= link_to "Logout", logout_path, method: :delete %></li>  
 </ul>
-    </div>
-  </div>
-</nav>
+
