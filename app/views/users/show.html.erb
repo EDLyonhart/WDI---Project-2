@@ -1,3 +1,21 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class = "navbar-header">
+<a class="navbar-brand" href="#">SHAREit</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to "My Dashboard", user_home_path(@user) %></li>
+        <li><%= link_to "My Network", user_network_path(@user) %></li>
+        <li><%= link_to "Logout", logout_path, method: :delete %></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
 <div class="container">
 
   <h2 class ="text-center">User Public Profile</h2>
@@ -10,42 +28,16 @@
       <div class="col-md-2">
         <%= f.input :last_name, label: "Last name: ", readonly: true%>
       </div>
-
-      <div class="col-md-2 col-md-offset-6" style="margin-top: 15px">
-          <%= link_to('Back Home', user_home_path(@session_user), {class: "btn btn-primary"}) %>
-      </div>
-    </div>
-
-    <div class="row">
       <div class="col-md-3">
         <%= f.input :location, label: "Location: ", readonly: true%>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-md-3">
-        <%= f.input :email, label: "Email: ", readonly: true%>
-      </div>
-      <div class="col-md-3">
-        <%= f.input :nickname, label: "Nickname: ", readonly: true%>
-      </div>
+
     </div>
-    <div class="row">
-      <div class ="col-md-6">
-      <% end %>
-        <%= form_for( [@user, Review.new], url: user_reviews_path(@user)) do |f| %>
-          <div>
-            <%= f.text_area :content, :rows => 3, :cols => 50 %>
-          </div>
-          <%= f.submit "Add review" %>
-        <% end %>
-        <br>
-        <% @reviews.each do |review| %>
-          <p>
-            <%= review.content %> - <%= time_ago_in_words review.created_at %> ago by <strong><%= User.find(review.user_id).name %></strong>
-          </p>
-        <% end %>
-    </div>
-    </div>
+  <% end %>
+
 
   <div class="row">
     <div class="col-md-6">

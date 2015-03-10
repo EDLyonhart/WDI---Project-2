@@ -33,7 +33,7 @@ def like_check
 end
 
 # Likes will be rejected via boolean column 'rejected'.  No need to ever delete a like.
-# Saving the like will allow us to manage which users are shown on the carousel and
+# Saving the lwike will allow us to manage which users are shown on the carousel and
 # displayed on the My Network page
 def destroy
 end
