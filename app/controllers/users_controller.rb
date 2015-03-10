@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     User.all.each do |user|
       user.likes.each do |like|
         # @user is me
-        if like.likee == @user.id && !like.is_matched
+        if like.likee == @user.id && !like.is_matched && !like.rejected
           @like_me << like
         end
       end
