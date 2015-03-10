@@ -10,7 +10,7 @@ get '/auth/:provider/callback', to: 'users#create', as: "create"
 get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
 
 get '/users/:id', to: 'users#index', as: "user_home"
-get '/users/:id/matches', to: 'users#matches', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
+get '/users/:id/matches', to: 'users#carousel', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
 get '/users/:id/profile', to: 'users#profile', as: "user_profile" # publicly viewable profile
 # We need :user_id below to allow the find_reviewable method to do it's work
 get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
