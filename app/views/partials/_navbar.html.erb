@@ -1,8 +1,19 @@
-<%= stylesheet_link_tag 'nav-pills' if params[:action] == 'edit' %>
 
-<ul class="nav nav-pills">
-  <li class="<%= 'active' if current_page?(user_home_path) %>"><%= link_to "My Profile", user_home_path %></li>
-  <li class="<%= 'active' if current_page?(user_network_path) %>"><%= link_to "My Network", user_network_path %></li>
-  <li class="<%= 'active' if current_page?(user_matches_path) %>"><%= link_to "Look for Matches", user_matches_path %></li>
-  <li class="<%= 'active' if current_page?(logout_path) %>"><%= link_to "Logout", logout_path, method: :delete %></li>
-</ul>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class = "navbar-header">
+<a class="navbar-brand" href="#">SHAREit</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="<%= 'active' if current_page?(user_home_path) %>"><%= link_to "My Profile", user_home_path %></li>
+        <li class="<%= 'active' if current_page?(user_network_path) %>"><%= link_to "My Network", user_network_path %></li>
+        <li class="<%= 'active' if current_page?(user_matches_path) %>"><%= link_to "Look for Matches", user_matches_path %></li>
+        <li class="<%= 'active' if current_page?(logout_path) %>"><%= link_to "Logout", logout_path, method: :delete %></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

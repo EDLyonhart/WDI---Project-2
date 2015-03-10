@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 
   def login
     if session[:user_id] != nil
-      redirect_to user_home_path(session[:user_id])
+      redirect_to user_matches_path(session[:user_id])
     end
   end
 
