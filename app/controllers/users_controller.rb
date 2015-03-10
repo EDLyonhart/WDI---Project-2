@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
 
-  before_action :find_session_user, only: [:index, :edit, :update]
+  before_action :find_session_user, only: [:index, :edit, :update, :network]
   before_action :find_user_by_route, only: [:matches]
+  before_action :find_user_likes, only: [:index, :matches, :network]
 
-  before_action :find_user_likes, only: [:index, :matches]
   def carousel
     match_list
-  end  
+  end
 
   before_action :find_user_likes, only: [:index]
 
@@ -40,6 +40,21 @@ class UsersController < ApplicationController
       user[:score]
     end
     @carousel_users.reverse!
+  end
+
+  def network
+    @matches = @likes.select do |like|
+      like.is_matched
+    end
+    @like_me = []
+    User.all.each do |user|
+      user.likes.each do |like|
+        # @user is me
+        if like.likee.id == @user.id
+          @like_me << user.id
+        end
+      end
+    end
   end
 
   def show
