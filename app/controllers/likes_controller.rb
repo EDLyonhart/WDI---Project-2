@@ -34,10 +34,9 @@ end
 
 def destroy
   binding.pry
-  like = Like.find params[:id] # No need for instance var here #
+  like = Like.find params[:like_id] # No need for instance var here #
   like.destroy
   redirect_to user_network_path
-  end
 end
 
 
