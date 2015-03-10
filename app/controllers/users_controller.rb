@@ -29,13 +29,11 @@ class UsersController < ApplicationController
     # create a list of potential matches (@users) by starting with User.all
     # and subtracting session user and any other user who session user has already liked
     @carousel_users = User.all - user_array - @likes
-    binding.pry
     @carousel_users = @carousel_users.each do |user|
       # each user in the carousel ranked in terms of mutual interests with the session user
       user[:score] =
         (@user[:has_tags] & user[:want_tags]).length +
         (@user[:want_tags] & user[:has_tags]).length
-        binding.pry
     end
     @carousel_users = @carousel_users.sort_by do |user|
       user[:score]
@@ -135,7 +133,6 @@ class UsersController < ApplicationController
     end
     @carousel_users.reverse!
     @match_list = @carousel_users - [@carousel_users[0]]
-    binding.pry
   end
 end
 
