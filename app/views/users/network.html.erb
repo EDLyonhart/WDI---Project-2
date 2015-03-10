@@ -8,9 +8,13 @@
 <br><br>
 
 <p>Those who like me:</p>
+<p>This should primarily appear on the carousel</p>
 <br>
 <ul>
   <%= @like_me.each do |like| %>
-    <li><%= User.find(like).name %></li>
+    <!-- we want user who owns the like, not session user -->
+    <% @user = User.find(like.user_id) %>
+    <li><%= @user.name %></li><%= link_to("delete", delete_user_like_path(@user, like), method: :delete)%>
   <% end %>
 </ul>
+
