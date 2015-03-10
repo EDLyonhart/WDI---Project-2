@@ -14,7 +14,3 @@
 
 # Ignore application configuration
 /config/application.yml
-
-
-# Don’t upload our App ID:
-/app/views/partials/_fb-graph-reqs.html.erb
