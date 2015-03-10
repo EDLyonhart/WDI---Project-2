@@ -1,0 +1,16 @@
+<p>My matches:</p>
+<br>
+<ul>
+  <%= @matches.each do |like| %>
+    <li><%= User.find(like.likee).name %></li>
+  <% end %>
+</ul>
+<br><br>
+
+<p>Those who like me:</p>
+<br>
+<ul>
+  <%= @like_me.each do |like| %>
+    <li><%= User.find(like).name %></li>
+  <% end %>
+</ul>
