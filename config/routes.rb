@@ -32,8 +32,7 @@ delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route nam
 # do we need to edit a resource?
 
 #Likes Routes
-# get '/users/:id/home/:likee_id', to: 'likes#test', as: "test"
-post '/users/:id/home/:likee_id', to: 'likes#like_check', as: "like_check"
+post '/users/:user_id/home/:has_user_id', to: 'likes#like', as: "like" 
 patch '/users/:id/likes/:like_id', to: 'likes#update', as: "reject_user_like"
 
 # Reviews
