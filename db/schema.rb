@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310213302) do
+ActiveRecord::Schema.define(version: 20150311013253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,12 +95,20 @@ ActiveRecord::Schema.define(version: 20150310213302) do
     t.string   "profile_pic"
     t.string   "location"
     t.string   "gender"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.integer  "uid",         limit: 8
-    t.string   "has_tags",              default: [],              array: true
-    t.string   "want_tags",             default: [],              array: true
-    t.integer  "score",                 default: 1
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.integer  "uid",           limit: 8
+    t.integer  "score",                   default: 1
+    t.boolean  "has_bike",                default: false
+    t.boolean  "has_housing",             default: false
+    t.boolean  "has_pet",                 default: false
+    t.boolean  "has_social",              default: false
+    t.boolean  "has_vehicle",             default: false
+    t.boolean  "wants_bike",              default: false
+    t.boolean  "wants_housing",           default: false
+    t.boolean  "wants_pet",               default: false
+    t.boolean  "wants_social",            default: false
+    t.boolean  "wants_vehicle",           default: false
   end
 
   create_table "users_friends", force: :cascade do |t|
