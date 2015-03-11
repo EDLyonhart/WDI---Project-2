@@ -11,6 +11,9 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="<%= 'active' if current_page?(user_home_path) %>"><%= link_to "My Dashboard", user_home_path %></li>
         <li class="<%= 'active' if current_page?(user_network_path) %>"><%= link_to "My Network", user_network_path %></li>
+        <li class="<%= 'active' if current_page?(user_network_path) %>"><%= link_to "My Interests", user_network_path %></li>
+        <li class="<%= 'active' if current_page?(user_network_path) %>"><%= link_to "My Wants", user_network_path %></li>
+        <li class="<%= 'active' if current_page?(user_network_path) %>"><%= link_to "My Offers", user_network_path %></li>
         <li class="<%= 'active' if current_page?(logout_path) %>"><%= link_to "Logout", logout_path, method: :delete %></li>
       </ul>
     </div><!-- /.navbar-collapse -->
