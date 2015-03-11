@@ -2,20 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.std_background {
-  height: 600px;
-  width: 100%;
-  background-color: AliceBlue;
-  border-right: rgb(44, 62, 80) 10px solid;
-  border-left: rgb(44, 62, 80) 10px solid;
-  border-bottom: rgb(44, 62, 80) 10px solid;
-  border-radius: 0 0 50px 50px;
+.back_background {
+  color: black;
 }
 
 .splash_background {
   background-image: url('http://www.heystephanie.com/wp-content/uploads/2011/10/iStock_000009717214Medium.jpg');
   height: 500px;
   width: 100%;
+}
+
+.std_background {
+  height: 100%;
+  width: 100%;
+  background-color: AliceBlue;
+  border-right: rgb(44, 62, 80) 10px solid;
+  border-left: rgb(44, 62, 80) 10px solid;
+  border-bottom: rgb(44, 62, 80) 10px solid;
 }
 
 .loginHeading {
@@ -31,9 +34,8 @@
   text-color: black;
 }
 
-.user_resources_show {
-  border-top: rgb(44, 62, 80) 5px solid;
-  border-bottom: rgb(44, 62, 80) 5px solid;
+.table {
+  border: rgb(44, 62, 80) 2px dashed;
 }
 
 .hidden {
