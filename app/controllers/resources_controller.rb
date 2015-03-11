@@ -20,12 +20,24 @@ class ResourcesController < ApplicationController
     wants_category = "wants_#{resource_params[:category]}"
     @resource = Resource.new resource_params
     @has_resource = User.where(has_category.to_sym => true) - [@user]
+    @wants_resource = User.where(wants_category.to_sym => true) - [@user]
     # don't allow user to save identical resources
     unless resource_exists @user, @resource
       if @resource.save
         # update_user_table @user, @resource, "add"
         # below will update category booleans in users table
         if resource_params[:has] == "1"
+        #creating joint table row + scoring interest overlap 
+        @wants_resource.each do |user|  
+        if user.location == @user.location 
+          location_weight = 1
+        else
+          location_weight = 0.75
+        #end of scoring algo
+        end
+        ResourcesUser.create(user_id:user.id,has_user_id: @user.id, 
+          score: (user.interests & @user.interests).length*location_weight, resource_category: resource_params[:category])
+        end
         @user.update_attribute(has_category.to_sym, true)
         else 
         #creating joint table row + scoring interest overlap  
@@ -66,15 +78,18 @@ class ResourcesController < ApplicationController
       # below will update category booleans in users table
        if resource.has
         @user.update_attribute(has_category.to_sym, false)
+        #deleting joint table entries when a has is removed
+        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(has_user_id: @user.id)
+        @resourceusers.destroy_all
         else 
         @user.update_attribute(wants_category.to_sym, false)
+        #deleting joint table entries when a want is removed
+        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_id: @user.id)
+        @resourceusers.destroy_all
        end
         #end of updating category booleans in users table 
       # update_user_table @user, resource, "remove"
       resource.destroy
-      #deleting joint table entries when a want is removed
-      @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_id: @user.id)
-      @resourceusers.destroy_all
       redirect_to user_home_path
     end
   end
