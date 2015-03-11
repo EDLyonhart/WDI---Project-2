@@ -18,7 +18,7 @@
 
 <div class="container">
 
-  <h2 class ="text-center">Edit User</h2>
+  <h2 class ="text-center">Edit Profile</h2>
   <br>
 
   <%= simple_form_for(@user, url: user_update_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f|%>
@@ -31,8 +31,6 @@
         <%= f.input :last_name, label: "Last name: "%>
         <br>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-3">
         <%= f.input :location, label: "Location: "%>
         <br>
@@ -49,17 +47,18 @@
       </div>
     </div>
     <div class="row">
-      <div class ="col-md-3">
+      <div class ="col-md-2 col-md-offset-8">
         <%= f.submit "Save changes", class: 'btn btn-primary' %>
+      </div>
+      <div class = "col-md-2">
+      <%= link_to('Cancel', user_home_path(@user), {class: "btn btn-primary"}) %>
       </div>
     </div>
   <% end %>
   <br>
 
   <div class ="row">
-    <div class = "col-md-2">
-      <%= link_to('Cancel', user_home_path(@user), {class: "btn btn-primary"}) %>
-    </div>
+
   </div>
   <br>
 
