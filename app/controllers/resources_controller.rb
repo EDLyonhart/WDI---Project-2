@@ -19,11 +19,11 @@ class ResourcesController < ApplicationController
     has_category = "has_#{resource_params[:category]}"
     wants_category = "wants_#{resource_params[:category]}"
     @resource = Resource.new resource_params
+    @has_resource = User.where(has_category.to_sym => true)
     binding.pry
     # don't allow user to save identical resources
     unless resource_exists @user, @resource
       if @resource.save
-        @user.resources << @resource
         # update_user_table @user, @resource, "add"
         # below will update category booleans in users table
         if resource_params[:has] == "1"
@@ -31,6 +31,7 @@ class ResourcesController < ApplicationController
         @user.update_attribute(has_category.to_sym, true)
         else 
           binding.pry
+        ResourcesUser.create()
         @user.update_attribute(wants_category.to_sym, true)
         end
         #end of updating category booleans in users table 
