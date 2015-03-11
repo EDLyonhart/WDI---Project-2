@@ -16,11 +16,20 @@ class ResourcesController < ApplicationController
   end
 
   def create
+    has_category = "has_#{resource_params[:category]}"
+    wants_category = "wants_#{resource_params[:category]}"
     @resource = Resource.new resource_params
     # don't allow user to save identical resources
     unless resource_exists @user, @resource
       if @resource.save
         update_user_table @user, @resource, "add"
+        # below will update category booleans in users table
+        if resource_params[:has] == true
+        @user.update_attribute(has_category.sym, true)
+        else 
+        @user.update_attribute(wants_category.sym, true)
+        end
+        #end of updating category booleans in users table 
         redirect_to user_home_path @user
       else
         flash.now[:alert] = "Please correct the following input errors"
