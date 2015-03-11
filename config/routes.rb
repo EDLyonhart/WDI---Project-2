@@ -25,7 +25,7 @@ delete '/logout', to: 'users#logout', as: "logout"
 
 # Resources
 get '/users/:id/resources/new', to: 'resources#new', as: "new_user_resource"
-post '/users/:id/resources', to: 'resources#create', as: "post_new_user_resource"
+post '/users/:id/resources/:category', to: 'resources#create', as: "post_new_user_resource"
 
 get '/users/:user_id/resource/:id', to: 'resources#show', as: "user_resource"
 delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route name with above
