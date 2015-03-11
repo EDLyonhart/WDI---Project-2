@@ -64,9 +64,6 @@ class UsersController < ApplicationController
     @user = User.find params[:user_id]
     # grab the reviews for the user to be shown
     @reviews = @user.reviews
-    # need to pass a separate @session_user in so we can re-direct to the right
-    # home page in the event this is one user checking out another
-    @session_user = User.find session[:user_id]
   end
 
   def edit

@@ -8,7 +8,6 @@ def test
 end
 
 def like_check
-  binding.pry
   #checks to see if there is a match
 @likee = User.find(params[:likee_id])
 @likee_likes = @likee.likes
@@ -26,7 +25,7 @@ def like_check
       @like = Like.new(user_id:params[:id],likee:params[:likee_id],is_matched:false)
       @like.save
       #Redirect back to carousel page
-      redirect_to carousel_path (params[:id])
+      redirect_to user_matches_path (params[:id])
       #send like_email
       like_email
   end
