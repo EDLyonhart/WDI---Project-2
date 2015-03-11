@@ -2,6 +2,16 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.std_background {
+  height: 600px;
+  width: 100%;
+  background-color: AliceBlue;
+  border-right: rgb(44, 62, 80) 10px solid;
+  border-left: rgb(44, 62, 80) 10px solid;
+  border-bottom: rgb(44, 62, 80) 10px solid;
+  border-radius: 0 0 50px 50px;
+}
+
 .splash_background {
   background-image: url('http://www.heystephanie.com/wp-content/uploads/2011/10/iStock_000009717214Medium.jpg');
   height: 500px;
@@ -21,13 +31,7 @@
   text-color: black;
 }
 
-.loginwithfb {
-  position: absolute;
-  left: 84%;
-  bottom: 6%;
-  width: 11%;
-  text-align: left;
-  background: white;
-  border: 2px solid black;
-  border-radius: 10px;
+.user_resources_show {
+  border-top: rgb(44, 62, 80) 5px solid;
+  border-bottom: rgb(44, 62, 80) 5px solid;
 }
