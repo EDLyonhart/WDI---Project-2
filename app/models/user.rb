@@ -1,8 +1,7 @@
 class User < ActiveRecord::Base
   has_many :users_friends
   has_many :friends, through: :users_friends
-  has_many :resources_users
-  has_many :resources, through: :resources_users
+  has_many :resources
   has_many :likes
   has_many :reviews, as: :reviewable
 

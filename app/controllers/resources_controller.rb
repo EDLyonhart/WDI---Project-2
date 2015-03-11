@@ -19,7 +19,7 @@ class ResourcesController < ApplicationController
     has_category = "has_#{resource_params[:category]}"
     wants_category = "wants_#{resource_params[:category]}"
     @resource = Resource.new resource_params
-    @has_resource = User.where(has_category.to_sym => true)
+    @has_resource = User.where(has_category.to_sym => true) - [@user]
     binding.pry
     # don't allow user to save identical resources
     unless resource_exists @user, @resource
@@ -31,7 +31,9 @@ class ResourcesController < ApplicationController
         @user.update_attribute(has_category.to_sym, true)
         else 
           binding.pry
-        ResourcesUser.create()
+        @has_resource.each do |user|  
+        ResourcesUser.create(user_id:@user.id,has_user_id: user.id, score: 1, resource_category: resource_params[:category])
+        end
         @user.update_attribute(wants_category.to_sym, true)
         end
         #end of updating category booleans in users table 
