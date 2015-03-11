@@ -1,45 +1,65 @@
 <div class="container">
 
+  <h2>My Requests:</h2>
+  <br>
+
+  <div class="row">
+    <div class ="col-md-10 col-md-offset-1">
+      <table class ="table table-striped">
+        <tr>
+          <th>Category</th>
+          <th>Delete</th>
+        </tr>
+        <% @resources.each do |resource| %>
+          <% if @resource.has == false %>
+            <tr>
+              <td><%= resource.category %></td>
+              <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+
   <h2>New resource:</h2>
 
-  <%= simple_form_for(@resource, url: post_offer_resource_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
+  <%= simple_form_for(@resource, url: post_new_user_resource_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
   <div class="row">
     <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
 
     <div class="col-md-5">
-      <table class="resource_want">
+      <table>
         <tr>
           <th></th>
-          <th>Offered Resource</th>
-          <th>Description</th>
+          <th>Wanted Resource</th>
         </tr>
         <tr>
-          <td><%= f.association :wants,   as: :check_boxes %></td>
+          <td><%= f.association :wants, as: :check_boxes %></td>
           <td>Bike</td>
-          <td><%= f.input :description %></td>
         </tr>
         <tr>
-          <td><%= f.association :wants,   as: :check_boxes %></td>
+          <td><%= f.association :wants, as: :check_boxes %></td>
           <td>Vehicle</td>
-          <td><%= f.input :description %></td>
         </tr>
         <tr>
-          <td><%= f.association :wants,   as: :check_boxes %></td>
+          <td><%= f.association :wants, as: :check_boxes %></td>
           <td>Social</td>
-          <td><%= f.input :description %></td>
         </tr>
         <tr>
-          <td><%= f.association :wants,   as: :check_boxes %></td>
+          <td><%= f.association :wants, as: :check_boxes %></td>
           <td>Pets</td>
-          <td><%= f.input :description %></td>
         </tr>
         <tr>
-          <td><%= f.association :wants,   as: :check_boxes %></td>
+          <td><%= f.association :wants, as: :check_boxes %></td>
           <td>Housing</td>
-          <td><%= f.input :description %></td>
         </tr>
       </table>
     </div>
 </div>
-<%= f.button :submit %>
+<%= f.submit "Save your wants", class: 'btn btn-primary' %>
 <% end %>

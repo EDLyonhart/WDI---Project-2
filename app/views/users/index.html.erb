@@ -1,11 +1,7 @@
 <%= render "partials/navbar" %>
-
-
-
 <div class="container std_background">
 
-<h1><%= @user.name %></h1>
-
+  <h1><%= @user.name %></h1>
   <div class="btn-group btn-group-justified">
     <a href="<%= user_matches_path(@user) %>" class="btn btn-default">View Potential Matches</a>
     <a href="<%= user_matches_path(@user) %>" class="btn btn-default">Find New Matches</a>
@@ -26,16 +22,20 @@
           <th>Delete</th>
         </tr>
         <% @resources.each do |resource| %>
+          <% if @resource.has == false %>
           <tr>
             <td><%= resource.category %></td>
             <td><%= link_to("Search", user_matches_path(@user, resource) %></td>
             <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
           </tr>
+          <% end %>
         <% end %>
       </table>
+      <%= link_to("See All Wants", __ path __(@user, resource) %>
     </div>
+  </div>
 
-    <div class="row user_resources_show">
+  <div class="row user_resources_show">
     <div class ="col-md-5">
       <table class ="table table-striped">
         <tr>
@@ -44,13 +44,16 @@
           <th>Delete</th>
         </tr>
         <% @resources.each do |resource| %>
+          <% if @resource.has == true %>  
           <tr>
             <td><%= resource.category %></td>
             <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
             <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
           </tr>
+          <% end %>
         <% end %>
       </table>
+      <%= link_to("See All Offers", __ path __(@user, resource) %>
     </div>
   </div>
 </div>
