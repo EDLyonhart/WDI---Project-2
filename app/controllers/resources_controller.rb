@@ -20,19 +20,24 @@ class ResourcesController < ApplicationController
     wants_category = "wants_#{resource_params[:category]}"
     @resource = Resource.new resource_params
     @has_resource = User.where(has_category.to_sym => true) - [@user]
-    binding.pry
     # don't allow user to save identical resources
     unless resource_exists @user, @resource
       if @resource.save
         # update_user_table @user, @resource, "add"
         # below will update category booleans in users table
         if resource_params[:has] == "1"
-          binding.pry
         @user.update_attribute(has_category.to_sym, true)
         else 
-          binding.pry
+        #creating joint table row + scoring interest overlap  
         @has_resource.each do |user|  
-        ResourcesUser.create(user_id:@user.id,has_user_id: user.id, score: 1, resource_category: resource_params[:category])
+        if @user.location == user.location 
+          location_weight = 1
+        else
+          location_weight = 0.75
+        #end of scoring algo
+        end
+        ResourcesUser.create(user_id:@user.id,has_user_id: user.id, 
+          score: (@user.interests & user.interests).length*location_weight, resource_category: resource_params[:category])
         end
         @user.update_attribute(wants_category.to_sym, true)
         end
@@ -60,15 +65,16 @@ class ResourcesController < ApplicationController
     else
       # below will update category booleans in users table
        if resource.has
-          binding.pry
         @user.update_attribute(has_category.to_sym, false)
         else 
-          binding.pry
         @user.update_attribute(wants_category.to_sym, false)
        end
         #end of updating category booleans in users table 
       # update_user_table @user, resource, "remove"
       resource.destroy
+      #deleting joint table entries when a want is removed
+      @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_id: @user.id)
+      @resourceusers.destroy_all
       redirect_to user_home_path
     end
   end
@@ -93,7 +99,7 @@ class ResourcesController < ApplicationController
   # def update_user_table user, resource, add_or_remove
   #   # add the resource to user.has_tags[] or user.want_tags[] as appropriate
   #   @user = user
-  #   if add_or_remove == "add"
+  #   if add_or_remove == add
   #     if resource.has
   #       @user.has_tags << resource.category
   #       @user.save
@@ -101,7 +107,7 @@ class ResourcesController < ApplicationController
   #       @user.want_tags << resource.category
   #       @user.save
   #     end
-  #   elsif add_or_remove == "remove"
+  #   elsif add_or_remove == remove
   #     if resource.has
   #       @user.has_tags.delete resource.category
   #       @user.save
@@ -110,7 +116,7 @@ class ResourcesController < ApplicationController
   #       @user.save
   #     end
   #   else
-  #     flash[:alert] = "Something bad happened when updating user table"
+  #     flash[:alert] = Something bad happened when updating user table
   #   end
   # end
 
