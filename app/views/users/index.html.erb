@@ -4,10 +4,6 @@
   <div class="container">
   <br><br>
 
-  <!-- just for testing -->
-  <% @avail_resources = ["bike", "social", "housing"] %>
-  <!-- just for testing -->
-
   <%= form_tag(user_matches_path(@user), method: "get") do %>
     <%= label_tag(:category, "What are you looking for? ") %>
     <%= text_field_tag(:category, "select a category", options= {list:"categories"}) %>
