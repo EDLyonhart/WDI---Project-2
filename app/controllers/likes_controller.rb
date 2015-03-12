@@ -16,24 +16,24 @@ end
 def accept #post '/users/:user_has_id/home/:user_wants_id/:resource_category', to: 'likes#accept', as: "accept"
   binding.pry
 @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
-@resouces_user.update_attribute(:like_accept, true)
+@resources_user.first.update_attribute(:like_accept, true)
 binding.pry
 render nothing: true
 end
 
 def reject_has #post '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to: 'likes#reject_has', as: "reject_has"
 @resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[:user_has_id],resource_category:params[:resource_category] )
-@resouces_user.update_attribute(:like_reject, true)
+@resources_user.update_attribute(:like_reject, true)
 end
 
 def reject_wants #'/users/:user_has_id/home/:user_wants_id/:resource_category/reject_wants', to: 'likes#reject_wants', as: "reject_wants"
 @resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[:user_has_id],resource_category:params[:resource_category] )
-@resouces_user.update_attribute(:like_reject, true)
+@resources_user.update_attribute(:like_reject, true)
 end
 
 # def like_check
-#   #checks to see if there is a match
-# @likee = User.find(params[:likee_id])
+#   #checks to see if there isr a match
+# @likee = User.find(params[:lrikee_id])
 # @likee_likes = @likee.likes
 #   if @likee_likes.exists?(likee: params[:id])
 #     #if there is now a match - create new row in likes with boolean true; change other row's boolean to true as well
