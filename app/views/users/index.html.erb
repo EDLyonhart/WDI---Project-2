@@ -1,71 +1,71 @@
 <%= render "partials/navbar" %>
 <div class="container std_background">
 
-<div class="container">
+  <div class="container">
 
-  <h2><%= @user.name %></h2>
+    <h2><%= @user.name %></h2>
 
-  <h3>My matches</h3>
-  <br>
+    <h3>My matches</h3>
+    <br>
 
-  <div class="row user_matches_show">
-    <div class ="col-md-10 col-md-offset-1">
-      <table class ="table table-striped">
-        <tr>
-          <th>Matched user</th>
-          <th>Resource category</th>
-          <th>You want it</th>
-          <th>You have it</th>
-          <th>Info</th>
-        </tr>
-        <% @matches.each do |match| %>
+    <div class="row user_matches_show">
+      <div class ="col-md-10 col-md-offset-1">
+        <table class ="table table-striped">
+          <tr>
+            <th>Matched user</th>
+            <th>Resource category</th>
+            <th>You want it</th>
+            <th>You have it</th>
+            <th>Info</th>
+          </tr>
+          <% @matches.each do |match| %>
           <tr>
             <td><%= User.find(match[:matched_user]).name %></td>
             <td><%= match[:category] %></td>
             <% if match[:you_have] %>
-              <td> </td>
+            <td> </td>
             <% else %>
-              <td>X</td>
+            <td>X</td>
             <% end %>
             <% if match[:you_have] %>
-              <td>X</td>
+            <td>X</td>
             <% else %>
-              <td> </td>
+            <td> </td>
             <% end %>
             <td>more info</td>
           </tr>
-        <% end %>
-      </table>
+          <% end %>
+        </table>
+      </div>
     </div>
-  </div>
-  <br>
+    <br>
 
-  <h3>My match requests</h3>
-  <br>
+    <h3>My match requests</h3>
+    <br>
 
-  <div class="row user_match_requests_show">
-    <div class ="col-md-10 col-md-offset-1">
-      <table class ="table table-striped">
-        <tr>
-          <th>Requesting user</th>
-          <th>Interested in your</th>
-          <th>Accept</th>
-          <th>Reject</th>
-        </tr>
-        <% @like_requests.each do |like_request| %>
+    <div class="row user_match_requests_show">
+      <div class ="col-md-10 col-md-offset-1">
+        <table class ="table table-striped">
+          <tr>
+            <th>Requesting user</th>
+            <th>Interested in your</th>
+            <th>Accept</th>
+            <th>Reject</th>
+          </tr>
+          <% @like_requests.each do |like_request| %>
           <tr>
             <td><%= User.find(like_request.user_wants_id).name %></td>
             <td><%= like_request.resource_category %></td>
-            <td>   <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary like"}) do |f| %>
-        <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-        <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => @carousel_users[0].id }%>
-        <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
-         <%= f.submit "Accept" %>
-        <% end %></td>
-            <td>reject button</td>
-          </tr>
-        <% end %>
-      </table>
+            <td>   <%= simple_form_for(@user, url: "/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary like"}) do |f| %>
+              <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => like_request.user_wants_id}%>
+              <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+              <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
+              <%= f.submit "Accept" %>
+              <% end %></td>
+              <td>reject button</td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
