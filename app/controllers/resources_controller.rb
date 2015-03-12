@@ -6,8 +6,61 @@ class ResourcesController < ApplicationController
     @resources = @user.resources
   end
 
-  def new
-    @resource = Resource.new
+  def new_want
+  @resource = Resource.new
+  @user = User.find(sessions[:user_id])
+  categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
+  existing_categories = []
+    if @user.wants_bike == true
+      categories << "bike"
+    end
+
+    if @user.wants_vehicle == true
+      categories << "vehicle"
+    end 
+
+    if @user.wants_social == true
+      categories << "social"
+    end
+
+    if @user.wants_pet == true
+      categories << "pet"
+    end
+
+    if @user.wants_housing == true
+       categories << "housing"
+    end
+
+   @available_resources = categories - existing_categories 
+  end
+
+  def new_has
+  @resource = Resource.new
+  @user = User.find(sessions[:user_id])
+  categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
+  existing_categories = []
+    if @user.has_bike == true
+      categories << "bike"
+    end
+
+    if @user.has_vehicle == true
+      categories << "vehicle"
+    end 
+
+    if @user.has_social == true
+      categories << "social"
+    end
+
+    if @user.has_pet == true
+      categories << "pet"
+    end
+
+    if @user.has_housing == true
+       categories << "housing"
+    end
+
+   @available_resources = categories - existing_categories 
+
   end
 
   def show

@@ -7,7 +7,7 @@
   <div class="row">
     <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
     <%= f.input :has, :as => :hidden, :input_html => { :value => :true } %>
-    <%= f.input :category, label:"Category: ", list:"categories", :collection => ['bike', 'vehicle', 'social', 'pet', 'housing'] %>
+    <%= f.input :category, label:"Category: ", list:"categories", :collection => @available_resources %>
   </div>
   <%= f.submit "Save your offers", class: 'btn btn-primary' %>
   <% end %>
