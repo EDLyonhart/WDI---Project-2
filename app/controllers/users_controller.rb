@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   end
 
   def load_carousel
-    @filter = "bike" #make this params[:resource category] once a filter dropdown is setup
+    @filter = params[:category] #make this params[:resource category] once a filter dropdown is setup
     @carousel_users = []
     @has_users = ResourcesUser.wanted_by_and_categorized_by(session[:user_id], @filter).not_liked.order(score: :desc)
     @carousel_users = @has_users.map{|owner| owner.owning_user}
