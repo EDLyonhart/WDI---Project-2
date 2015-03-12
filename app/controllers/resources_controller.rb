@@ -16,6 +16,7 @@ class ResourcesController < ApplicationController
   end
 
   def create
+    binding.pry
     has_category = "has_#{resource_params[:category]}"
     wants_category = "wants_#{resource_params[:category]}"
     @resource = Resource.new resource_params
@@ -23,10 +24,12 @@ class ResourcesController < ApplicationController
     @wants_resource = User.where(wants_category.to_sym => true) - [@user]
     # don't allow user to save identical resources
     unless resource_exists @user, @resource
+      binding.pry
       if @resource.save
         # update_user_table @user, @resource, "add"
         # below will update category booleans in users table
-        if resource_params[:has] == "1"
+        binding.pry
+        if resource_params[:has] == "true"
         #creating joint table row + scoring interest overlap 
         @wants_resource.each do |user|  
         if user.location == @user.location 
@@ -35,20 +38,21 @@ class ResourcesController < ApplicationController
           location_weight = 0.75
         #end of scoring algo
         end
-        ResourcesUser.create(user_id:user.id,has_user_id: @user.id, 
+        ResourcesUser.create(user_wants_id:user.id,user_has_id: @user.id, 
           score: (user.interests & @user.interests).length*location_weight, resource_category: resource_params[:category])
         end
         @user.update_attribute(has_category.to_sym, true)
         else 
         #creating joint table row + scoring interest overlap  
         @has_resource.each do |user|  
+        binding.pry
         if @user.location == user.location 
           location_weight = 1
         else
           location_weight = 0.75
         #end of scoring algo
         end
-        ResourcesUser.create(user_id:@user.id,has_user_id: user.id, 
+        ResourcesUser.create(user_has_id:@user.id,user_wants_id: user.id, 
           score: (@user.interests & user.interests).length*location_weight, resource_category: resource_params[:category])
         end
         @user.update_attribute(wants_category.to_sym, true)
