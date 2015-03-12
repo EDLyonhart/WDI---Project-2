@@ -6,7 +6,7 @@ class ResourcesController < ApplicationController
     @resources = @user.resources
   end
 
-  def new_want
+  def newwant
   @resource = Resource.new
   @user = User.find(sessions[:user_id])
   categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
@@ -34,7 +34,7 @@ class ResourcesController < ApplicationController
    @available_resources = categories - existing_categories 
   end
 
-  def new_has
+  def newhas
   @resource = Resource.new
   @user = User.find(sessions[:user_id])
   categories = ['bike', 'vehicle', 'social', 'pet', 'housing']

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def login
   @resource = Resource.new
-  @user = User.find(sessions[:user_id])
+  @user = User.find(session[:user_id])
 
     if Resource.exists?(user_id: session[:user_id])
       redirect_to user_home_path(@user)
