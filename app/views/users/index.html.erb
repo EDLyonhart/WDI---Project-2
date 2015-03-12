@@ -73,17 +73,14 @@
         </tr>
         <% @matches.each do |match| %>
           <% @profile_user = User.find(match[:matched_user]) %>
-
           <% id = @profile_user.id %>
+          <% unless match[:i_have] %>
           <tr>
             <td><%= link_to "#{@profile_user.name}", user_profile_path(@profile_user), method: :get %></td>
-            <% if match[:i_have] %>
-              <td> </td>
-            <% else %>
-              <td><%= match[:category] %></td>
-            <% end %>
+            <td><%= match[:category] %></td>
             <td>link to description</td>
           </tr>
+          <% end %>
         <% end %>
       </table>
     </div>
@@ -96,16 +93,16 @@
           <th>Description</th>
         </tr>
         <% @matches.each do |match| %>
-          <tr>
-            <td><%= User.find(match[:matched_user]).name %></td>
-            <% unless match[:i_have] %>
-              <td> </td>
-            <% else %>
+          <% @profile_user = User.find(match[:matched_user]) %>
+          <% id = @profile_user.id %>
+          <% if match[:i_have] %>
+            <tr>
+              <td><%= link_to "#{@profile_user.name}", user_profile_path(@profile_user), method: :get %></td>
               <td><%= match[:category] %></td>
-            <% end %>
-            <td><%= User.find(match[:matched_user]).first_name %>'s profile %></td>
-          </tr>
+              <td><%= User.find(match[:matched_user]).first_name %>'s profile %></td>
+            </tr>
           <% end %>
+        <% end %>
         </table>
       </div>
     </div>
