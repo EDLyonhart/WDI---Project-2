@@ -3,36 +3,107 @@
 
   <div class="container">
 
-    <h2><%= @user.name %></h2>
+  <h2><%= @user.name %></h2>
 
-    <h3>My matches</h3>
-    <br>
+  <div class="btn-group btn-group-justified">
+    <a href="<%= user_matches_path(@user) %>" class="btn btn-default">Find New Matches</a>
+    <a href="<%= new_user_resource_path(@user) %>" class="btn btn-default">Add a resource</a>
+    <a href="<%= user_show_path(@user) %>" class="btn btn-default">View Public Profile</a>
+    <a href="<%= user_edit_path(@user) %>" class="btn btn-default">Edit Profile</a>
+  </div>
+  <br>
 
-    <div class="row user_matches_show">
-      <div class ="col-md-10 col-md-offset-1">
-        <table class ="table table-striped">
+  <h3>My resources</h3>
+  <br>
+
+  <div class="row user_resources_show">
+    <div class ="col-md-5 col-md-offset-1">
+      <table class ="table table-striped">
+        <caption>Their stuff</caption>
+        <tr>
+          <th>Category</th>
+          <th>Info</th>
+          <th>Delete</th>
+        </tr>
+        <% @resources.each do |resource| %>
+          <% unless resource.has %>
           <tr>
-            <th>Matched user</th>
-            <th>Resource category</th>
-            <th>You want it</th>
-            <th>You have it</th>
-            <th>Info</th>
+            <td><%= resource.category %></td>
+            <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
+            <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
           </tr>
-          <% @matches.each do |match| %>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+
+    <div class ="col-md-5">
+      <table class ="table table-striped">
+        <caption>My stuff</caption>
+        <tr>
+          <th>Category</th>
+          <th>Info</th>
+          <th>Delete</th>
+        </tr>
+        <% @resources.each do |resource| %>
+          <% if resource.has %>
+          <tr>
+            <td><%= resource.category %></td>
+            <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
+            <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+
+  </div>
+
+  <h3>My matches</h3>
+  <br>
+
+  <div class="row">
+    <div class ="col-md-5 col-md-offset-1">
+      <table class ="table table-striped">
+        <caption>Their stuff</caption>
+        <tr>
+          <th>Name</th>
+          <th>Resource</th>
+          <th>Description</th>
+        </tr>
+        <% @matches.each do |match| %>
+          <% @profile_user = User.find(match[:matched_user]) %>
+
+          <% id = @profile_user.id %>
+          <tr>
+            <td><%= link_to "#{@profile_user.name}", user_profile_path(@profile_user), method: :get %></td>
+            <% if match[:i_have] %>
+              <td> </td>
+            <% else %>
+              <td><%= match[:category] %></td>
+            <% end %>
+            <td>link to description</td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class ="col-md-5">
+      <table class ="table table-striped">
+      <caption>My stuff</caption>
+        <tr>
+          <th>Name</th>
+          <th>Resource</th>
+          <th>Description</th>
+        </tr>
+        <% @matches.each do |match| %>
           <tr>
             <td><%= User.find(match[:matched_user]).name %></td>
-            <td><%= match[:category] %></td>
-            <% if match[:you_have] %>
-            <td> </td>
+            <% unless match[:i_have] %>
+              <td> </td>
             <% else %>
-            <td>X</td>
+              <td><%= match[:category] %></td>
             <% end %>
-            <% if match[:you_have] %>
-            <td>X</td>
-            <% else %>
-            <td> </td>
-            <% end %>
-            <td>more info</td>
+            <td><%= User.find(match[:matched_user]).first_name %>'s profile %></td>
           </tr>
           <% end %>
         </table>

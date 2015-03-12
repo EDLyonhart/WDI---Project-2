@@ -3,17 +3,18 @@ class LikesController < ApplicationController
 require 'mandrill'
 mandrill = Mandrill::API.new ENV["MANDRIL_APIKEY"]
 
-def like  
-@resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
-@resources_user.first.update_attribute(:like_request, true)
-like_email
-flash.now[:alert] =  "User Liked!"
-render nothing: true
+def like
+  @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
+  @resources_user.first.update_attribute(:like_request, true)
+  like_email
+  flash.now[:alert] =  "User Liked!"
+  render nothing: true
 end
-def accept 
-@resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
-@resources_user.first.update_attribute(:like_accept, true)
-render nothing: true
+
+def accept
+  @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
+  @resources_user.first.update_attribute(:like_accept, true)
+  render nothing: true
 end
 
 def reject_has 
@@ -23,11 +24,9 @@ render nothing: true
 end
 
 def reject_wants
-@resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
-binding.pry
-@resources_user.first.update_attribute(:like_reject, true)
-render nothing: true
-binding.pry
+  @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
+  @resources_user.first.update_attribute(:like_reject, true)
+  render nothing: true
 end
 
 # def like_check
@@ -90,20 +89,19 @@ private
 # end
 
 def like_email
-
-require 'mandrill'
-m = Mandrill::API.new
-@user1 = User.find(params["values"]["user_has_id"])
-message = {
- :subject=> "#{@user1.first_name}, someone liked your profile!",
- :from_name=> "The SHAREit Team",
- :text=>"New Like!",
- :to=> [email:@user1.email],
- :html=>"<html><h1> Someone has liked your profile! <a href='http://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
- :from_email=>"gannavas@gmail.com"
-}
-sending = m.messages.send message
-puts sending
+  require 'mandrill'
+  m = Mandrill::API.new
+  @user1 = User.find(params["values"]["user_has_id"])
+  message = {
+   :subject=> "#{@user1.first_name}, someone liked your profile!",
+   :from_name=> "The SHAREit Team",
+   :text=>"New Like!",
+   :to=> [email:@user1.email],
+   :html=>"<html><h1> Someone has liked your profile! <a href='http://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
+   :from_email=>"gannavas@gmail.com"
+  }
+  sending = m.messages.send message
+  puts sending
 end
 
 end
