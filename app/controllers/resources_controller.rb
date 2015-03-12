@@ -132,12 +132,12 @@ class ResourcesController < ApplicationController
        if resource.has
         @user.update_attribute(has_category.to_sym, false)
         #deleting joint table entries when a has is removed
-        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(has_user_id: @user.id)
+        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_has_id: @user.id)
         @resourceusers.destroy_all
         else
         @user.update_attribute(wants_category.to_sym, false)
         #deleting joint table entries when a want is removed
-        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_id: @user.id)
+        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_wants_id: @user.id)
         @resourceusers.destroy_all
        end
         #end of updating category booleans in users table

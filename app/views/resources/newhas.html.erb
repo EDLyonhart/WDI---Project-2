@@ -1,3 +1,5 @@
+<%= render "partials/navbar" %>
+
 <div class="container">
 <h2>New Offer:</h2>
 
@@ -12,5 +14,5 @@
 </div>
 
 <div>
-  <!-- add a next button -->
+  <%= button_to "Add interests", user_home_path, :class => "button", :method => :get  %>
 </div>
