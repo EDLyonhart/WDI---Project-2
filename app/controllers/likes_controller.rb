@@ -5,22 +5,26 @@ mandrill = Mandrill::API.new ENV["MANDRIL_APIKEY"]
 
 def like  #post '/users/:user_wants_id/home/:user_has_id', to: 'likes#like'
 # @resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id]).where(user_has_id: params[user_has_id]).where(resource_category:params[:resource_category])
-@resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[user_has_id],resource_category:params[:resource_category] )
-@resouces_user.update_attribute(:like_request, true)
+binding.pry
+@resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
+binding.pry
+@resources_user.first.update_attribute(:like_request, true)
 like_email
+flash.now[:alert] =  "User Liked!"
+render nothing: true
 end
 def accept #post '/users/:user_has_id/home/:user_wants_id/:resource_category', to: 'likes#accept', as: "accept"
-@resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[user_has_id],resource_category:params[:resource_category] )
+@resources_user = ResourcesUser.where(user_wants_id: params[:values][:user_wants_id],user_has_id: params[:values][:user_has_id],resource_category:params[:resource_category] )
 @resouces_user.update_attribute(:like_accept, true)
 end
 
 def reject_has #post '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to: 'likes#reject_has', as: "reject_has"
-@resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[user_has_id],resource_category:params[:resource_category] )
+@resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[:user_has_id],resource_category:params[:resource_category] )
 @resouces_user.update_attribute(:like_reject, true)
 end
 
 def reject_wants #'/users/:user_has_id/home/:user_wants_id/:resource_category/reject_wants', to: 'likes#reject_wants', as: "reject_wants"
-@resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[user_has_id],resource_category:params[:resource_category] )
+@resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[:user_has_id],resource_category:params[:resource_category] )
 @resouces_user.update_attribute(:like_reject, true)
 end
 
@@ -87,7 +91,7 @@ def like_email
 
 require 'mandrill'
 m = Mandrill::API.new
-@user1 = User.find(params[:user_has_id])
+@user1 = User.find(params["values"]["user_has_id"])
 message = {
  :subject=> "#{@user1.first_name}, someone liked your profile!",
  :from_name=> "The SHAREit Team",
