@@ -82,11 +82,11 @@ class UsersController < ApplicationController
       if resource_match.user_has_id == user.id
         # the matched user is the user who wants what you have
         match[:matched_user] = resource_match.user_wants_id
-        match[:you_have] = true
+        match[:i_have] = true
       else
         # the matched user is the user who has what you want
         match[:matched_user] = resource_match.user_has_id
-        match[:you_have] = false
+        match[:I_have] = false
       end
       match[:category] = resource_match.resource_category
       matches << match
