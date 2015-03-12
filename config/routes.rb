@@ -10,13 +10,16 @@ get '/auth/:provider/callback', to: 'users#create', as: "create"
 get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
 
 get '/users/:id', to: 'users#index', as: "user_home"
-get '/users/:id/interests', to: 'users#interests', as: "user_interest" #Series of forms to capture users interests
 get '/users/:id/matches', to: 'users#load_carousel', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
 # We need :user_id below to allow the find_reviewable method to do it's work
 get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
 get '/users/:user_id/profile', to: 'users#show', as: "user_profile" # publicly viewable profile
 get '/users/:id/edit', to: 'users#edit', as: "user_edit" #Allows a user to edit profile page
 get '/users/:id/network', to: 'users#network', as: "user_network"
+
+# User Interests
+get '/users/:id/interests', to: 'users#interests', as: "user_interest" #Series of forms to capture users interests
+post '/users/:id', to: 'users#interests', as: "new_user_interest"
 
 # get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
 # get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route
