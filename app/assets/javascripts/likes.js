@@ -38,7 +38,10 @@ $.ajax({
   url: "/users/:user_has_id/reject_has",
   type: 'PUT',
   data: {values:values},
-  success: function(data) {alert("Request rejected!");
+  success: function(data) 
+  {alert("Request rejected!");
+  location.reload();
+
   }
 });
   });
