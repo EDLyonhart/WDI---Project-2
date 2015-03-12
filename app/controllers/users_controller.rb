@@ -94,6 +94,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def interests
+    @user = User.find params[:id] 
+  end
+
   def logout
     session[:user_id] = nil
     redirect_to login_path, notice: "You are now logged out!"
