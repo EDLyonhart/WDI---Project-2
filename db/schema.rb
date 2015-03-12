@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310213302) do
+ActiveRecord::Schema.define(version: 20150312013252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150310213302) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
 
   create_table "friends", force: :cascade do |t|
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(version: 20150310213302) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -60,20 +62,35 @@ ActiveRecord::Schema.define(version: 20150310213302) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
 
   create_table "resources", force: :cascade do |t|
-    t.integer  "user_id"
     t.string   "category"
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.boolean  "has"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.text     "description", default: "No description given"
+  end
+
+  create_table "resources_users", force: :cascade do |t|
+    t.integer  "user_wants_id"
+    t.integer  "user_has_id"
+    t.integer  "score"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.string   "resource_category"
+    t.boolean  "like_request",      default: false
+    t.boolean  "like_accept",       default: false
+    t.boolean  "like_reject",       default: false
   end
 
   create_table "reviews", force: :cascade do |t|
     t.integer  "reviewable_id"
     t.string   "reviewable_type"
     t.string   "content"
+    t.integer  "user_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
@@ -84,6 +101,7 @@ ActiveRecord::Schema.define(version: 20150310213302) do
     t.string   "description"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -95,12 +113,21 @@ ActiveRecord::Schema.define(version: 20150310213302) do
     t.string   "profile_pic"
     t.string   "location"
     t.string   "gender"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.integer  "uid",         limit: 8
-    t.string   "has_tags",              default: [],              array: true
-    t.string   "want_tags",             default: [],              array: true
-    t.integer  "score",                 default: 1
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.integer  "uid",           limit: 8
+    t.integer  "score",                   default: 1
+    t.boolean  "has_bike",                default: false
+    t.boolean  "has_housing",             default: false
+    t.boolean  "has_pet",                 default: false
+    t.boolean  "has_social",              default: false
+    t.boolean  "has_vehicle",             default: false
+    t.boolean  "wants_bike",              default: false
+    t.boolean  "wants_housing",           default: false
+    t.boolean  "wants_pet",               default: false
+    t.boolean  "wants_social",            default: false
+    t.boolean  "wants_vehicle",           default: false
+    t.string   "interests",               default: [],                 array: true
   end
 
   create_table "users_friends", force: :cascade do |t|
@@ -118,6 +145,7 @@ ActiveRecord::Schema.define(version: 20150310213302) do
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "user_id"
   end
 
 end

@@ -1,3 +1,4 @@
 class Bike < ActiveRecord::Base
-   belongs_to :resources
+   belongs_to :resource
+   belongs_to :user
 end

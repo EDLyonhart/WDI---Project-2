@@ -1,40 +1,147 @@
 <%= render "partials/navbar" %>
-
-
-
 <div class="container std_background">
 
-<h1><%= @user.name %></h1>
+  <div class="container">
+
+  <h2><%= @user.name %></h2>
 
   <div class="btn-group btn-group-justified">
-    <a href="<%= user_matches_path(@user) %>" class="btn btn-default">View Potential Matches</a>
     <a href="<%= user_matches_path(@user) %>" class="btn btn-default">Find New Matches</a>
     <a href="<%= new_user_resource_path(@user) %>" class="btn btn-default">Add a resource</a>
     <a href="<%= user_show_path(@user) %>" class="btn btn-default">View Public Profile</a>
     <a href="<%= user_edit_path(@user) %>" class="btn btn-default">Edit Profile</a>
   </div>
+  <br>
 
-  <h2>My resources:</h2>
+  <h3>My resources</h3>
   <br>
 
   <div class="row user_resources_show">
-    <div class ="col-md-10 col-md-offset-1">
+    <div class ="col-md-5 col-md-offset-1">
       <table class ="table table-striped">
+        <caption>Their stuff</caption>
         <tr>
-          <th>Have?</th>
           <th>Category</th>
           <th>Info</th>
           <th>Delete</th>
         </tr>
         <% @resources.each do |resource| %>
+          <% unless resource.has %>
           <tr>
-            <td><%= resource.has %></td>
             <td><%= resource.category %></td>
             <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
             <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
           </tr>
+          <% end %>
         <% end %>
       </table>
     </div>
+
+    <div class ="col-md-5">
+      <table class ="table table-striped">
+        <caption>My stuff</caption>
+        <tr>
+          <th>Category</th>
+          <th>Info</th>
+          <th>Delete</th>
+        </tr>
+        <% @resources.each do |resource| %>
+          <% if resource.has %>
+          <tr>
+            <td><%= resource.category %></td>
+            <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
+            <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </table>
+    </div>
+
   </div>
-</div>
+
+  <h3>My matches</h3>
+  <br>
+
+  <div class="row">
+    <div class ="col-md-5 col-md-offset-1">
+      <table class ="table table-striped">
+        <caption>Their stuff</caption>
+        <tr>
+          <th>Name</th>
+          <th>Resource</th>
+          <th>Description</th>
+        </tr>
+        <% @matches.each do |match| %>
+          <% @profile_user = User.find(match[:matched_user]) %>
+
+          <% id = @profile_user.id %>
+          <tr>
+            <td><%= link_to "#{@profile_user.name}", user_profile_path(@profile_user), method: :get %></td>
+            <% if match[:i_have] %>
+              <td> </td>
+            <% else %>
+              <td><%= match[:category] %></td>
+            <% end %>
+            <td>link to description</td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class ="col-md-5">
+      <table class ="table table-striped">
+      <caption>My stuff</caption>
+        <tr>
+          <th>Name</th>
+          <th>Resource</th>
+          <th>Description</th>
+        </tr>
+        <% @matches.each do |match| %>
+          <tr>
+            <td><%= User.find(match[:matched_user]).name %></td>
+            <% unless match[:i_have] %>
+              <td> </td>
+            <% else %>
+              <td><%= match[:category] %></td>
+            <% end %>
+            <td><%= User.find(match[:matched_user]).first_name %>'s profile %></td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    </div>
+    <br>
+
+    <h3>My match requests</h3>
+    <br>
+
+    <div class="row user_match_requests_show">
+      <div class ="col-md-10 col-md-offset-1">
+        <table class ="table table-striped">
+          <tr>
+            <th>Requesting user</th>
+            <th>Interested in your</th>
+            <th>Accept</th>
+            <th>Reject</th>
+          </tr>
+          <% @like_requests.each do |like_request| %>
+          <tr>
+            <td><%= User.find(like_request.user_wants_id).name %></td>
+            <td><%= like_request.resource_category %></td>
+            <td>   <%= simple_form_for(@user, url: "/users/:user_has_id/accept", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary accept"}) do |f| %>
+              <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => like_request.user_wants_id}%>
+              <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+              <%= f.input :resource_category, :as => :hidden, :input_html => { :value => like_request.resource_category }%>
+              <%= f.submit "Accept" %>
+              <% end %></td>
+              <td> <%= simple_form_for(@user, url: "/users/:user_has_id/reject_has", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary reject_has"}) do |f| %>
+              <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => like_request.user_wants_id}%>
+              <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+              <%= f.input :resource_category, :as => :hidden, :input_html => { :value => like_request.resource_category }%>
+              <%= f.submit "Reject" %>
+              <% end %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
