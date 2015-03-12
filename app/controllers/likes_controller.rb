@@ -12,7 +12,6 @@ def like
 end
 
 def accept
-  binding.pry
   @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
   @resources_user.first.update_attribute(:like_accept, true)
   render nothing: true

@@ -1,4 +1,4 @@
-<%= render 'partials/header' %>
+<% @session_user = User.find(session[:user_id]) %>
 
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
@@ -10,9 +10,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "My Dashboard", user_home_path(@user) %></li>
-        <li><%= link_to "My Network", user_network_path(@user) %></li>
-        <li><%= link_to "Logout", logout_path, method: :delete %></li>
+        <li class="<%= 'active' if current_page?(user_home_path(@session_user)) %>"><%= link_to "My Dashboard", user_home_path(@session_user) %></li>
+        <li class="<%= 'active' if current_page?(logout_path(@session_user)) %>"><%= link_to "Logout", logout_path(@session_user), method: :delete %></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -32,12 +31,23 @@
       </div>
       <!-- only display email address if the session user and profile user have matched -->
       <!-- or if the session user IS the profile user -->
-      <% @user.likes.each do |like| %>
-        <% if @user.id == session[:user_id] || (like.likee == session[:user_id] && like.is_matched) %>
-          <div class="col-md-4">
-            <%= f.input :email, label: "Email: ", readonly: true%>
-          </div>
+
+      <!-- first we need to determine if a match exists -->
+      <!-- grab the relevant data -->
+      <% resource_matches = ResourcesUser.where("user_wants_id = ? or user_has_id = ?", @session_user.id, @session_user.id) %>
+      <!-- start by assuming a match exists -->
+      <% match = true %>
+      <% resource_matches.each do |resource_match| %>
+        <!-- unless like_accept = false, it's still a match -->
+        <% unless resource_match.like_accept %>
+          <% match = false %>
         <% end %>
+      <% end %>
+      <% binding.pry %>
+      <% if match || @user.id == session[:user_id] %>
+        <div class="col-md-4">
+          <%= f.input :email, label: "Email: ", readonly: true%>
+        </div>
       <% end %>
       <p style="color: red">More detail here about user's haves and wants?</p>
     </div>
