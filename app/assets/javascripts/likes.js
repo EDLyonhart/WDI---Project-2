@@ -62,7 +62,7 @@ $.ajax({
   });
 
 
-$("#accept").submit(function(e) {
+$(".accept").submit(function(e) {
     e.preventDefault();
     // get all the inputs into an array.
     var $inputs = $('#myForm :input');
