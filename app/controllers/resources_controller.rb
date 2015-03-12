@@ -26,7 +26,7 @@ class ResourcesController < ApplicationController
       if @resource.save
         # update_user_table @user, @resource, "add"
         # below will update category booleans in users table
-        if resource_params[:has] == "1"
+        if resource_params[:has] == "true"
         #creating joint table row + scoring interest overlap 
         @wants_resource.each do |user|  
         if user.location == @user.location 
@@ -35,7 +35,7 @@ class ResourcesController < ApplicationController
           location_weight = 0.75
         #end of scoring algo
         end
-        ResourcesUser.create(user_id:user.id,has_user_id: @user.id, 
+        ResourcesUser.create(user_wants_id:user.id,user_has_id: @user.id, 
           score: (user.interests & @user.interests).length*location_weight, resource_category: resource_params[:category])
         end
         @user.update_attribute(has_category.to_sym, true)
@@ -48,7 +48,7 @@ class ResourcesController < ApplicationController
           location_weight = 0.75
         #end of scoring algo
         end
-        ResourcesUser.create(user_id:@user.id,has_user_id: user.id, 
+        ResourcesUser.create(user_has_id:user.id,user_wants_id: @user.id, 
           score: (@user.interests & user.interests).length*location_weight, resource_category: resource_params[:category])
         end
         @user.update_attribute(wants_category.to_sym, true)

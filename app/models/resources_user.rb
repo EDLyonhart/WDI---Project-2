@@ -15,6 +15,6 @@ class ResourcesUser < ActiveRecord::Base
   end
 
   def self.not_liked
-    where(like_request: false)
+    where(like_request: :false)
   end
 end

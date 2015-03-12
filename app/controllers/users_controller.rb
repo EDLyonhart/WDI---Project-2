@@ -3,13 +3,15 @@ class UsersController < ApplicationController
   before_action :find_session_user, only: [:index, :edit, :update, :network]
   before_action :find_user_by_route, only: [:matches]
 
+
   # before_action :find_user_likes, only: [:index, :matches, :network]
-
-  # def carousel
-  #   match_list
-  # end
-
+#   before_action :find_user_likes, only: [:index, :matches, :network]
+#   # def carousel
+#   #   match_list
+#   # end
   # before_action :find_user_likes, only: [:index]
+#   before_action :find_user_likes, only: [:index]
+
 
 
   def index
@@ -24,7 +26,7 @@ class UsersController < ApplicationController
 
   def login
     if session[:user_id] != nil
-      redirect_to user_matches_path(session[:user_id])
+      redirect_to new_user_resource_path(session[:user_id])
     end
   end
 
@@ -49,8 +51,10 @@ class UsersController < ApplicationController
     @filter = "bike" #make this params[:resource category] once a filter dropdown is setup
     @carousel_users = []
     @has_users = ResourcesUser.wanted_by_and_categorized_by(session[:user_id], @filter).not_liked.order(score: :desc)
+    binding.pry
     @carousel_users = @has_users.map{|owner| owner.owning_user} 
     @match_list = @carousel_users - [@carousel_users.first]
+    binding.pry
     if @carousel_users == []
       flash[:alert] = "No current owners with #{@filter}. Check back soon to browse and share!"
       redirect_to user_home_path(session[:user_id])
@@ -88,10 +92,10 @@ class UsersController < ApplicationController
     @user = User.from_omniauth(env["omniauth.auth"], params[:provider])
     if @user.save
       session[:user_id] = @user.id
-      redirect_to user_home_path(@user), notice: "signed in!"
+      redirect_to new_user_resource_path(@user), notice: "signed in!"
     else
       flash[:alert] = "Login Error"
-      redirect_to login_path
+      redirect_to new_user_resource_path
     end
   end
 
