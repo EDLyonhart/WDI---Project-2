@@ -76,9 +76,9 @@
         </tr>
         <% @matches.each do |match| %>
           <% @profile_user = User.find(match[:matched_user]) %>
-          <% profile_user_id = @profile_user.id %>
+          <% id = @profile_user.id %>
           <tr>
-            <td><a href='/users/#{profile_user_id}/profile'><%= @profile_user.name %></a></td>
+            <td><%= link_to "#{@profile_user.name}", user_profile_path(@profile_user), method: :get %></td>
             <% if match[:i_have] %>
               <td> </td>
             <% else %>
@@ -110,11 +110,6 @@
         <% end %>
       </table>
     </div>
-  </div>
-  <br>
-
-
-
   </div>
   <br>
 
