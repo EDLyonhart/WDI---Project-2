@@ -26,13 +26,14 @@ delete '/logout', to: 'users#logout', as: "logout"
 # Resources
 get '/users/:id/resources/new', to: 'resources#new', as: "new_user_resource"
 post '/users/:id/resources', to: 'resources#create', as: "post_new_user_resource"
+get '/users/:user_id/resources/:id', to: 'resources#show', as: "show_user_resource"
 
 get '/users/:user_id/resource/:id', to: 'resources#show', as: "user_resource"
 delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route name with above
 # do we need to edit a resource?
 
 #Likes Routes
-put '/users/:user_wants_id/home/:user_has_id/:resource_category', to: 'likes#like', as: "like" #action to edit like_request:boolean to true  
+put '/users/:user_wants_id/home/:user_has_id/:resource_category', to: 'likes#like', as: "like" #action to edit like_request:boolean to true
 put '/users/:user_has_id/home/:user_wants_id/:resource_category', to: 'likes#accept', as: "accept" #action to edit like_accept:boolean to true
 put '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to: 'likes#reject_has', as: "reject_has" #action to edit like_reject:boolean to true from Wants Carousel (i.e. User swiping through useres who have what they want)
 put '/users/:user_has_id/home/:user_wants_id/:resource_category/reject_wants', to: 'likes#reject_wants', as: "reject_wants"#action to edit like_reject:boolean to true from confirm Carousel (i.e. I have what user wants, and am rejecting his request to share)
