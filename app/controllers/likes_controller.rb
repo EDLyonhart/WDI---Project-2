@@ -17,13 +17,17 @@ render nothing: true
 end
 
 def reject_has 
-@resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[:user_has_id],resource_category:params[:resource_category] )
+@resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
 @resources_user.first.update_attribute(:like_reject, true)
+redirect_to user_home_path(params["values"]["user_has_id"])
 end
 
 def reject_wants
-@resources_user = ResourcesUser.where(user_wants_id: params[:user_wants_id],user_has_id: params[:user_has_id],resource_category:params[:resource_category] )
+@resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
+binding.pry
 @resources_user.first.update_attribute(:like_reject, true)
+render nothing: true
+binding.pry
 end
 
 # def like_check
