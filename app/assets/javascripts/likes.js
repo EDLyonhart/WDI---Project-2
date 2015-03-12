@@ -84,6 +84,7 @@ $.ajax({
   type: 'PUT',
   data: {values:values},
   success: function(data) {alert("Match Confirmed!");
+  location.reload();
   }
 });
 
