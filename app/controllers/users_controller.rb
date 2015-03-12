@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if Resource.exists?(user_id: session[:user_id])
       redirect_to user_home_path(@user)
     else
-      redirect_to newwant_user_resource_path(@resource)
+      redirect_to newwant_user_resource_path(@resource, @user)
     end
   end
 
