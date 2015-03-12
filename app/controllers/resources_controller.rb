@@ -6,8 +6,61 @@ class ResourcesController < ApplicationController
     @resources = @user.resources
   end
 
-  def new
-    @resource = Resource.new
+  def newwant
+  @resource = Resource.new
+  @user = User.find(sessions[:user_id])
+  categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
+  existing_categories = []
+    if @user.wants_bike == true
+      categories << "bike"
+    end
+
+    if @user.wants_vehicle == true
+      categories << "vehicle"
+    end 
+
+    if @user.wants_social == true
+      categories << "social"
+    end
+
+    if @user.wants_pet == true
+      categories << "pet"
+    end
+
+    if @user.wants_housing == true
+       categories << "housing"
+    end
+
+   @available_resources = categories - existing_categories 
+  end
+
+  def newhas
+  @resource = Resource.new
+  @user = User.find(sessions[:user_id])
+  categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
+  existing_categories = []
+    if @user.has_bike == true
+      categories << "bike"
+    end
+
+    if @user.has_vehicle == true
+      categories << "vehicle"
+    end 
+
+    if @user.has_social == true
+      categories << "social"
+    end
+
+    if @user.has_pet == true
+      categories << "pet"
+    end
+
+    if @user.has_housing == true
+       categories << "housing"
+    end
+
+   @available_resources = categories - existing_categories 
+
   end
 
   def show
@@ -79,12 +132,12 @@ class ResourcesController < ApplicationController
        if resource.has
         @user.update_attribute(has_category.to_sym, false)
         #deleting joint table entries when a has is removed
-        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(has_user_id: @user.id)
+        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_has_id: @user.id)
         @resourceusers.destroy_all
         else
         @user.update_attribute(wants_category.to_sym, false)
         #deleting joint table entries when a want is removed
-        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_id: @user.id)
+        @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_wants_id: @user.id)
         @resourceusers.destroy_all
        end
         #end of updating category booleans in users table

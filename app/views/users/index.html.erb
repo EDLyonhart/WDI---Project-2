@@ -2,18 +2,33 @@
 <div class="container std_background">
 
   <div class="container">
+  <br><br>
 
-  <h2><%= @user.name %></h2>
+  <!-- just for testing -->
+  <% @avail_resources = ["bike", "social", "housing"] %>
+  <!-- just for testing -->
+
+  <%= form_tag(user_matches_path(@user), method: "get") do %>
+    <%= label_tag(:category, "What are you looking for? ") %>
+    <%= text_field_tag(:category, "select a category", options= {list:"categories"}) %>
+    <datalist id="categories">
+      <% @avail_resources.each do |resource| %>
+        <option><%= resource %></option>
+      <% end %>
+    </datalist>
+    <%= submit_tag("Find matches") %>
+  <% end %>
+  <br><br>
 
   <div class="btn-group btn-group-justified">
-    <a href="<%= user_matches_path(@user) %>" class="btn btn-default">Find New Matches</a>
-    <a href="<%= newwant_user_resource_path(@user) %>" class="btn btn-default">Add stuff you want</a>
-    <a href="<%= newhas_user_resource_path(@user) %>" class="btn btn-default">Add stuff you have</a>
-    <a href="<%= user_edit_path(@user) %>" class="btn btn-default">Edit Profile</a>
+
+    <a href="<%= newwant_user_resource_path(@user) %>" class="btn btn-default">Add shareables you WANT</a>
+    <a href="<%= newhas_user_resource_path(@user) %>" class="btn btn-default">Add shareables you HAVE</a>
+    <a href="<%= user_edit_path(@user) %>" class="btn btn-default">Edit your profile</a>
   </div>
   <br>
 
-  <h3>My resources</h3>
+  <h3>My Shareables</h3>
   <br>
 
   <div class="row user_resources_show">
@@ -68,22 +83,19 @@
         <caption>Their stuff</caption>
         <tr>
           <th>Name</th>
-          <th>Resource</th>
+          <th>Shareable</th>
           <th>Description</th>
         </tr>
         <% @matches.each do |match| %>
           <% @profile_user = User.find(match[:matched_user]) %>
-
           <% id = @profile_user.id %>
+          <% unless match[:i_have] %>
           <tr>
             <td><%= link_to "#{@profile_user.name}", user_profile_path(@profile_user), method: :get %></td>
-            <% if match[:i_have] %>
-              <td> </td>
-            <% else %>
-              <td><%= match[:category] %></td>
-            <% end %>
+            <td><%= match[:category] %></td>
             <td>link to description</td>
           </tr>
+          <% end %>
         <% end %>
       </table>
     </div>
@@ -92,20 +104,20 @@
       <caption>My stuff</caption>
         <tr>
           <th>Name</th>
-          <th>Resource</th>
+          <th>Shareable</th>
           <th>Description</th>
         </tr>
         <% @matches.each do |match| %>
-          <tr>
-            <td><%= User.find(match[:matched_user]).name %></td>
-            <% unless match[:i_have] %>
-              <td> </td>
-            <% else %>
+          <% @profile_user = User.find(match[:matched_user]) %>
+          <% id = @profile_user.id %>
+          <% if match[:i_have] %>
+            <tr>
+              <td><%= link_to "#{@profile_user.name}", user_profile_path(@profile_user), method: :get %></td>
               <td><%= match[:category] %></td>
-            <% end %>
-            <td><%= User.find(match[:matched_user]).first_name %>'s profile %></td>
-          </tr>
+              <td><%= User.find(match[:matched_user]).first_name %>'s profile %></td>
+            </tr>
           <% end %>
+        <% end %>
         </table>
       </div>
     </div>
