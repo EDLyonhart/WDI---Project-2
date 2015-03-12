@@ -25,7 +25,6 @@ delete '/logout', to: 'users#logout', as: "logout"
 
 # Resources
 get '/users/:id/resources/newwant', to: 'resources#newwant', as: "newwant_user_resource"
-post '/users/:id/resources', to: 'resources#create', as: "post_new_user_resource"
 get '/users/:id/resources/newhas', to: 'resources#newhas', as: "newhas_user_resource"
 post '/users/:id/resources', to: 'resrouces#create', as: "post_new_user_resource"
 get '/users/:user_id/resources/:id', to: 'resources#show', as: "show_user_resource"
