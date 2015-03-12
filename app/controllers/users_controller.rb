@@ -2,16 +2,15 @@ class UsersController < ApplicationController
 
   before_action :find_session_user, only: [:index, :edit, :update, :network]
   before_action :find_user_by_route, only: [:matches]
-<<<<<<< HEAD
-  before_action :find_user_likes, only: [:index, :matches, :network]
+
+  # before_action :find_user_likes, only: [:index, :matches, :network]
 
   # def carousel
   #   match_list
   # end
 
-  before_action :find_user_likes, only: [:index]
-=======
->>>>>>> c8d3db06a2369fa66fc393024d70b3e2a3729f2f
+  # before_action :find_user_likes, only: [:index]
+
 
   def index
     # @user = session user
