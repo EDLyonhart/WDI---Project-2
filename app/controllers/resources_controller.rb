@@ -7,28 +7,29 @@ class ResourcesController < ApplicationController
   end
 
   def newwant
+
   @resource = Resource.new
-  @user = User.find(sessions[:user_id])
+  @user = User.find(session[:user_id])
   categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
   existing_categories = []
     if @user.wants_bike == true
-      categories << "bike"
+      existing_categories << "bike"
     end
 
     if @user.wants_vehicle == true
-      categories << "vehicle"
+      existing_categories << "vehicle"
     end 
 
     if @user.wants_social == true
-      categories << "social"
+      existing_categories << "social"
     end
 
     if @user.wants_pet == true
-      categories << "pet"
+      existing_categories << "pet"
     end
 
     if @user.wants_housing == true
-       categories << "housing"
+       existing_categories << "housing"
     end
 
    @available_resources = categories - existing_categories 
@@ -36,27 +37,27 @@ class ResourcesController < ApplicationController
 
   def newhas
   @resource = Resource.new
-  @user = User.find(sessions[:user_id])
+  @user = User.find(session[:user_id])
   categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
   existing_categories = []
     if @user.has_bike == true
-      categories << "bike"
+      existing_categories << "bike"
     end
 
     if @user.has_vehicle == true
-      categories << "vehicle"
+      existing_categories << "vehicle"
     end 
 
     if @user.has_social == true
-      categories << "social"
+      existing_categories << "social"
     end
 
     if @user.has_pet == true
-      categories << "pet"
+      existing_categories << "pet"
     end
 
     if @user.has_housing == true
-       categories << "housing"
+       existing_categories << "housing"
     end
 
    @available_resources = categories - existing_categories 
@@ -107,7 +108,11 @@ class ResourcesController < ApplicationController
         @user.update_attribute(wants_category.to_sym, true)
         end
         #end of updating category booleans in users table
-        redirect_to user_home_path @user
+        if resource_params[:has] == "true"
+          redirect_to newhas_user_resource_path @user
+        else 
+          redirect_to newwant_user_resource_path @user
+        end      
       else
         flash.now[:alert] = "Please correct the following input errors"
         render :new
