@@ -19,7 +19,7 @@ get '/users/:id/network', to: 'users#network', as: "user_network"
 
 # User Interests
 get '/users/:id/interests', to: 'users#interests', as: "user_interest" #Series of forms to capture users interests
-post '/users/:id', to: 'users#interests', as: "new_user_interest"
+post '/users/:id', to: 'users#interests_add', as: "new_user_interest"
 
 # get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
 # get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route
