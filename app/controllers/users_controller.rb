@@ -2,6 +2,16 @@ class UsersController < ApplicationController
 
   before_action :find_session_user, only: [:index, :edit, :update, :network]
   before_action :find_user_by_route, only: [:matches]
+<<<<<<< HEAD
+  before_action :find_user_likes, only: [:index, :matches, :network]
+
+  # def carousel
+  #   match_list
+  # end
+
+  before_action :find_user_likes, only: [:index]
+=======
+>>>>>>> c8d3db06a2369fa66fc393024d70b3e2a3729f2f
 
   def index
     # @user = session user
@@ -16,6 +26,51 @@ class UsersController < ApplicationController
   def login
     if session[:user_id] != nil
       redirect_to new_user_resource_path(session[:user_id])
+    end
+  end
+
+  def load_carousel
+    # adds session user into an array for subsequent processing
+    # put session user's likes into an array for subsequent processing
+    # @likes = likes_to_users @user.likes
+    # create a list of potential matches (@users) by starting with User.all
+    # and subtracting session user and any other user who session user has already liked
+    # @carousel_users = User.all - user_array - @likes
+    # @carousel_users = @carousel_users.each do |user|
+      # each user in the carousel ranked in terms of mutual interests with the session user
+    #   user[:score] =
+    #     (@user[:has_tags] & user[:want_tags]).length +
+    #     (@user[:want_tags] & user[:has_tags]).length
+    # end
+    # @carousel_users = @carousel_users.sort_by do |user|
+    #   user[:score]
+    # end
+    # @carousel_users.reverse!
+
+    @filter = "bike" #make this params[:resource category] once a filter dropdown is setup
+    @carousel_users = []
+    @has_users = ResourcesUser.wanted_by_and_categorized_by(session[:user_id], @filter).not_liked.order(score: :desc)
+    @carousel_users = @has_users.map{|owner| owner.owning_user} 
+    @match_list = @carousel_users - [@carousel_users.first]
+    if @carousel_users == []
+      flash[:alert] = "No current owners with #{@filter}. Check back soon to browse and share!"
+      redirect_to user_home_path(session[:user_id])
+    end
+  end
+
+  # @matches and @like_me are both arrays of Like models
+  def network
+    @matches = find_user_likes.select do |like|
+      like.is_matched
+    end
+    @like_me = []
+    User.all.each do |user|
+      user.likes.each do |like|
+        # @user is me
+        if like.likee == @user.id && !like.is_matched && !like.rejected
+          @like_me << like
+        end
+      end
     end
   end
 
@@ -109,6 +164,30 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:nickname, :name, :first_name, :last_name, :location, :email, :has_tags, :want_tags)
   end
+
+
+#   def match_list
+#     # adds session user into an array for subsequent processing
+#     @user = User.find session[:user_id]
+#     user_array = []
+#     user_array << @user
+#     # put session user's likes into an array for subsequent processing
+#     @likes = likes_to_users @user.likes
+#     # create a list of potential matches (@users) by starting with User.all
+#     # and subtracting session user and any other user who session user has already liked
+#     @carousel_users = User.all - user_array - @likes
+#     @carousel_users = @carousel_users.each do |user|
+#       # each user in the carousel ranked in terms of mutual interests with the session user
+#       user[:score] =
+#         (@user[:has_tags] & user[:want_tags]).length +
+#         (@user[:want_tags] & user[:has_tags]).length
+#     end
+#     @carousel_users = @carousel_users.sort_by do |user|
+#       user[:score]
+#     end
+#     @carousel_users.reverse!
+#     @match_list = @carousel_users - [@carousel_users[0]]
+#   end
 
 end
 

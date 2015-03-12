@@ -39,7 +39,15 @@
           </div>
           <div class="row">
            <div class = "col-md-offset-5">
-            <%=  link_to('Like User',like_check_path(session[:user_id],@carousel_users[0].id) ,method: :post, class: "btn-lg btn-primary") %>
+          <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary like"}) do |f| %>
+         <div class="row">
+        <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+        <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => @carousel_users[0].id }%>
+        <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
+         <%= f.submit "Like" %>
+        <% end %>
+
+          </div>
           </div>
           <br><br>
         </div>
@@ -77,7 +85,15 @@
       </div>
       <div class="row">
         <div class = "col-md-offset-5">
-          <%=  link_to('Like User',like_check_path(session[:user_id],user.id), method: :post, class: "btn-lg btn-primary") %>
+            <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary like"}) do |f| %>
+         <div class="row">
+        <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+        <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => user.id }%>
+        <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
+         <%= f.submit "Like" %>
+        <% end %>
+
+          </div>
         </div>
         <br><Br>
       </div>

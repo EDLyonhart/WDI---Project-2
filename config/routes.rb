@@ -10,7 +10,7 @@ get '/auth/:provider/callback', to: 'users#create', as: "create"
 get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
 
 get '/users/:id', to: 'users#index', as: "user_home"
-get '/users/:id/matches', to: 'users#carousel', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
+get '/users/:id/matches', to: 'users#load_carousel', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
 get '/users/:id/profile', to: 'users#profile', as: "user_profile" # publicly viewable profile
 # We need :user_id below to allow the find_reviewable method to do it's work
 get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
@@ -32,10 +32,10 @@ delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route nam
 # do we need to edit a resource?
 
 #Likes Routes
-post '/users/:user_wants_id/home/:user_has_id/:resource_category', to: 'likes#like', as: "like" #action to edit like_request:boolean to true  
-post '/users/:user_has_id/home/:user_wants_id/:resource_category', to: 'likes#accept', as: "accept" #action to edit like_accept:boolean to true
-post '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to: 'likes#reject_has', as: "reject_has" #action to edit like_reject:boolean to true from Wants Carousel (i.e. User swiping through useres who have what they want)
-post '/users/:user_has_id/home/:user_wants_id/:resource_category/reject_wants', to: 'likes#reject_wants', as: "reject_wants"#action to edit like_reject:boolean to true from confirm Carousel (i.e. I have what user wants, and am rejecting his request to share)
+put '/users/:user_wants_id/home/:user_has_id/:resource_category', to: 'likes#like', as: "like" #action to edit like_request:boolean to true  
+put '/users/:user_has_id/home/:user_wants_id/:resource_category', to: 'likes#accept', as: "accept" #action to edit like_accept:boolean to true
+put '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to: 'likes#reject_has', as: "reject_has" #action to edit like_reject:boolean to true from Wants Carousel (i.e. User swiping through useres who have what they want)
+put '/users/:user_has_id/home/:user_wants_id/:resource_category/reject_wants', to: 'likes#reject_wants', as: "reject_wants"#action to edit like_reject:boolean to true from confirm Carousel (i.e. I have what user wants, and am rejecting his request to share)
 patch '/users/:id/likes/:like_id', to: 'likes#update', as: "reject_user_like"
 
 # Reviews
