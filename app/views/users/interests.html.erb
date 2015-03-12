@@ -1,6 +1,6 @@
 <h2>Add an Interest:</h2>
 
-<%= simple_form_for(@user, url: __path_for_interests__ , defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
+<%= simple_form_for(@user, url: user_interest_path , defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
 <div class="row">
   <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
   <div class="col-md-3 col-md-offset-1 interest_dropdown">

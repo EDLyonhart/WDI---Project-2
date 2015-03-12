@@ -10,6 +10,7 @@ get '/auth/:provider/callback', to: 'users#create', as: "create"
 get '/auth/:provider/callback', to: 'users#create_fb', as: "create_fb"
 
 get '/users/:id', to: 'users#index', as: "user_home"
+get '/users/:id/interests', to: 'users#interests', as: "user_interest" #Series of forms to capture users interests
 get '/users/:id/matches', to: 'users#load_carousel', as: "user_matches" #Carousel - where swiping will occur (id used to populate queue)
 # We need :user_id below to allow the find_reviewable method to do it's work
 get '/users/:user_id/show', to: 'users#show', as: "user_show" #Allows other users to see profile pages of matches
