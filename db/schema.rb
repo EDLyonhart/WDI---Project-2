@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312013252) do
+ActiveRecord::Schema.define(version: 20150312181229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150312013252) do
     t.boolean  "like_request",      default: false
     t.boolean  "like_accept",       default: false
     t.boolean  "like_reject",       default: false
+    t.integer  "resource_id"
   end
 
   create_table "reviews", force: :cascade do |t|

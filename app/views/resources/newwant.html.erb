@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>New Want:</h2>
+
+  <%= simple_form_for(@resource, url: post_new_user_resource_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
+  <div class="row">
+    <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+    <%= f.input :has, :as => :hidden, :input_html => { :value => :false } %>
+    <%= f.input :category, label:"Category: ", list:"categories", :collection => ['bike', 'vehicle', 'social', 'pet', 'housing'] %>
+  </div>
+  <%= f.submit "Save your wants", class: 'btn btn-primary' %>
+  <% end %>
+</div>
+
+<div>
+  <!-- also add a next button -->
+</div>
