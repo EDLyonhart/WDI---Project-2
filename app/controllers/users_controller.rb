@@ -11,17 +11,35 @@ class UsersController < ApplicationController
     #   match[:you_have] ? 1 : 0
     # end
     @like_requests = find_like_requests @user # an array of ResourcesUser objects
+  
+    existing_categories = []
+  
+    if @user.wants_bike == true
+      existing_categories << "bike"
+    end
+
+    if @user.wants_vehicle == true
+      existing_categories << "vehicle"
+    end 
+
+    if @user.wants_social == true
+      existing_categories << "social"
+    end
+
+    if @user.wants_pet == true
+      existing_categories << "pet"
+    end
+
+    if @user.wants_housing == true
+       existing_categories << "housing"
+    end
+
+   @avail_resources = existing_categories 
   end
 
   def login
-  @resource = Resource.new
-  @user = User.find(session[:user_id])
 
-    if Resource.exists?(user_id: session[:user_id])
-      redirect_to user_home_path(@user)
-    else
-      redirect_to newwant_user_resource_path(@resource, @user)
-    end
+  
   end
 
   def load_carousel
@@ -48,10 +66,15 @@ class UsersController < ApplicationController
   end
 
   def create
+    @resource = Resource.new
     @user = User.from_omniauth(env["omniauth.auth"], params[:provider])
     if @user.save
       session[:user_id] = @user.id
-      redirect_to new_user_resource_path(@user), notice: "signed in!"
+      if Resource.exists?(user_id: session[:user_id])
+      redirect_to user_home_path(@user), notice: "signed in!"
+      else
+      redirect_to newwant_user_resource_path(@user)
+      end
     else
       flash[:alert] = "Login Error"
       redirect_to new_user_resource_path
