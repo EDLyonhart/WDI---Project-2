@@ -25,15 +25,13 @@
           <th>Delete</th>
         </tr>
         <% @resources.each do |resource| %>
+          <% unless resource.has %>
           <tr>
-            <% unless resource.has %>
-              <td><%= resource.category %></td>
-            <% else %>
-              <td> </td>
-            <% end %>
+            <td><%= resource.category %></td>
             <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
             <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
           </tr>
+          <% end %>
         <% end %>
       </table>
     </div>
@@ -47,15 +45,13 @@
           <th>Delete</th>
         </tr>
         <% @resources.each do |resource| %>
+          <% if resource.has %>
           <tr>
-            <% if resource.has %>
-              <td><%= resource.category %></td>
-            <% else %>
-              <td> </td>
-            <% end %>
+            <td><%= resource.category %></td>
             <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
             <td><%= link_to('Delete', user_resource_path(@user, resource), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-xs btn-danger") %></td>
           </tr>
+          <% end %>
         <% end %>
       </table>
     </div>
@@ -76,6 +72,7 @@
         </tr>
         <% @matches.each do |match| %>
           <% @profile_user = User.find(match[:matched_user]) %>
+
           <% id = @profile_user.id %>
           <tr>
             <td><%= link_to "#{@profile_user.name}", user_profile_path(@profile_user), method: :get %></td>
@@ -84,7 +81,7 @@
             <% else %>
               <td><%= match[:category] %></td>
             <% end %>
-            <td><%= link_to "description", user_profile_path(@profile_user) %></td>
+            <td>link to description</td>
           </tr>
         <% end %>
       </table>
