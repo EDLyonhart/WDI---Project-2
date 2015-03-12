@@ -95,7 +95,12 @@ class UsersController < ApplicationController
   end
 
   def interests
-    @user = User.find params[:id] 
+    @user = User.find params[:id]
+  end
+
+  def interests_add
+    binding.pry
+    redirect_to user_home_path(session[:user_id])
   end
 
   def logout

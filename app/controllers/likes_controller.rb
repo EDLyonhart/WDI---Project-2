@@ -17,7 +17,7 @@ def accept
   render nothing: true
 end
 
-def reject_has 
+def reject_has
 @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
 @resources_user.first.update_attribute(:like_reject, true)
 render nothing: true
