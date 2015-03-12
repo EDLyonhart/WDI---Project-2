@@ -6,8 +6,13 @@ class ResourcesController < ApplicationController
     @resources = @user.resources
   end
 
-  def new
+  def new_want
     @resource = Resource.new
+  end
+
+  def new_has
+  @resource = Resource.new
+
   end
 
   def show
