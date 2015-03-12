@@ -126,7 +126,7 @@
           <tr>
             <td><%= User.find(like_request.user_wants_id).name %></td>
             <td><%= like_request.resource_category %></td>
-            <td>accept button</td>
+            <td><%= link_to "Accept", "/users/:#{like_request.user_has_id}/home/:#{like_request.user_wants_id}/:#{like_request.resource_category}", method: :put %></td>
             <td>reject button</td>
           </tr>
         <% end %>

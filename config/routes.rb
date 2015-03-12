@@ -39,6 +39,9 @@ put '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to:
 put '/users/:user_has_id/home/:user_wants_id/:resource_category/reject_wants', to: 'likes#reject_wants', as: "reject_wants"#action to edit like_reject:boolean to true from confirm Carousel (i.e. I have what user wants, and am rejecting his request to share)
 patch '/users/:id/likes/:like_id', to: 'likes#update', as: "reject_user_like"
 
+patch 'users/:id/dashboard/:like_request/accept', to: 'likes#accept_from_dashboard', as: "dashboard_like_accept"
+patch 'users/:id/dashboard/:like_request/reject', to: 'likes#reject_from_dashboard', as: "dashboard_like_reject"
+
 # Reviews
 post '/users/:user_id/reviews', to: 'reviews#create_review', as: 'user_reviews'
 post '/users/:some_user/resources/:resource_id/reviews' => 'reviews#create_review', as: 'user_resource_reviews'

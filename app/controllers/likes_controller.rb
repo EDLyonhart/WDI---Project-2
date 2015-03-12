@@ -28,6 +28,10 @@ def reject_wants #'/users/:user_has_id/home/:user_wants_id/:resource_category/re
 @resouces_user.update_attribute(:like_reject, true)
 end
 
+def accept_from_dashboard
+
+end
+
 # def like_check
 #   #checks to see if there is a match
 # @likee = User.find(params[:likee_id])
