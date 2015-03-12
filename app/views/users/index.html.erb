@@ -1,11 +1,13 @@
 <%= render "partials/navbar" %>
 
 
-<div class="container">
+
+<div class="container std_background">
 
 <h1><%= @user.name %></h1>
 
   <div class="btn-group btn-group-justified">
+    <a href="<%= user_matches_path(@user) %>" class="btn btn-default">View Potential Matches</a>
     <a href="<%= user_matches_path(@user) %>" class="btn btn-default">Find New Matches</a>
     <a href="<%= new_user_resource_path(@user) %>" class="btn btn-default">Add a resource</a>
     <a href="<%= user_show_path(@user) %>" class="btn btn-default">View Public Profile</a>
@@ -35,6 +37,4 @@
       </table>
     </div>
   </div>
-
 </div>
-
