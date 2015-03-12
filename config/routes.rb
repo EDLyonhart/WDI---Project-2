@@ -33,7 +33,7 @@ delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route nam
 
 #Likes Routes
 put '/users/:user_wants_id/home/:user_has_id/:resource_category', to: 'likes#like', as: "like" #action to edit like_request:boolean to true  
-put '/users/:user_has_id/home/:user_wants_id/:resource_category', to: 'likes#accept', as: "accept" #action to edit like_accept:boolean to true
+put '/users/:user_has_id/home/:user_wants_id/:resource_category/accept', to: 'likes#accept', as: "accept" #action to edit like_accept:boolean to true
 put '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to: 'likes#reject_has', as: "reject_has" #action to edit like_reject:boolean to true from Wants Carousel (i.e. User swiping through useres who have what they want)
 put '/users/:user_has_id/home/:user_wants_id/:resource_category/reject_wants', to: 'likes#reject_wants', as: "reject_wants"#action to edit like_reject:boolean to true from confirm Carousel (i.e. I have what user wants, and am rejecting his request to share)
 patch '/users/:id/likes/:like_id', to: 'likes#update', as: "reject_user_like"

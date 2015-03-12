@@ -14,8 +14,9 @@ flash.now[:alert] =  "User Liked!"
 render nothing: true
 end
 def accept #post '/users/:user_has_id/home/:user_wants_id/:resource_category', to: 'likes#accept', as: "accept"
-@resources_user = ResourcesUser.where(user_wants_id: params[:values][:user_wants_id],user_has_id: params[:values][:user_has_id],resource_category:params[:resource_category] )
+@resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
 @resouces_user.update_attribute(:like_accept, true)
+render nothing: true
 end
 
 def reject_has #post '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to: 'likes#reject_has', as: "reject_has"

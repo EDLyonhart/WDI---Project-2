@@ -56,7 +56,7 @@
           <tr>
             <td><%= User.find(like_request.user_wants_id).name %></td>
             <td><%= like_request.resource_category %></td>
-            <td>   <%= simple_form_for(@user, url: "/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary like"}) do |f| %>
+            <td>   <%= simple_form_for(@user, url: "/users/:user_has_id/home/:user_wants_id/:resource_category/accept", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary like"}) do |f| %>
               <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => like_request.user_wants_id}%>
               <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
               <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
