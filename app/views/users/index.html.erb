@@ -6,14 +6,14 @@
   <h2><%= @user.name %></h2>
 
   <div class="btn-group btn-group-justified">
-    <a href="<%= user_matches_path(@user) %>" class="btn btn-default">Find New Matches</a>
-    <a href="<%= newwant_user_resource_path(@user) %>" class="btn btn-default">Add stuff you want</a>
-    <a href="<%= newhas_user_resource_path(@user) %>" class="btn btn-default">Add stuff you have</a>
-    <a href="<%= user_edit_path(@user) %>" class="btn btn-default">Edit Profile</a>
+    <a href="<%= user_matches_path(@user) %>" class="btn btn-default">Find new matches</a>
+    <a href="<%= newwant_user_resource_path(@user) %>" class="btn btn-default">Add shareables you want</a>
+    <a href="<%= newhas_user_resource_path(@user) %>" class="btn btn-default">Add shareables you have</a>
+    <a href="<%= user_edit_path(@user) %>" class="btn btn-default">Edit your profile</a>
   </div>
   <br>
 
-  <h3>My resources</h3>
+  <h3>My Shareables</h3>
   <br>
 
   <div class="row user_resources_show">
@@ -68,7 +68,7 @@
         <caption>Their stuff</caption>
         <tr>
           <th>Name</th>
-          <th>Resource</th>
+          <th>Shareable</th>
           <th>Description</th>
         </tr>
         <% @matches.each do |match| %>
@@ -89,7 +89,7 @@
       <caption>My stuff</caption>
         <tr>
           <th>Name</th>
-          <th>Resource</th>
+          <th>Shareable</th>
           <th>Description</th>
         </tr>
         <% @matches.each do |match| %>
