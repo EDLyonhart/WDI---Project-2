@@ -2,6 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
 .splash_background {
   background-image: url('http://www.heystephanie.com/wp-content/uploads/2011/10/iStock_000009717214Medium.jpg');
   height: 500px;
@@ -17,6 +18,12 @@
   border-bottom: rgb(44, 62, 80) 10px solid;
 }
 
+.facebook {
+  text-align: center;
+  margin: 0 auto;
+}
+
+
 .loginHeading {
   position: absolute;
   left: 1%;
@@ -30,6 +37,15 @@
   text-color: black;
 }
 
+span {
+  font-style: normal;
+  text-color: purple;
+}
+
+.subhead {
+  font-style: oblique;
+}
+
 .table {
   border: rgb(44, 62, 80) 2px dashed;
 }
@@ -37,3 +53,33 @@
 .hidden {
   visibility: hidden;
 }
+
+.indent {
+  text-indent: 50px;
+}
+
+.text {
+  font-style: bold;
+}
+
+.picbox {
+  border-style: solid;
+  border-width: 5px;
+  border-color: black;
+}
+
+hr {
+  background-color: #7575A3;
+  color: #7575A3;
+}
+
+.line{
+  line-height: 150%;
+  
+}
+
+.line2{
+  line-height: 200%;
+}
+
+
