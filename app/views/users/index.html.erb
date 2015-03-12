@@ -62,7 +62,12 @@
               <%= f.input :resource_category, :as => :hidden, :input_html => { :value => like_request.resource_category }%>
               <%= f.submit "Accept" %>
               <% end %></td>
-              <td>reject button</td>
+              <td> <%= simple_form_for(@user, url: "/users/:user_has_id/reject_has", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary reject_has"}) do |f| %>
+              <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => like_request.user_wants_id}%>
+              <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+              <%= f.input :resource_category, :as => :hidden, :input_html => { :value => like_request.resource_category }%>
+              <%= f.submit "Reject" %>
+              <% end %></td>
             </tr>
             <% end %>
           </table>
