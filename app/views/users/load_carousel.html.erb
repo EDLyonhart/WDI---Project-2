@@ -24,13 +24,11 @@
           <tr>
             <th>Have?</th>
             <th>Category</th>
-            <th>Info</th>
           </tr>
           <% @carousel_users[0].resources.each do |resource| %>
           <tr>
             <td><%= resource.has %></td>
             <td><%= resource.category %></td>
-            <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
           </tr>
           <% end %>
         </table>
@@ -70,13 +68,11 @@
             <tr>
               <th>Have?</th>
               <th>Category</th>
-              <th>Info</th>
             </tr>
             <% user.resources.each do |resource| %>
             <tr>
               <td><%= resource.has %></td>
               <td><%= resource.category %></td>
-              <td><%= link_to('Info', user_resource_path(@user, resource), {class: "btn-xs btn-info"})%></td>
             </tr>
             <% end %>
           </table>

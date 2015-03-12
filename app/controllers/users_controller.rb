@@ -2,16 +2,16 @@ class UsersController < ApplicationController
 
   before_action :find_session_user, only: [:index, :edit, :update, :network]
   before_action :find_user_by_route, only: [:matches]
-<<<<<<< HEAD
-  before_action :find_user_likes, only: [:index, :matches, :network]
+# <<<<<<< HEAD
+#   before_action :find_user_likes, only: [:index, :matches, :network]
 
-  # def carousel
-  #   match_list
-  # end
+#   # def carousel
+#   #   match_list
+#   # end
 
-  before_action :find_user_likes, only: [:index]
-=======
->>>>>>> c8d3db06a2369fa66fc393024d70b3e2a3729f2f
+#   before_action :find_user_likes, only: [:index]
+# =======
+# >>>>>>> c8d3db06a2369fa66fc393024d70b3e2a3729f2f
 
   def index
     # @user = session user
@@ -50,8 +50,10 @@ class UsersController < ApplicationController
     @filter = "bike" #make this params[:resource category] once a filter dropdown is setup
     @carousel_users = []
     @has_users = ResourcesUser.wanted_by_and_categorized_by(session[:user_id], @filter).not_liked.order(score: :desc)
+    binding.pry
     @carousel_users = @has_users.map{|owner| owner.owning_user} 
     @match_list = @carousel_users - [@carousel_users.first]
+    binding.pry
     if @carousel_users == []
       flash[:alert] = "No current owners with #{@filter}. Check back soon to browse and share!"
       redirect_to user_home_path(session[:user_id])
