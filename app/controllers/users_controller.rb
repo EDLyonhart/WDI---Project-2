@@ -136,9 +136,7 @@ class UsersController < ApplicationController
   #
   def update_score
     @score = ResourcesUser.all
-    binding.pry
     @score.each do |x|
-      binding.pry
     unless x.user_has_id == nil
        @user_has = User.find(x.user_has_id)
        @user_wants = User.find(x.user_wants_id)
@@ -147,10 +145,8 @@ class UsersController < ApplicationController
        else
         location_weight = 0.75
        end
-       binding.pry
       x.update_attribute(:score, (@user_has.interests & @user_wants.interests).length*(location_weight/@user_wants.interests.length) *100) 
     end  
-      binding.pry
     end
   end
   def find_matches user
