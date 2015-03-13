@@ -103,6 +103,7 @@ class UsersController < ApplicationController
     @user.interests =[]
     params[:user][:interests].each{|x| @user.interests << x}
     @user.update_attribute(:location, params[:user][:location])
+    update_score
     redirect_to user_home_path(session[:user_id])
   end
 
@@ -133,6 +134,25 @@ class UsersController < ApplicationController
   #   category: the resource category (string)
   #   you_have: boolean.  If true, the match is based on you having what the other user wants
   #
+  def update_score
+    @score = ResourcesUser.all
+    binding.pry
+    @score.each do |x|
+      binding.pry
+    unless x.user_has_id == nil
+       @user_has = User.find(x.user_has_id)
+       @user_wants = User.find(x.user_wants_id)
+       if @user_has.location == @user_wants.location 
+        location_weight = 1
+       else
+        location_weight = 0.75
+       end
+       binding.pry
+      x.update_attribute(:score, (@user_has.interests & @user_wants.interests).length*(location_weight/@user_wants.interests.length) *100) 
+    end  
+      binding.pry
+    end
+  end
   def find_matches user
     matches = []  # array of objects:
     # grab every item that pertains to you ...

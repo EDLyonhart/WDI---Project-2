@@ -9,7 +9,7 @@ class ResourcesController < ApplicationController
   end
 
   def newwant
-
+    binding.pry
   @resource = Resource.new
   @user = User.find(session[:user_id])
   categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
