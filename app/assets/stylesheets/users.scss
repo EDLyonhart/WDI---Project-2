@@ -1,11 +1,9 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+// You can use Sass (SCSS) here: http://sass-lang.com/
 
 
 .splash_background {
-  background-image: url('https://www.heystephanie.com/wp-content/uploads/2011/10/iStock_000009717214Medium.jpg');
-
   position: fixed;
   height: 500px;
   background-repeat: no-repeat;
@@ -21,10 +19,6 @@
   z-index: 1;
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cca658f146666c06211fb58f3f1416c9f1ddc375
 .splash_left, .splash_right {
   height: 1050px;
   top: 500px;
