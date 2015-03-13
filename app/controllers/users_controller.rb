@@ -61,7 +61,6 @@ class UsersController < ApplicationController
     # determine if the session user and the user whose profile is to be shown have matched
     # this will affect what's viewable on the profile page
     @match = two_users_matched @user, @session_user
-    binding.pry
   end
 
   def edit
@@ -153,7 +152,6 @@ class UsersController < ApplicationController
     # gather the relevant data entries.  there's probably a better way to do this
     resource_matches = (ResourcesUser.where(user_wants_id:user1.id, user_has_id:user2.id) +
       ResourcesUser.where(user_wants_id:user2.id, user_has_id:user1.id))
-    binding.pry
     # start by assuming a match exists
     match = true
     match = false if resource_matches.empty?
