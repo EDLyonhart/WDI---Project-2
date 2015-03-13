@@ -32,10 +32,9 @@ end
 def email
 @send_to_email = params[:user][:email]
 @sent_from_email = User.find(params[:from]).email
-@sent_from_email = "liescott@gmail.com"
+# @sent_from_email = "liescott@gmail.com"
 @message = params[:user][:first_name]
 @user1 = User.find(session[:user_id])
-binding.pry
 
 require 'mandrill'
   m = Mandrill::API.new
@@ -51,7 +50,6 @@ require 'mandrill'
   puts sending
 
 redirect_to user_show_path (params[:send_to])
-binding.pry
 end
 
 # def like_check
