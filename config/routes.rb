@@ -17,6 +17,11 @@ get '/users/:user_id/profile', to: 'users#show', as: "user_profile" # publicly v
 get '/users/:id/edit', to: 'users#edit', as: "user_edit" #Allows a user to edit profile page
 get '/users/:id/network', to: 'users#network', as: "user_network"
 
+# User Interests
+get '/users/:id/interests', to: 'users#interests', as: "user_interest" #Series of forms to capture users interests
+
+put '/users/:id', to: 'users#interests_add', as: "new_user_interest"
+
 # get '/users/:id/snippet', to: 'users#snippet', as: "snippet" #gets all Users and generates relevancy score to queue up carousel
 # get '/carousel', to: 'users#carousel', as: "carousel" #carousel test route
 
@@ -34,10 +39,10 @@ delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route nam
 # do we need to edit a resource?
 
 #Likes Routes
-put '/users/:user_wants_id/home/:user_has_id/:resource_category', to: 'likes#like', as: "like" #action to edit like_request:boolean to true
-put '/users/:user_has_id/home/:user_wants_id/:resource_category', to: 'likes#accept', as: "accept" #action to edit like_accept:boolean to true
-put '/users/:user_wants_id/home/:user_has_id/:resource_category/reject_has', to: 'likes#reject_has', as: "reject_has" #action to edit like_reject:boolean to true from Wants Carousel (i.e. User swiping through useres who have what they want)
-put '/users/:user_has_id/home/:user_wants_id/:resource_category/reject_wants', to: 'likes#reject_wants', as: "reject_wants"#action to edit like_reject:boolean to true from confirm Carousel (i.e. I have what user wants, and am rejecting his request to share)
+put '/likes/like', to: 'likes#like', as: "like" #action to edit like_request:boolean to true
+put '/likes/accept', to: 'likes#accept', as: "accept" #action to edit like_accept:boolean to true
+put '/likes/reject_has', to: 'likes#reject_has', as: "reject_has" #action to edit like_reject:boolean to true from Wants Carousel (i.e. User swiping through useres who have what they want)
+put '/likes/reject_wants', to: 'likes#reject_wants', as: "reject_wants"#action to edit like_reject:boolean to true from confirm Carousel (i.e. I have what user wants, and am rejecting his request to share)
 
 patch '/users/:id/likes/:like_id', to: 'likes#update', as: "reject_user_like"
 

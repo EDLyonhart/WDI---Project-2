@@ -1,18 +1,21 @@
 <%= render "partials/navbar" %>
 
 <div class="container">
-  <h2>New Want:</h2>
+  <div class="col-md-4 col-md-offset-4">
+    <h2>New Want:</h2>
 
-  <%= simple_form_for(@resource, url: new_user_resource_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
-  <div class="row">
-    <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-    <%= f.input :has, :as => :hidden, :input_html => { :value => :false } %>
-    <%= f.input :category, label:"Category: ", list:"categories", :collection => @available_resources  %>
+    <%= simple_form_for(@resource, url: new_user_resource_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
+    <div class="row">
+      <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+      <%= f.input :has, :as => :hidden, :input_html => { :value => :false } %>
+      <%= f.input :category, label:"Category: ", list:"categories", :collection => @available_resources  %>
+    </div>
+    <%= f.submit "Save your wants", class: 'btn btn-primary' %>
+    <% end %>
   </div>
-  <%= f.submit "Save your wants", class: 'btn btn-primary' %>
-  <% end %>
 </div>
-
-<div>
-  <%= button_to "Add offers", newhas_user_resource_path, :class => "button", :method => :get  %>
+<div class="container">
+    <div class="col-xs-1 col-xs-offset-8">
+    <%= button_to "Add offers", newhas_user_resource_path, :class => "btn btn-large btn-primary", :method => :get  %>
+  </div>
 </div>

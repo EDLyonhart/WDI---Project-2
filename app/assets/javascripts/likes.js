@@ -14,7 +14,7 @@ $( document ).ready(function() {
  console.log(values);
     
 $.ajax({
-  url: "/users/:user_has_id/reject_wants",
+  url: "/likes/reject_wants",
   type: 'PUT',
   data: {values:values},
   success: function(data) {alert("Request rejected!");
@@ -35,7 +35,7 @@ $(".reject_has").submit(function(e) {
  console.log(values);
     
 $.ajax({
-  url: "/users/:user_has_id/reject_has",
+  url: "/likes/reject_has",
   type: 'PUT',
   data: {values:values},
   success: function(data) 
@@ -59,7 +59,7 @@ $(".like").submit(function(e) {
  console.log(values);
     
 $.ajax({
-  url: "/users/:user_wants_id/home/:user_has_id/:resource_category",
+  url: "/likes/like",
   type: 'PUT',
   data: {values:values},
   success: function(data) {alert("User Liked!");
@@ -80,10 +80,11 @@ $(".accept").submit(function(e) {
  var values = {user_wants_id:user_wants_id, user_has_id:user_has_id, resource_category:resource_category};
  console.log(values);
 $.ajax({
-  url: "/users/:user_has_id/accept",
+  url: "/likes/accept",
   type: 'PUT',
   data: {values:values},
   success: function(data) {alert("Match Confirmed!");
+  location.reload();
   }
 });
 
