@@ -1,6 +1,8 @@
+<%= render "partials/navbar" %>
+
 <h2>Add an interest and your city:</h2>
 
-<div class="container">
+<div class="container std_background body_background">
 
 <%= form_for(@user, url: new_user_interest_path, method: :put ) do |f| %>
 
@@ -38,7 +40,7 @@
       </tr>
     </table>
 <hr>
-    <table class="interest interest_politics">  
+    <table class="interest interest_politics">
       <tr>
         <th></th>
         <th>Political Interests</th>
