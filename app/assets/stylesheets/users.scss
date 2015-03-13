@@ -1,23 +1,47 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+// You can use Sass (SCSS) here: http://sass-lang.com/
 
 
 .splash_background {
-  background-image: url('https://www.heystephanie.com/wp-content/uploads/2011/10/iStock_000009717214Medium.jpg');
+  position: fixed;
   height: 500px;
-  width: 100%;
+  background-repeat: no-repeat;
+  width: 93%;
 }
 
 .std_background {
-  height: 100%;
   width: 100%;
-  background-color: AliceBlue;
+  height: 1550px;
+  background-color: white;
   border-right: rgb(44, 62, 80) 10px solid;
   border-left: rgb(44, 62, 80) 10px solid;
-  border-bottom: rgb(44, 62, 80) 10px solid;
+  z-index: 1;
 }
 
+.splash_left, .splash_right {
+  height: 1050px;
+  top: 500px;
+  background: white;
+}
+
+.splash_left {
+  border-top: rgb(44, 62, 80) 3px solid;
+  border-right: rgb(44, 62, 80) 3px solid;
+  border-radius: 0 25px 0 0;  
+}
+
+.splash_right {
+  border-top: rgb(44, 62, 80) 3px solid;
+  border-left: rgb(44, 62, 80) 3px solid;
+  border-radius: 25px 0 0 0;   
+}
+
+
+.facebook {
+  text-align: center;
+  margin: 0 auto;
+}
 
 .loginHeading {
   position: absolute;
@@ -27,8 +51,6 @@
   width: 100%;
   height: 15%;
   text-align: left;
-  background-color: white;
-  opacity: 0.6;
   text-color: black;
 }
 
@@ -72,6 +94,14 @@ hr {
 .line2{
   line-height: 200%;
 }
+
+.navbar-bottom {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+}
+
+
 
 
 
