@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
 
   before_action :find_session_user, only: [:index, :edit, :update, :network]
-  before_action :find_user_by_route, only: [:matches]
+  # before_action :find_user_by_route, only: [:index]
 
   def index
-    # @user = session user
     @resources = @user.resources
     @matches = find_matches @user # an array of objects
     # @matches.sort_by! do |match|
@@ -137,10 +136,12 @@ class UsersController < ApplicationController
         # the matched user is the user who wants what you have
         match[:matched_user] = resource_match.user_wants_id
         match[:i_have] = true
+        match[:resource_id] = resource_match.resource_id
       else
         # the matched user is the user who has what you want
         match[:matched_user] = resource_match.user_has_id
         match[:i_have] = false
+        match[:resource_id] = resource_match.resource_id
       end
       match[:category] = resource_match.resource_category
       matches << match

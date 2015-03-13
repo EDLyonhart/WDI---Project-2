@@ -35,8 +35,9 @@ post '/users/:id/resources', to: 'resources#create', as: "new_user_resource"
 get '/users/:user_id/resources/:id', to: 'resources#show', as: "show_user_resource"
 
 get '/users/:user_id/resource/:id', to: 'resources#show', as: "user_resource"
-delete '/users/:user_id/resource/:id', to: 'resources#destroy' #shares route name with above
-# do we need to edit a resource?
+delete '/users/:user_id/resource/:id', to: 'resources#destroy'
+get '/users/:user_id/resources/:id/edit', to: 'resources#edit', as: "edit_user_resource"
+put 'users/:user_id/resources/:id', to: 'resources#update', as: "update_user_resource"
 
 #Likes Routes
 put '/likes/like', to: 'likes#like', as: "like" #action to edit like_request:boolean to true

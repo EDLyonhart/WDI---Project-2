@@ -15,29 +15,48 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+<div class="container std_background">
+
 <div class="container">
 
   <h2 class ="text-center"><%= @user.name %>'s Profile</h2>
   <br>
   <%= simple_form_for(@user, url: user_update_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f|%>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <%= f.input :name, label: "Name: ", readonly: true%>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <%= f.input :location, label: "Location: ", readonly: true%>
       </div>
       <!-- only display email address if the session user and profile user have matched -->
       <!-- or if the session user IS the profile user -->
 
       <% if @match || @user.id == session[:user_id] %>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <%= f.input :email, label: "Email: ", readonly: true%>
         </div>
       <% end %>
-      <p style="color: red">More detail here about user's haves and wants?</p>
     </div>
   <% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <br>
+      <!-- don't allow a user to create reviews for himself -->
+      <% unless @user.id == session[:user_id] %>
+        <!-- only allow users who have matched with the profile user to enter comments -->
+        <% if @match %>
+          <h3>Since you have matched with <%= @user.name %>, you may leave a review</h3>
+          <%= form_for [@user, Review.new], url: user_reviews_path(@user) do |f| %>
+            <%= f.text_area :content, :rows => 5, :cols => 60 %>
+            <br>
+            <%= f.submit "Add review" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-md-6">
@@ -48,21 +67,9 @@
         </p>
       <% end %>
     </div>
-    <div class="col-md-6">
-      <br><br>
-      <!-- don't allow a user to create reviews for himself -->
-      <% unless @user.id == session[:user_id] %>
-        <!-- only allow users who have matched with the profile user to enter comments -->
-        <% if @match %>
-          <%= form_for [@user, Review.new], url: user_reviews_path(@user) do |f| %>
-            <%= f.text_area :content, :rows => 5, :cols => 60 %>
-            <br>
-            <%= f.submit "Add review" %>
-          <% end %>
-        <% end %>
-      <% end %>
-    </div>
   </div>
+
+</div>
 
 </div>
 
