@@ -29,6 +29,31 @@ def reject_wants
   render nothing: true
 end
 
+def email
+@send_to_email = params[:user][:email]
+@sent_from_email = User.find(params[:from]).email
+@sent_from_email = "liescott@gmail.com"
+@message = params[:user][:first_name]
+@user1 = User.find(session[:user_id])
+binding.pry
+
+require 'mandrill'
+  m = Mandrill::API.new
+  message = {
+   :subject=> "Request to share from, #{@user1.first_name}!",
+   :from_name=> "The SHAREit Team",
+   :text=>"Sharing is caring!",
+   :to=> [email:@send_to_email],
+   :html=>"<html><h1>#{@message}<a href='https://coolest-tinder-for-sharing-app.herokuapp.com/#{@user1.id}/profile'> See #{@user1.first_name}'s profile!</a> </h1></html>",
+   :from_email=>@sent_from_email
+  }
+  sending = m.messages.send message
+  puts sending
+
+redirect_to user_show_path (params[:send_to])
+binding.pry
+end
+
 # def like_check
 #   #checks to see if there isr a match
 # @likee = User.find(params[:lrikee_id])

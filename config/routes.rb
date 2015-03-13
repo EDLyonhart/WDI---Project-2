@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   #Hidden Login Route
 get '/hidden/secret', to: 'users#hidden', as: 'hidden'
 post '/hidden/secret', to: 'users#secret' , as: 'secret'
+patch'email/:send_to/:from', to: 'likes#email', as:'email'
 
 # Users Routes
 root 'users#login'

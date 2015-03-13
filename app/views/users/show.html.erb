@@ -40,15 +40,27 @@
       </div>
 
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <br>
         <!-- don't allow a user to create reviews for himself -->
           <!-- only allow users who have matched with the profile user to enter comments -->
-            <h3>Since you have matched with <%= @user.name %>, you may leave a review</h3>
+            <h3>Leave <%= @user.first_name %> a review:</h3>
             <%= form_for [@user, Review.new], url: user_reviews_path(@user) do |f| %>
-              <%= f.text_area :content, :rows => 5, :cols => 60 %>
+              <%= f.text_area :content, :rows => 5, :cols => 40 %>
               <br>
               <%= f.submit "Add review" %>
+            <% end %>
+      </div>
+       <div class="col-md-4 col-md-offset-1">
+        <br>
+        <!-- don't allow a user to create reviews for himself -->
+          <!-- only allow users who have matched with the profile user to enter comments -->
+            <h3>Email <%= @user.first_name%>:</h3>
+            <%= form_for [@user], url: email_path(@user,session[:user_id]) do |f| %>
+              <%= f.text_area :first_name, :rows => 5, :cols => 60 %>
+               <%= f.hidden_field :email %>
+              <br>
+              <%= f.submit "Send" %>
             <% end %>
       </div>
     </div>
