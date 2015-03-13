@@ -4,25 +4,32 @@
 
 
 .splash_background {
+  position: fixed;
   background-image: url('http://www.heystephanie.com/wp-content/uploads/2011/10/iStock_000009717214Medium.jpg');
   height: 500px;
+  background-repeat: no-repeat;
   width: 100%;
 }
 
 .std_background {
-  height: 100%;
   width: 100%;
   background-color: AliceBlue;
   border-right: rgb(44, 62, 80) 10px solid;
   border-left: rgb(44, 62, 80) 10px solid;
   border-bottom: rgb(44, 62, 80) 10px solid;
+  z-index: 1;
 }
+
+.splash_left, .splash_right {
+  top: 500px;
+  background: AliceBlue;
+}
+
 
 .facebook {
   text-align: center;
   margin: 0 auto;
 }
-
 
 .loginHeading {
   position: absolute;
@@ -77,5 +84,14 @@ hr {
 .line2{
   line-height: 200%;
 }
+
+navbar-bottom {
+  position: fixed;
+  bottom: 0px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
 
 
