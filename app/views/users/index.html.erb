@@ -1,11 +1,12 @@
 <%= render "partials/navbar" %>
+
 <div class="container std_background">
 
   <div class="container">
   <br><br>
 
   <%= form_tag(user_matches_path(@user), method: "get") do %>
-    <%= label_tag(:category, "What are you looking for? ") %>
+    <%= label_tag(:category, "What are you looking for?") %>
     <%= text_field_tag(:category, "select a category", options= {list:"categories"}) %>
     <datalist id="categories">
       <% @avail_resources.each do |resource| %>
