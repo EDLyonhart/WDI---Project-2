@@ -95,6 +95,8 @@
         <br>
       </div>
     </div>
+
+    <!-- button start -->
     <div class="row">
       <div class = "col-md-offset-3">
         <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category", defaults: { error_html: { id: 'error' } }, :html => { :class => "like"}) do |f| %>
@@ -107,6 +109,7 @@
 
       </div>
     </div>
+
     <div class = "col-md-offset-3">
       <%= simple_form_for(@carousel_users, url: "/users/:user_has_id/reject_wants", defaults: { error_html: { id: 'error' } }, :html => {:class => "reject_wants"}) do |f| %>
 
