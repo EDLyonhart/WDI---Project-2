@@ -95,6 +95,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def interests
+    @user = User.find(session[:user_id])
+  end
+
+  def interests_add
+    @user = User.find(session[:user_id])
+    @user.interests =[]
+    params[:user][:interests].each{|x| @user.interests << x}
+    @user.update_attribute(:location, params[:user][:location])
+    redirect_to user_home_path(session[:user_id])
+  end
+
   def logout
     session[:user_id] = nil
     redirect_to login_path, notice: "You are now logged out!"

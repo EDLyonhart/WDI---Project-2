@@ -1,133 +1,132 @@
-<h2>Add an Interest:</h2>
+<h2>Add an interest and your city:</h2>
 
-<%= simple_form_for(@user, url: user_interest_path , defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f| %>
+<div class="container">
+
+<%= form_for(@user, url: new_user_interest_path, method: :put ) do |f| %>
+
 <div class="row">
-  <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-  <div class="col-md-3 col-md-offset-1 interest_dropdown">
-    <%= f.input :category, label:"Category: ", list:"categories", :collection => ['music', 'politics', 'physical activities', 'profession'] %>
-  </div>
-
-  <div class="col-md-5">
+  <div class="col-xs-3 col-xs-offset-1">
     <table class="interest interest_music">
       <tr>
         <th></th>
         <th>Musical Interests</th>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
-        <td>Rock</td>
+        <td><%= f.check_box :interests, {multiple: true}, "rock", nil %></td>
+        <td><%= f.label :rock%></td>
+
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "electronic", nil %></td>
         <td>Electronic</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "americana", nil %></td>
         <td>Americana</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "hip-hop", nil %></td>
         <td>Hip-Hop</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "classical", nil %></td>
         <td>Classical</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "indy", nil %></td>
         <td>Indy</td>
       </tr>
     </table>
-
+<hr>
     <table class="interest interest_politics">  
       <tr>
         <th></th>
         <th>Political Interests</th>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "socialism", nil %></td>
         <td>Socialism</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "liberatarianism", nil %></td>
         <td>Liberatarianism</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "leftwing", nil %></td>
         <td>Left Wing</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "rightwing", nil %></td>
         <td>Right Wing</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "ecoconscious", nil %></td>
         <td>Eco-Conscious</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "feminism", nil %></td>
         <td>Feminism</td>
       </tr>
     </table>
-
+<hr>
     <table class="interest interest_physical">
       <tr>
         <th></th>
         <th>Physical Activities</th>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "bicycling", nil %></td>
         <td>Bicycling</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "jogging", nil %></td>
         <td>Jogging</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "teamsports", nil %></td>
         <td>Team Sports</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "hiking", nil %></td>
         <td>Hiking</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "workingout", nil %></td>
         <td>Working Out</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "dancing", nil %></td>
         <td>Dancing</td>
       </tr>
     </table>
-
+<hr>
     <table class="interest interest_professional">
       <tr>
         <th></th>
         <th>Professional</th>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "tech", nil %></td>
         <td>Technology</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "labor", nil %></td>
         <td>Manual Labor</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "service", nil %></td>
         <td>Service/Retail</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "management", nil %></td>
         <td>Management</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "governmental", nil %></td>
         <td>Governmental</td>
       </tr>
       <tr>
-        <td><%= f.association :interests,   as: :check_boxes %></td>
+        <td><%= f.check_box :interests, {multiple: true}, "nonprofit", nil %></td>
         <td>Non-profit</td>
       </tr>
     </table>
@@ -136,18 +135,19 @@
   <br>
 
   <div class="row">
-    <%= f.input :user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-    <div class="col-md-3 col-md-offset-1 location_field">
-      <%= f.input :location %>
+    <div class="col-xs-2 col-xs-offset-1 location_field">
+      <%= f.label "City, State" %>
+      <%= f.text_field :location, :placeholder => 'eg: San Francisco, CA' %>
     </div>
   </div>
 
   <br>
 
   <div class="row">
-    <div class ="col-md-2">
+    <div class ="col-xs-2 col-md-offset-6">
       <%= f.submit "Save Interests and Location", class: 'btn btn-primary' %>
     </div>
   </div>
 </div>
 <% end %>
+</div>
