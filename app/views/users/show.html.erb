@@ -15,66 +15,62 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container">
+<div class="container std_background">
 
-  <h2 class ="text-center"><%= @user.name %>'s Profile</h2>
-  <br>
-  <%= simple_form_for(@user, url: user_update_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f|%>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <%= f.input :name, label: "Name: ", readonly: true%>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <%= f.input :location, label: "Location: ", readonly: true%>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-      <!-- only display email address if the session user and profile user have matched -->
-      <!-- or if the session user IS the profile user -->
+  <div class="container">
 
-      <% if @match || @user.id == session[:user_id] %>
-        <div class="col-md-4">
-          <%= f.input :email, label: "Email: ", readonly: true%>
+    <h2 class ="text-center"><%= @user.name %>'s Profile</h2>
+    <br>
+    <%= simple_form_for(@user, url: user_update_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f|%>
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.input :name, label: "Name: ", readonly: true%>
         </div>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-4">
+        <div class="col-md-3">
+          <%= f.input :location, label: "Location: ", readonly: true%>
+        </div>
+
+        <!-- only display email address if the session user and profile user have matched -->
+        <!-- or if the session user IS the profile user -->
+
+        <% if @match || @user.id == session[:user_id] %>
+          <div class="col-md-3">
+            <%= f.input :email, label: "Email: ", readonly: true%>
+          </div>
         <% end %>
-        <p style="color: red">More detail here about user's haves and wants?</p>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-6">
+        <br>
+        <!-- don't allow a user to create reviews for himself -->
+        <% unless @user.id == session[:user_id] %>
+          <!-- only allow users who have matched with the profile user to enter comments -->
+          <% if @match %>
+            <h3>Since you have matched with <%= @user.name %>, you may leave a review</h3>
+            <%= form_for [@user, Review.new], url: user_reviews_path(@user) do |f| %>
+              <%= f.text_area :content, :rows => 5, :cols => 60 %>
+              <br>
+              <%= f.submit "Add review" %>
+            <% end %>
+          <% end %>
+        <% end %>
       </div>
     </div>
-  </div>
-  <% end %>
-</div>
 
-<div class="row">
-  <div class="col-md-6">
-    <h3>Reviews for <%= @user.name %></h3>
-    <% @reviews.each do |review| %>
-    <p>
-      <%= review.content %> - <%= time_ago_in_words review.created_at %> ago by <strong><%= User.find(review.user_id).name %></strong>
-    </p>
-    <% end %>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Reviews for <%= @user.name %></h3>
+        <% @reviews.each do |review| %>
+        <p>
+          <%= review.content %> - <%= time_ago_in_words review.created_at %> ago by <strong><%= User.find(review.user_id).name %></strong>
+        </p>
+        <% end %>
+      </div>
+    </div>
+
   </div>
-  <div class="col-md-6">
-    <br><br>
-    <!-- don't allow a user to create reviews for himself -->
-    <% unless @user.id == session[:user_id] %>
-    <!-- only allow users who have matched with the profile user to enter comments -->
-    <% @user.likes.each do |like| %>
-    <% if like.likee == session[:user_id] && like.is_matched %>
-    <%= form_for [@user, Review.new], url: user_reviews_path(@user) do |f| %>
-    <%= f.text_area :content, :rows => 5, :cols => 60 %>
-    <br>
-    <%= f.submit "Add review" %>
-    <% end %>
-    <% end %>
-    <% end %>
-    <% end %>
-  </div>
-</div>
 
 </div>
 
