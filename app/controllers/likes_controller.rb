@@ -81,7 +81,7 @@ private
 #  :from_name=> "The SHAREit Team",
 #  :text=>"New Match!",
 #  :to=> [email:@user1.email],
-#  :html=>"<html><h1> Check out your new match! <a href='http://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
+#  :html=>"<html><h1> Check out your new match! <a href='https://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
 #  :from_email=>"gannavas@gmail.com"
 # }
 # sending = m.messages.send message
@@ -97,7 +97,7 @@ def like_email
    :from_name=> "The SHAREit Team",
    :text=>"New Like!",
    :to=> [email:@user1.email],
-   :html=>"<html><h1> Someone has liked your profile! <a href='http://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
+   :html=>"<html><h1> Someone has liked your profile! <a href='https://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
    :from_email=>"gannavas@gmail.com"
   }
   sending = m.messages.send message

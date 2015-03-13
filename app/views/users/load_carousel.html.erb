@@ -1,7 +1,7 @@
 <%= render "partials/header" %>
 <%= render "partials/navbar" %>
 
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 <div class="container-fluid">
   <div class = "col-md-8 col-md-offset-2">
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval = "5000">
@@ -42,22 +42,22 @@
           <div class="row">
           <div class=".col-xs-12">
           <div class = "col-md-offset-5">
-          <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-success like"}) do |f| %>
+          <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category", defaults: { error_html: { id: 'error' } }, :html => { :id => "like" }) do |f| %>
 
           <div class="button">
             <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
             <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => @carousel_users[0].id }%>
             <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
-            <%= f.submit "Like" %>
+            <%= f.submit "Like", class: "btn btn-success like"%>
             <% end %>
           </div>
         
-          <%= simple_form_for(@carousel_users, url: "/users/:user_has_id/reject_wants", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-danger reject_wants"}) do |f| %>
+          <%= simple_form_for(@carousel_users, url: "/users/:user_has_id/reject_wants", defaults: { error_html: { id: 'error' } }, :html => { :id => "like"}) do |f| %>
           <div class="button">
             <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
             <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => @carousel_users[0].id }%>
             <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
-            <%= f.submit "Pass" %>
+            <%= f.submit "Pass", class: "btn btn-danger like" %>
             <% end %>
 
           </div>
