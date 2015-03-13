@@ -11,16 +11,16 @@ class UsersController < ApplicationController
     #   match[:you_have] ? 1 : 0
     # end
     @like_requests = find_like_requests @user # an array of ResourcesUser objects
-  
+
     existing_categories = []
-  
+
     if @user.wants_bike == true
       existing_categories << "bike"
     end
 
     if @user.wants_vehicle == true
       existing_categories << "vehicle"
-    end 
+    end
 
     if @user.wants_social == true
       existing_categories << "social"
@@ -31,15 +31,12 @@ class UsersController < ApplicationController
     end
 
     if @user.wants_housing == true
-       existing_categories << "housing"
+     existing_categories << "housing"
     end
-
-   @avail_resources = existing_categories 
+    @avail_resources = existing_categories
   end
 
   def login
-
-  
   end
 
   def load_carousel
@@ -60,6 +57,10 @@ class UsersController < ApplicationController
     @user = User.find params[:user_id]
     # grab the reviews for the user to be shown
     @reviews = @user.reviews
+    @session_user = User.find session[:user_id]
+    # determine if the session user and the user whose profile is to be shown have matched
+    # this will affect what's viewable on the profile page
+    @match = two_users_match @user, @session_user
   end
 
   def edit
@@ -71,9 +72,9 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       if Resource.exists?(user_id: session[:user_id])
-      redirect_to user_home_path(@user), notice: "signed in!"
+        redirect_to user_home_path(@user), notice: "signed in!"
       else
-      redirect_to newwant_user_resource_path(@user)
+        redirect_to newwant_user_resource_path(@user)
       end
     else
       flash[:alert] = "Login Error"
@@ -117,6 +118,7 @@ class UsersController < ApplicationController
     resource_matches = resource_matches.select do |resource_match|
       resource_match.like_accept
     end
+
     resource_matches.each do |resource_match|
       match = {}
       if resource_match.user_has_id == user.id
@@ -132,6 +134,21 @@ class UsersController < ApplicationController
       matches << match
     end
     return matches
+  end
+
+  def two_users_match user1, user2
+    # gather the relevant data entries.  there's probably a better way to do this
+    resource_matches1 = ResourcesUser.where(user_wants_id:user1.id, user_has_id:user2.id)
+    resource_matches2 = ResourcesUser.where(user_wants_id:user2.id, user_has_id:user1.id)
+    resource_matches3 = resource_matches1 - resource_matches2
+    resource_matches = resource_matches3 + resource_matches2
+    # start by assuming a match exists
+    match = true
+    resource_matches.each do |resource_match|
+      # unless like_accept = false
+      match = false unless resource_match.like_accept
+    end
+    return match
   end
 
   def find_like_requests user
