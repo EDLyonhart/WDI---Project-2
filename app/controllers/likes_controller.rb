@@ -35,7 +35,6 @@ def email
 # @sent_from_email = "liescott@gmail.com"
 @message = params[:user][:first_name]
 @user1 = User.find(session[:user_id])
-
 require 'mandrill'
   m = Mandrill::API.new
   message = {
@@ -43,7 +42,7 @@ require 'mandrill'
    :from_name=> "The SHAREit Team",
    :text=>"Sharing is caring!",
    :to=> [email:@send_to_email],
-   :html=>"<html><h1>#{@message}<a href='https://coolest-tinder-for-sharing-app.herokuapp.com/#{@user1.id}/profile'> See #{@user1.first_name}'s profile!</a> </h1></html>",
+   :html=>"<html><h1>#{@message}<a href='https://coolest-tinder-for-sharing-app.herokuapp.com/users/#{params[:send_to]}/show'> See #{@user1.first_name}'s profile!</a> </h1></html>",
    :from_email=>@sent_from_email
   }
   sending = m.messages.send message
