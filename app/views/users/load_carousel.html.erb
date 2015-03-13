@@ -1,22 +1,25 @@
+<%= render "partials/header" %>
 <%= render "partials/navbar" %>
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 <div class="container-fluid">
   <div class = "col-md-8 col-md-offset-2">
     <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval = "5000">
 
-
       <!-- Wrapper for slides -->
       <div class="carousel-inner">
         <div class="item active">
-          <h1 class = "text-center"><%=@carousel_users[0].first_name %></h1>
+          <h1 class = "name text-center"><%=@carousel_users[0].first_name %></h1>
           <div class = "jumbotron">
             <div class = "col-md-2  col-md-offset-3 col-centered" >
               <div class = row>
-                <img id="hell" src="<%=@carousel_users[0].profile_pic %>?type=large" alt="...">
+                <img class="img-circle center-block" id="hell" src="<%=@carousel_users[0].profile_pic %>?type=large" alt="...">
               </div>
-              <br><Br>
+              <br>
+              <br>
             </div>
           </div>
+
 
           <div class="row">
             <div class ="col-md-8 col-md-offset-2">
@@ -32,87 +35,92 @@
               </tr>
               <% end %>
             </table>
-            <br><Br>
+            <br><br>
           </div>
         </div>
+
+        <!-- <div class="container-fluid"> -->
+
         <div class="row">
-         <div class = "col-md-offset-5">
-          <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary like"}) do |f| %>
-          <div class="row">
-            <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-            <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => @carousel_users[0].id }%>
-            <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
-            <%= f.submit "Like" %>
-            <% end %>
-
-          </div>
-        </div>
+          <div class=".col-xs-12">
             <div class = "col-md-offset-5">
-              <%= simple_form_for(@carousel_users, url: "/users/:user_has_id/reject_wants", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary reject_wants"}) do |f| %>
-          <div class="row">
-            <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-            <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => @carousel_users[0].id }%>
-            <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
-            <%= f.submit "Reject" %>
-            <% end %>
+              <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category", defaults: { error_html: { id: 'error' } }, :html => { :class => "like" }) do |f| %>
 
+              <div class="button">
+                <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+                <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => @carousel_users[0].id }%>
+                <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
+                <%= f.submit "Like", class: "btn btn-success"%>
+                <% end %>
+              </div>
+
+              <%= simple_form_for(@carousel_users, url: "/users/:user_has_id/reject_wants", defaults: { error_html: { id: 'error' } }, :html => { :class => "reject_wants"}) do |f| %>
+              <div class="button">
+                <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+                <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => @carousel_users[0].id }%>
+                <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
+                <%= f.submit "Pass", class: "btn btn-danger" %>
+                <% end %>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <% @match_list.each do |user| %>
-    <div class="item">
-     <h1 class = "text-center"><%=user.first_name %></h1>
-     <div class = "jumbotron">
-       <div class = "col-md-2  col-md-offset-3 col-centered" >
-        <div class = row>
-          <img id ="hell" src="<%=user.profile_pic %>?type=large" alt="...">
-        </div>
-        <br><Br>
-      </div> 
+
+      <% @match_list.each do |user| %>
+      <div class="item">
+       <h1 class = "text-center"><%=user.first_name %></h1>
+       <div class = "jumbotron">
+         <div class = "col-md-2  col-md-offset-3 col-centered" >
+          <div class = row>
+            <img class = "img-circle center-block" id ="hell" src="<%=user.profile_pic %>?type=large" alt="...">
+          </div>
+          <br><br>
+        </div> 
+      </div>
+      <div class="row">
+        <div class ="col-md-8 col-md-offset-2">
+         <table class ="table table-striped">
+          <tr>
+            <th>Have?</th>
+            <th>Category</th>
+          </tr>
+          <% user.resources.each do |resource| %>
+          <tr>
+            <td><%= resource.has %></td>
+            <td><%= resource.category %></td>
+          </tr>
+          <% end %>
+        </table>
+        <br>
+      </div>
     </div>
     <div class="row">
-      <div class ="col-md-8 col-md-offset-2">
-       <table class ="table table-striped">
-        <tr>
-          <th>Have?</th>
-          <th>Category</th>
-        </tr>
-        <% user.resources.each do |resource| %>
-        <tr>
-          <td><%= resource.has %></td>
-          <td><%= resource.category %></td>
-        </tr>
-        <% end %>
-      </table>
-      <br><Br>
-    </div>
-  </div>
-  <div class="row">
-    <div class = "col-md-offset-3">
-      <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary like"}) do |f| %>
-      <div class="row">
+          <div class=".col-xs-12">
+            <div class = "col-md-offset-5">
+        <%= simple_form_for(@carousel_users, url: "/users/:user_wants_id/home/:user_has_id/:resource_category", defaults: { error_html: { id: 'error' } }, :html => { :class => "like"}) do |f| %>
+        <div class="button">
         <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
         <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => user.id }%>
         <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
-        <%= f.submit "Like" %>
+        <%= f.submit "Like", class: "btn btn-success"%>
         <% end %>
+        </div>
 
-      </div>
-    </div>
-    <div class = "col-md-offset-3">
-    <%= simple_form_for(@carousel_users, url: "/users/:user_has_id/reject_wants", defaults: { error_html: { id: 'error' } }, :html => { :id => "like", :class => "btn btn-primary reject_wants"}) do |f| %>
-      <div class="row">
-        <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-        <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => user.id }%>
-        <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
-        <%= f.submit "Reject" %>
-        <% end %>
+      <%= simple_form_for(@carousel_users, url: "/users/:user_has_id/reject_wants", defaults: { error_html: { id: 'error' } }, :html => {:class => "reject_wants"}) do |f| %>
+    <div class="button">
 
+      <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
+      <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => user.id }%>
+      <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
+      <%= f.submit "Pass", class: "btn btn-danger" %>
+      <% end %>
       </div>
-    </div>
   </div>
+</div>
+</div>
 </div>
 <% end %>
 
@@ -120,8 +128,13 @@
 <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 </a>
+
 <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
   <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 </a>
-</div>
+
 </div> <!-- Carousel -->
+</div>
+</div> 
+
+

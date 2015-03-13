@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  #Hidden Login Route
+get '/hidden/secret', to: 'users#hidden', as: 'hidden'
+post '/hidden/secret', to: 'users#secret' , as: 'secret'
 
 # Users Routes
 root 'users#login'

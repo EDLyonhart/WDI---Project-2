@@ -100,7 +100,7 @@ class ResourcesController < ApplicationController
         #end of scoring algo
         end
         ResourcesUser.create(user_wants_id:user.id,user_has_id: @user.id,
-          score: (user.interests & @user.interests).length*location_weight, resource_category: resource_params[:category], resource_id: @resource.id)
+          score: (user.interests & @user.interests).length*location_weight/user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
         end
         @user.update_attribute(has_category.to_sym, true)
         else
@@ -113,7 +113,7 @@ class ResourcesController < ApplicationController
         #end of scoring algo
         end
         ResourcesUser.create(user_has_id:user.id,user_wants_id: @user.id,
-          score: (@user.interests & user.interests).length*location_weight, resource_category: resource_params[:category], resource_id: @resource.id)
+          score: (@user.interests & user.interests).length*location_weight/@user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
         end
         @user.update_attribute(wants_category.to_sym, true)
         end

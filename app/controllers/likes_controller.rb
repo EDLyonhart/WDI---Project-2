@@ -6,7 +6,7 @@ mandrill = Mandrill::API.new ENV["MANDRIL_APIKEY"]
 def like
   @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
   @resources_user.first.update_attribute(:like_request, true)
-  like_email
+  # like_email
   flash.now[:alert] =  "User Liked!"
   render nothing: true
 end
@@ -81,7 +81,7 @@ private
 #  :from_name=> "The SHAREit Team",
 #  :text=>"New Match!",
 #  :to=> [email:@user1.email],
-#  :html=>"<html><h1> Check out your new match! <a href='http://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
+#  :html=>"<html><h1> Check out your new match! <a href='https://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
 #  :from_email=>"gannavas@gmail.com"
 # }
 # sending = m.messages.send message
@@ -97,7 +97,7 @@ def like_email
    :from_name=> "The SHAREit Team",
    :text=>"New Like!",
    :to=> [email:@user1.email],
-   :html=>"<html><h1> Someone has liked your profile! <a href='http://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
+   :html=>"<html><h1> Someone has liked your profile! <a href='https://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
    :from_email=>"gannavas@gmail.com"
   }
   sending = m.messages.send message

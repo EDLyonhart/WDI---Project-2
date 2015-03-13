@@ -111,6 +111,18 @@ class UsersController < ApplicationController
     redirect_to login_path, notice: "You are now logged out!"
   end
 
+  def hidden
+    @user = User.new
+
+  end
+
+  def secret
+    binding.pry
+  @user = User.find_by(email:params[:user][:email])
+  session[:user_id] = @user.id
+  redirect_to user_home_path(@user)
+  end
+
   private
 
   #
