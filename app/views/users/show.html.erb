@@ -33,29 +33,23 @@
         <!-- only display email address if the session user and profile user have matched -->
         <!-- or if the session user IS the profile user -->
 
-        <% if @match || @user.id == session[:user_id] %>
           <div class="col-md-3">
             <%= f.input :email, label: "Email: ", readonly: true%>
           </div>
         <% end %>
       </div>
-    <% end %>
 
     <div class="row">
       <div class="col-md-6">
         <br>
         <!-- don't allow a user to create reviews for himself -->
-        <% unless @user.id == session[:user_id] %>
           <!-- only allow users who have matched with the profile user to enter comments -->
-          <% if @match %>
             <h3>Since you have matched with <%= @user.name %>, you may leave a review</h3>
             <%= form_for [@user, Review.new], url: user_reviews_path(@user) do |f| %>
               <%= f.text_area :content, :rows => 5, :cols => 60 %>
               <br>
               <%= f.submit "Add review" %>
             <% end %>
-          <% end %>
-        <% end %>
       </div>
     </div>
 
