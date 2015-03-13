@@ -6,7 +6,7 @@ mandrill = Mandrill::API.new ENV["MANDRIL_APIKEY"]
 def like
   @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
   @resources_user.first.update_attribute(:like_request, true)
-  like_email
+  # like_email
   flash.now[:alert] =  "User Liked!"
   render nothing: true
 end
