@@ -60,7 +60,8 @@ class UsersController < ApplicationController
     @session_user = User.find session[:user_id]
     # determine if the session user and the user whose profile is to be shown have matched
     # this will affect what's viewable on the profile page
-    @match = two_users_match @user, @session_user
+    @match = two_users_matched @user, @session_user
+    binding.pry
   end
 
   def edit
@@ -148,14 +149,14 @@ class UsersController < ApplicationController
     return matches
   end
 
-  def two_users_match user1, user2
+  def two_users_matched user1, user2
     # gather the relevant data entries.  there's probably a better way to do this
-    resource_matches1 = ResourcesUser.where(user_wants_id:user1.id, user_has_id:user2.id)
-    resource_matches2 = ResourcesUser.where(user_wants_id:user2.id, user_has_id:user1.id)
-    resource_matches3 = resource_matches1 - resource_matches2
-    resource_matches = resource_matches3 + resource_matches2
+    resource_matches = (ResourcesUser.where(user_wants_id:user1.id, user_has_id:user2.id) +
+      ResourcesUser.where(user_wants_id:user2.id, user_has_id:user1.id))
+    binding.pry
     # start by assuming a match exists
     match = true
+    match = false if resource_matches.empty?
     resource_matches.each do |resource_match|
       # unless like_accept = false
       match = false unless resource_match.like_accept
