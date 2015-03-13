@@ -1,16 +1,36 @@
-#hell{ width: 300%;
-    
+.name {
+  text-align: center;
 }
+
+#hell{ 
+width: 300%;
+margin: 0 auto;   
+}
+
 .btn-lg {
   width:200%
 }
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+ }
 
 .loginHeading {
   font-size: 80px;
   text-align: center;
 }
 
-.tabel th {
-
+.table th {
   text-align:center;
 }
+
+.table td {
+  text-align: center;
+}
+
+.table {
+  border: invisible;
+}
+
