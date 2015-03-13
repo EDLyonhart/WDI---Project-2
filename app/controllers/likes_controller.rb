@@ -48,6 +48,7 @@ require 'mandrill'
   sending = m.messages.send message
   puts sending
 
+flash[:alert] =  "Message Sent!"
 redirect_to user_show_path (params[:send_to])
 end
 
