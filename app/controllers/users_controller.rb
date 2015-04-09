@@ -44,6 +44,7 @@ class UsersController < ApplicationController
     @has_users = ResourcesUser.wanted_by_and_categorized_by(session[:user_id], @filter).not_liked.order(score: :desc)
     @carousel_users = @has_users.map{|owner| owner.owning_user}
     @match_list = @carousel_users - [@carousel_users.first]
+    binding.pry
     if @carousel_users == []
       flash[:alert] = "No current owners with #{@filter}. Check back soon to browse and share!"
       redirect_to user_home_path(session[:user_id])

@@ -68,7 +68,7 @@
         </div>
       </div>
 
-
+      <% unless @match_list == [] %>
       <% @match_list.each do |user| %>
       <div class="item">
        <h1 class = "text-center"><%=user.first_name %></h1>
@@ -92,6 +92,7 @@
             <td><%= resource.has %></td>
             <td><%= resource.category %></td>
           </tr>
+          <% end %>
           <% end %>
         </table>
         <br>
@@ -125,8 +126,9 @@
 </div>
 </div>
 </div>
-<% end %>
 
+<% end %>
+</div>
 <!-- Controls -->
 <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
