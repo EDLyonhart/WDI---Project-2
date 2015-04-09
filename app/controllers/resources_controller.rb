@@ -79,6 +79,7 @@ class ResourcesController < ApplicationController
   end
 
   def create
+    binding.pry
     if params["resource"]["category"] == ""
       flash[:alert] = "Please enter a resource."
        redirect_to :back
@@ -103,9 +104,8 @@ class ResourcesController < ApplicationController
           location_weight = 0.75
         #end of scoring algo
         end
-
         ResourcesUser.create(user_wants_id:user.id,user_has_id: @user.id,
-          score: (user.interests & @user.interests).length*location_weight/user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
+          score: 100 * ((user.interests & @user.interests).length*location_weight/user.interests.length), resource_category: resource_params[:category], resource_id: @resource.id)
         end
         @user.update_attribute(has_category.to_sym, true)
         else
@@ -117,9 +117,8 @@ class ResourcesController < ApplicationController
           location_weight = 0.75
         #end of scoring algo
         end
-      
         ResourcesUser.create(user_has_id:user.id,user_wants_id: @user.id,
-          score: (@user.interests & user.interests).length*location_weight/@user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
+          score: 100 * ((@user.interests & user.interests).length*location_weight/@user.interests.length), resource_category: resource_params[:category], resource_id: @resource.id)
         end
         @user.update_attribute(wants_category.to_sym, true)
         end
