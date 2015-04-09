@@ -9,7 +9,6 @@ class ResourcesController < ApplicationController
   end
 
   def newwant
-    binding.pry
   @resource = Resource.new
   @user = User.find(session[:user_id])
   categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
@@ -80,6 +79,11 @@ class ResourcesController < ApplicationController
   end
 
   def create
+    if params["resource"]["category"] == ""
+      flash[:alert] = "Please enter a resource."
+       redirect_to :back
+    else
+
     has_category = "has_#{resource_params[:category]}"
     wants_category = "wants_#{resource_params[:category]}"
     @resource = Resource.new resource_params
@@ -99,6 +103,7 @@ class ResourcesController < ApplicationController
           location_weight = 0.75
         #end of scoring algo
         end
+
         ResourcesUser.create(user_wants_id:user.id,user_has_id: @user.id,
           score: (user.interests & @user.interests).length*location_weight/user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
         end
@@ -112,6 +117,7 @@ class ResourcesController < ApplicationController
           location_weight = 0.75
         #end of scoring algo
         end
+      
         ResourcesUser.create(user_has_id:user.id,user_wants_id: @user.id,
           score: (@user.interests & user.interests).length*location_weight/@user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
         end
@@ -132,6 +138,7 @@ class ResourcesController < ApplicationController
       render :new
     end
   end
+end
 
   # all you can udpate is the description
   # or you can just delete it
