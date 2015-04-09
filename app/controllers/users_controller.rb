@@ -118,7 +118,6 @@ class UsersController < ApplicationController
   end
 
   def secret
-    binding.pry
   @user = User.find_by(email:params[:user][:email])
   session[:user_id] = @user.id
   redirect_to user_home_path(@user)

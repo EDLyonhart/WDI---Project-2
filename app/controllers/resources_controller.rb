@@ -9,10 +9,10 @@ class ResourcesController < ApplicationController
   end
 
   def newwant
-  @resource = Resource.new
-  @user = User.find(session[:user_id])
-  categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
-  existing_categories = []
+    @resource = Resource.new
+    @user = User.find(session[:user_id])
+    categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
+    existing_categories = []
     if @user.wants_bike == true
       existing_categories << "bike"
     end
@@ -30,59 +30,59 @@ class ResourcesController < ApplicationController
     end
 
     if @user.wants_housing == true
-       existing_categories << "housing"
-    end
+     existing_categories << "housing"
+   end
 
    @available_resources = categories - existing_categories
-  end
+ end
 
-  def newhas
+ def newhas
   @resource = Resource.new
   @user = User.find(session[:user_id])
   categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
   existing_categories = []
-    if @user.has_bike == true
-      existing_categories << "bike"
-    end
-
-    if @user.has_vehicle == true
-      existing_categories << "vehicle"
-    end
-
-    if @user.has_social == true
-      existing_categories << "social"
-    end
-
-    if @user.has_pet == true
-      existing_categories << "pet"
-    end
-
-    if @user.has_housing == true
-       existing_categories << "housing"
-    end
-
-   @available_resources = categories - existing_categories
-
+  if @user.has_bike == true
+    existing_categories << "bike"
   end
 
-  def show
-    @user = User.find params[:user_id]
-    @resource = Resource.find params[:id]
-    @session_user = User.find session[:user_id]
-    @reviews = @resource.reviews
-    @match = two_users_matched @user, @session_user
+  if @user.has_vehicle == true
+    existing_categories << "vehicle"
   end
 
-  def edit
-    @user = User.find params[:user_id]
-    @resource = Resource.find params[:id]
+  if @user.has_social == true
+    existing_categories << "social"
   end
 
-  def create
-    if params["resource"]["category"] == ""
-      flash[:alert] = "Please enter a resource."
-       redirect_to :back
-    else
+  if @user.has_pet == true
+    existing_categories << "pet"
+  end
+
+  if @user.has_housing == true
+   existing_categories << "housing"
+ end
+
+ @available_resources = categories - existing_categories
+
+end
+
+def show
+  @user = User.find params[:user_id]
+  @resource = Resource.find params[:id]
+  @session_user = User.find session[:user_id]
+  @reviews = @resource.reviews
+  @match = two_users_matched @user, @session_user
+end
+
+def edit
+  @user = User.find params[:user_id]
+  @resource = Resource.find params[:id]
+end
+
+def create
+  if params["resource"]["category"] == ""
+    flash[:alert] = "Please enter a resource."
+    redirect_to :back
+  else
 
     has_category = "has_#{resource_params[:category]}"
     wants_category = "wants_#{resource_params[:category]}"
@@ -97,32 +97,32 @@ class ResourcesController < ApplicationController
         if resource_params[:has] == "true"
         #creating joint table row + scoring interest overlap
         @wants_resource.each do |user|
-        if user.location == @user.location
-          location_weight = 1
-        else
-          location_weight = 0.75
+          if user.location == @user.location
+            location_weight = 1
+          else
+            location_weight = 0.75
         #end of scoring algo
-        end
+      end
 
-        ResourcesUser.create(user_wants_id:user.id,user_has_id: @user.id,
-          score: (user.interests & @user.interests).length*location_weight/user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
-        end
-        @user.update_attribute(has_category.to_sym, true)
-        else
+      ResourcesUser.create(user_wants_id:user.id,user_has_id: @user.id,
+        score: (user.interests & @user.interests).length*location_weight/user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
+    end
+    @user.update_attribute(has_category.to_sym, true)
+  else
         #creating joint table row + scoring interest overlap
         @has_resource.each do |user|
-        if @user.location == user.location
-          location_weight = 1
-        else
-          location_weight = 0.75
+          if @user.location == user.location
+            location_weight = 1
+          else
+            location_weight = 0.75
         #end of scoring algo
-        end
+      end
       
-        ResourcesUser.create(user_has_id:user.id,user_wants_id: @user.id,
-          score: (@user.interests & user.interests).length*location_weight/@user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
-        end
-        @user.update_attribute(wants_category.to_sym, true)
-        end
+      ResourcesUser.create(user_has_id:user.id,user_wants_id: @user.id,
+        score: (@user.interests & user.interests).length*location_weight/@user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
+    end
+    @user.update_attribute(wants_category.to_sym, true)
+  end
         #end of updating category booleans in users table
         if resource_params[:has] == "true"
           redirect_to newhas_user_resource_path @user
@@ -165,17 +165,17 @@ end
       redirect_to user_home_path
     else
       # below will update category booleans in users table
-       if resource.has
+      if resource.has
         @user.update_attribute(has_category.to_sym, false)
         #deleting joint table entries when a has is removed
         @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_has_id: @user.id)
         @resourceusers.destroy_all
-        else
+      else
         @user.update_attribute(wants_category.to_sym, false)
         #deleting joint table entries when a want is removed
         @resourceusers = ResourcesUser.where(resource_category: resource.category).where(user_wants_id: @user.id)
         @resourceusers.destroy_all
-       end
+      end
         #end of updating category booleans in users table
       # update_user_table @user, resource, "remove"
       resource.destroy
