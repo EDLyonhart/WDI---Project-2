@@ -30,9 +30,15 @@
               </tr>
               <% @carousel_users[0].resources.each do |resource| %>
               <tr>
-                <td><%= resource.has %></td>
+              <% if resource.has? %>
+                <td>Yes</td>
                 <td><%= resource.category %></td>
               </tr>
+              <% else %>
+                <td>No</td>
+                <td><%= resource.category %></td>
+              </tr>
+              <% end %>
               <% end %>
             </table>
             <br><br>
