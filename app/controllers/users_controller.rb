@@ -44,7 +44,6 @@ class UsersController < ApplicationController
     @has_users = ResourcesUser.wanted_by_and_categorized_by(session[:user_id], @filter).not_liked.order(score: :desc)
     @carousel_users = @has_users.map{|owner| owner.owning_user}
     @match_list = @carousel_users - [@carousel_users.first]
-    binding.pry
     if @carousel_users == []
       flash[:alert] = "No current owners with #{@filter}. Check back soon to browse and share!"
       redirect_to user_home_path(session[:user_id])
@@ -119,7 +118,6 @@ class UsersController < ApplicationController
   end
 
   def secret
-    binding.pry
   @user = User.find_by(email:params[:user][:email])
   session[:user_id] = @user.id
   redirect_to user_home_path(@user)
@@ -141,13 +139,13 @@ class UsersController < ApplicationController
     unless x.user_has_id == nil
        @user_has = User.find(x.user_has_id)
        @user_wants = User.find(x.user_wants_id)
-       if @user_has.location == @user_wants.location 
+       if @user_has.location == @user_wants.location
         location_weight = 1
        else
         location_weight = 0.75
        end
-      x.update_attribute(:score, (@user_has.interests & @user_wants.interests).length*(location_weight/@user_wants.interests.length) *100) 
-    end  
+      x.update_attribute(:score, (@user_has.interests & @user_wants.interests).length*(location_weight/@user_wants.interests.length) *100)
+    end
     end
   end
   def find_matches user
