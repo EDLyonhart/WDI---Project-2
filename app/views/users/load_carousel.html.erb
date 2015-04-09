@@ -68,7 +68,7 @@
         </div>
       </div>
 
-
+      <% unless @match_list == [] %>
       <% @match_list.each do |user| %>
       <div class="item">
        <h1 class = "text-center"><%=user.first_name %></h1>
@@ -93,10 +93,13 @@
             <td><%= resource.category %></td>
           </tr>
           <% end %>
+          <% end %>
         </table>
         <br>
       </div>
     </div>
+
+    <!-- button start -->
     <div class="row">
           <div class=".col-xs-12">
             <div class = "col-md-offset-5">
@@ -108,6 +111,7 @@
         <%= f.submit "Like", class: "btn btn-success"%>
         <% end %>
         </div>
+
 
       <%= simple_form_for(@carousel_users, url: "/users/:user_has_id/reject_wants", defaults: { error_html: { id: 'error' } }, :html => {:class => "reject_wants"}) do |f| %>
     <div class="button">
@@ -122,8 +126,9 @@
 </div>
 </div>
 </div>
-<% end %>
 
+<% end %>
+</div>
 <!-- Controls -->
 <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
