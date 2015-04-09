@@ -16,52 +16,53 @@
   </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container">
+<div class="container std_background body_background">
 
-  <h2 class ="text-center">Edit Profile</h2>
-  <br>
+  <div class="container">
 
-  <%= simple_form_for(@user, url: user_update_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f|%>
-    <div class="row">
-      <div class="col-md-3">
-        <%= f.input :first_name, label: "First name: "%>
-        <br>
-      </div>
-      <div class="col-md-3" col-md-offset-1>
-        <%= f.input :last_name, label: "Last name: "%>
-        <br>
-      </div>
-      <div class="col-md-3">
-        <%= f.input :location, label: "Location: "%>
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        <%= f.input :email, label: "Email: "%>
-        <br>
-      </div>
-      <div class="col-md-3" col-md-offset-1>
-        <%= f.input :nickname, label: "Nickname: "%>
-        <br>
-      </div>
-    </div>
-    <div class="row">
-      <div class = "col-md-2">
-        <%= link_to('Cancel', user_home_path(@user), {class: "btn btn-primary"}) %>
-      </div>
-      <div class ="col-md-2 col-md-offset-4">
-        <%= f.submit "Save changes", class: 'btn btn-primary' %>
-      </div>
-      <div class = "col-md-2">
-        <%= link_to('View your public profile', user_profile_path(@user), {class: "btn btn-primary"}) %>
-      </div>
-    </div>
-  <% end %>
-  <br>
+    <h2 class ="text-center">Edit Profile</h2>
+    <br>
 
-  <div class ="row">
+    <%= simple_form_for(@user, url: user_update_path(@user), defaults: { error_html: { id: 'error' } }, :html => { :class => "form-group"}) do |f|%>
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.input :first_name, label: "First name: "%>
+          <br>
+        </div>
+        <div class="col-md-3" col-md-offset-1>
+          <%= f.input :last_name, label: "Last name: "%>
+          <br>
+        </div>
+        <div class="col-md-3">
+          <%= f.input :location, label: "Location: "%>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <%= f.input :email, label: "Email: "%>
+          <br>
+        </div>
+        <div class="col-md-3" col-md-offset-1>
+          <%= f.input :nickname, label: "Nickname: "%>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class = "col-md-2">
+          <%= link_to('Cancel', user_home_path(@user), {class: "btn btn-primary"}) %>
+        </div>
+        <div class ="col-md-2 col-md-offset-4">
+          <%= f.submit "Save changes", class: 'btn btn-primary' %>
+        </div>
+        <div class = "col-md-2">
+          <%= link_to('View your public profile', user_profile_path(@user), {class: "btn btn-primary"}) %>
+        </div>
+      </div>
+    <% end %>
+    <br>
 
   </div>
+</div>
   <br>
 

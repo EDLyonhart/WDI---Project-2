@@ -1,13 +1,15 @@
 class ResourcesController < ApplicationController
 
-  before_action :find_user, only: [:index, :new, :create, :destroy, :update_user_table]
+  # why are we defining the user in terms of the session??
+  before_action :find_user, only: [:index, :new, :create, :destroy]
+  before_action :find_resource, only: [:update]
 
   def index
     @resources = @user.resources
   end
 
   def newwant
-
+    binding.pry
   @resource = Resource.new
   @user = User.find(session[:user_id])
   categories = ['bike', 'vehicle', 'social', 'pet', 'housing']
@@ -18,7 +20,7 @@ class ResourcesController < ApplicationController
 
     if @user.wants_vehicle == true
       existing_categories << "vehicle"
-    end 
+    end
 
     if @user.wants_social == true
       existing_categories << "social"
@@ -32,7 +34,7 @@ class ResourcesController < ApplicationController
        existing_categories << "housing"
     end
 
-   @available_resources = categories - existing_categories 
+   @available_resources = categories - existing_categories
   end
 
   def newhas
@@ -46,7 +48,7 @@ class ResourcesController < ApplicationController
 
     if @user.has_vehicle == true
       existing_categories << "vehicle"
-    end 
+    end
 
     if @user.has_social == true
       existing_categories << "social"
@@ -60,11 +62,19 @@ class ResourcesController < ApplicationController
        existing_categories << "housing"
     end
 
-   @available_resources = categories - existing_categories 
+   @available_resources = categories - existing_categories
 
   end
 
   def show
+    @user = User.find params[:user_id]
+    @resource = Resource.find params[:id]
+    @session_user = User.find session[:user_id]
+    @reviews = @resource.reviews
+    @match = two_users_matched @user, @session_user
+  end
+
+  def edit
     @user = User.find params[:user_id]
     @resource = Resource.find params[:id]
   end
@@ -90,7 +100,7 @@ class ResourcesController < ApplicationController
         #end of scoring algo
         end
         ResourcesUser.create(user_wants_id:user.id,user_has_id: @user.id,
-          score: (user.interests & @user.interests).length*location_weight, resource_category: resource_params[:category], resource_id: @resource.id)
+          score: (user.interests & @user.interests).length*location_weight/user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
         end
         @user.update_attribute(has_category.to_sym, true)
         else
@@ -103,16 +113,16 @@ class ResourcesController < ApplicationController
         #end of scoring algo
         end
         ResourcesUser.create(user_has_id:user.id,user_wants_id: @user.id,
-          score: (@user.interests & user.interests).length*location_weight, resource_category: resource_params[:category], resource_id: @resource.id)
+          score: (@user.interests & user.interests).length*location_weight/@user.interests.length, resource_category: resource_params[:category], resource_id: @resource.id)
         end
         @user.update_attribute(wants_category.to_sym, true)
         end
         #end of updating category booleans in users table
         if resource_params[:has] == "true"
           redirect_to newhas_user_resource_path @user
-        else 
+        else
           redirect_to newwant_user_resource_path @user
-        end      
+        end
       else
         flash.now[:alert] = "Please correct the following input errors"
         render :new
@@ -120,6 +130,20 @@ class ResourcesController < ApplicationController
     else
       flash.now[:alert] = "You have already created that resource"
       render :new
+    end
+  end
+
+  # all you can udpate is the description
+  # or you can just delete it
+  def update
+    @user = User.find params[:user_id]
+    @resource.update_attributes(description: params[:resource][:description])
+    if @resource.save
+      flash[:notice] = "Shareable description updated"
+      redirect_to show_user_resource_path(@user, @resource)
+    else
+      flash.now[:alert] = "Something went wrong"
+      render :edit
     end
   end
 
@@ -154,6 +178,20 @@ class ResourcesController < ApplicationController
 
   private
 
+  def two_users_matched user1, user2
+    # gather the relevant data entries.  there's probably a better way to do this
+    resource_matches = (ResourcesUser.where(user_wants_id:user1.id, user_has_id:user2.id) +
+      ResourcesUser.where(user_wants_id:user2.id, user_has_id:user1.id))
+    # start by assuming a match exists
+    match = true
+    match = false if resource_matches.empty?
+    resource_matches.each do |resource_match|
+      # unless like_accept = false
+      match = false unless resource_match.like_accept
+    end
+    return match
+  end
+
   def resource_exists user, new_resource
     unless user.resources.empty?
       user.resources.each do |resource|
@@ -172,8 +210,12 @@ class ResourcesController < ApplicationController
     @user = User.find session[:user_id]
   end
 
+  def find_resource
+    @resource = Resource.find params[:id]
+  end
+
   def resource_params
-    params.require(:resource).permit(:user_id, :category, :has)
+    params.require(:resource).permit(:user_id, :category, :has, :description)
   end
 
 end

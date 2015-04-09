@@ -1,6 +1,56 @@
-<div class="container">
+<%= render "partials/navbar" %>
 
-  <p><%= @user.name %></p>
-  <p><%= @resource.description %></p>
+<div class="container std_background">
+
+  <div class="container">
+  <br>
+
+    <% if @user == @session_user %>
+      <h2>This '<%= @resource.category %>' shareable is being offered by you</h2>
+      <h3><%= link_to "Edit", edit_user_resource_path(@user, @resource) %> Description:</h3>
+    <% else %>
+      <h2>This '<%= @resource.category %>' shareable is being offered by <%= @user.name %></h2>
+      <h3>Description:</h3>
+    <% end %>
+
+    <p>"<%= @resource.description %>"</p>
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <br><br>
+        <!-- don't allow a user to create reviews for himself -->
+        <% unless @user.id == session[:user_id] %>
+          <!-- only allow users who have matched with the profile user to enter comments -->
+          <% if @match && !(ResourcesUser.where(user_wants_id:session[:user_id], user_has_id:@user.id, resource_category:"#{@resource.category}", like_accept:true).empty?) %>
+            <h3>Since you have matched with <%= @user.name %> in category '<%= @resource.category %>', you may leave a review</h3>
+            <%= form_for [@user, @resource, Review.new] do |f| %>
+              <%= f.text_area :content, :rows => 5, :cols => 60 %>
+              <br>
+              <%= f.submit "Add review" %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-md-6">
+        <h3>Reviews for '<%= @resource.category %>' offered by <%= @user.name %></h3>
+        <% if @resource.reviews.empty? %>
+          <p>(No reviews yet)</p>
+        <% end %>
+        <% @reviews.each do |review| %>
+          <p>
+            <%= review.content %> - <%= time_ago_in_words review.created_at %> ago by <strong><%= User.find(review.user_id).name %></strong>
+          </p>
+        <% end %>
+      </div>
+
+    </div>
+
+  </div>
 
 </div>

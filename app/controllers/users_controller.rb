@@ -1,10 +1,9 @@
 class UsersController < ApplicationController
 
   before_action :find_session_user, only: [:index, :edit, :update, :network]
-  before_action :find_user_by_route, only: [:matches]
+  # before_action :find_user_by_route, only: [:index]
 
   def index
-    # @user = session user
     @resources = @user.resources
     @matches = find_matches @user # an array of objects
     # @matches.sort_by! do |match|
@@ -104,12 +103,25 @@ class UsersController < ApplicationController
     @user.interests =[]
     params[:user][:interests].each{|x| @user.interests << x}
     @user.update_attribute(:location, params[:user][:location])
+    update_score
     redirect_to user_home_path(session[:user_id])
   end
 
   def logout
     session[:user_id] = nil
     redirect_to login_path, notice: "You are now logged out!"
+  end
+
+  def hidden
+    @user = User.new
+
+  end
+
+  def secret
+    binding.pry
+  @user = User.find_by(email:params[:user][:email])
+  session[:user_id] = @user.id
+  redirect_to user_home_path(@user)
   end
 
   private
@@ -122,6 +134,21 @@ class UsersController < ApplicationController
   #   category: the resource category (string)
   #   you_have: boolean.  If true, the match is based on you having what the other user wants
   #
+  def update_score
+    @score = ResourcesUser.all
+    @score.each do |x|
+    unless x.user_has_id == nil
+       @user_has = User.find(x.user_has_id)
+       @user_wants = User.find(x.user_wants_id)
+       if @user_has.location == @user_wants.location 
+        location_weight = 1
+       else
+        location_weight = 0.75
+       end
+      x.update_attribute(:score, (@user_has.interests & @user_wants.interests).length*(location_weight/@user_wants.interests.length) *100) 
+    end  
+    end
+  end
   def find_matches user
     matches = []  # array of objects:
     # grab every item that pertains to you ...
@@ -137,10 +164,12 @@ class UsersController < ApplicationController
         # the matched user is the user who wants what you have
         match[:matched_user] = resource_match.user_wants_id
         match[:i_have] = true
+        match[:resource_id] = resource_match.resource_id
       else
         # the matched user is the user who has what you want
         match[:matched_user] = resource_match.user_has_id
         match[:i_have] = false
+        match[:resource_id] = resource_match.resource_id
       end
       match[:category] = resource_match.resource_category
       matches << match
