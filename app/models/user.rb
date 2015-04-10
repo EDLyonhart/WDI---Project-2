@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
     find_by(uid: auth[:uid]) || create_from_omniauth(auth,provider)
   end
 
+  #all the information which facebook provides about a user
+  #to create / populate the user database.
   def self.create_from_omniauth(auth,provider)
   new(uid: auth["uid"],nickname: auth["info"]["nickname"],email: auth["info"]["email"],
     name: auth["info"]["name"],first_name: auth["info"]["first_name"],last_name: auth["info"]["last_name"],

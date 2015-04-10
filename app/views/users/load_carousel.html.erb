@@ -117,7 +117,7 @@
     <div class="button">
 
       <%= f.input :wants_user_id, :as => :hidden, :input_html => { :value => session[:user_id] }%>
-      <%= f.input :has_user_id, :as => :hidden, :input_html => { :value => user.id }%>
+      <%= f.input :user_has_id, :as => :hidden, :input_html => { :value => user.id }%>
       <%= f.input :resource_category, :as => :hidden, :input_html => { :value => @filter }%>
       <%= f.submit "Pass", class: "btn btn-danger" %>
       <% end %>

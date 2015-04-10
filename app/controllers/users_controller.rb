@@ -5,13 +5,10 @@ class UsersController < ApplicationController
 
   def index
     @resources = @user.resources
-    @matches = find_matches @user # an array of objects
-    # @matches.sort_by! do |match|
-    #   match[:you_have] ? 1 : 0
-    # end
-    @like_requests = find_like_requests @user # an array of ResourcesUser objects
+    @matches = find_matches @user                 # defined below
+    @like_requests = find_like_requests @user     # defined below
 
-    existing_categories = []
+    existing_categories = []                      # populates the carousel dropdown with resource to be searched for
 
     if @user.wants_bike == true
       existing_categories << "bike"
@@ -32,19 +29,19 @@ class UsersController < ApplicationController
     if @user.wants_housing == true
      existing_categories << "housing"
     end
-    @avail_resources = existing_categories
+
+    @avail_resources = existing_categories        # instance variable to be used in view
   end
 
   def login
   end
 
   def load_carousel
-    @filter = params[:category] #make this params[:resource category] once a filter dropdown is setup
+    @filter = params[:category]                                       #make this params[:resource category] once a filter dropdown is setup
     @carousel_users = []
     @has_users = ResourcesUser.wanted_by_and_categorized_by(session[:user_id], @filter).not_liked.order(score: :desc)
     @carousel_users = @has_users.map{|owner| owner.owning_user}
     @match_list = @carousel_users - [@carousel_users.first]
-    binding.pry
     if @carousel_users == []
       flash[:alert] = "No current owners with #{@filter}. Check back soon to browse and share!"
       redirect_to user_home_path(session[:user_id])
@@ -67,14 +64,14 @@ class UsersController < ApplicationController
   end
 
   def create
-    @resource = Resource.new
-    @user = User.from_omniauth(env["omniauth.auth"], params[:provider])
+    @resource = Resource.new                                            # needed for new_user_resources_path
+    @user = User.from_omniauth(env["omniauth.auth"], params[:provider]) # facebook OmniAuth
     if @user.save
-      session[:user_id] = @user.id
+      session[:user_id] = @user.id                                      # saves session[:user_id]
       if Resource.exists?(user_id: session[:user_id])
-        redirect_to user_home_path(@user), notice: "signed in!"
+        redirect_to user_home_path(@user), notice: "signed in!"         # if resources already exist, send them to their dashboard
       else
-        redirect_to newwant_user_resource_path(@user)
+        redirect_to newwant_user_resource_path(@user)                   # otherwise, direct them to add resources.
       end
     else
       flash[:alert] = "Login Error"
@@ -95,11 +92,11 @@ class UsersController < ApplicationController
     end
   end
 
-  def interests
+  def interests                                       # get interests page
     @user = User.find(session[:user_id])
   end
 
-  def interests_add
+  def interests_add                                   # populate user's interests
     @user = User.find(session[:user_id])
     @user.interests =[]
     params[:user][:interests].each{|x| @user.interests << x}
@@ -113,16 +110,15 @@ class UsersController < ApplicationController
     redirect_to login_path, notice: "You are now logged out!"
   end
 
-  def hidden
-    @user = User.new
+  # def hidden                                            # not used in production
+  #   @user = User.new                                    # purpose was to modify information
+  # end
 
-  end
-
-  def secret
-  @user = User.find_by(email:params[:user][:email])
-  session[:user_id] = @user.id
-  redirect_to user_home_path(@user)
-  end
+  # def secret                                          # not used in production.
+  # @user = User.find_by(email:params[:user][:email])   # purpose was to modify information
+  # session[:user_id] = @user.id
+  # redirect_to user_home_path(@user)
+  # end
 
   private
 
@@ -133,14 +129,14 @@ class UsersController < ApplicationController
   #     or you liked him and he accepted)
   #   category: the resource category (string)
   #   you_have: boolean.  If true, the match is based on you having what the other user wants
-  #
-  def update_score
-    @score = ResourcesUser.all
-    @score.each do |x|
-    unless x.user_has_id == nil
+
+  def update_score                                      # score is used to display highest matches first in carousel
+    @score = ResourcesUser.all                          # any time factors are changed, update score.
+    @score.each do |x|                                  # called any time a user updates their interests.
+    unless x.user_has_id == nil                           # when updating, look at for update/efficiency.
        @user_has = User.find(x.user_has_id)
        @user_wants = User.find(x.user_wants_id)
-       if @user_has.location == @user_wants.location 
+       if @user_has.location == @user_wants.location    # score is weighted based on being in the same city.
         location_weight = 1
        else
         location_weight = 0.75
@@ -149,24 +145,21 @@ class UsersController < ApplicationController
     end  
     end
   end
+
   def find_matches user
-    matches = []  # array of objects:
-    # grab every item that pertains to you ...
-    resource_matches = ResourcesUser.where("user_wants_id = ? or user_has_id = ?", user.id, user.id)
-    # ... and contains a mutual like ...
-    resource_matches = resource_matches.select do |resource_match|
+    matches = []
+    resource_matches = ResourcesUser.where("user_wants_id = ? or user_has_id = ?", user.id, user.id)  # grab every item that pertains to you ..
+    resource_matches = resource_matches.select do |resource_match|                                    # ... and contains a mutual like ...
       resource_match.like_accept
     end
 
     resource_matches.each do |resource_match|
       match = {}
-      if resource_match.user_has_id == user.id
-        # the matched user is the user who wants what you have
+      if resource_match.user_has_id == user.id                # the matched user is the user who wants what you have
         match[:matched_user] = resource_match.user_wants_id
         match[:i_have] = true
         match[:resource_id] = resource_match.resource_id
-      else
-        # the matched user is the user who has what you want
+      else                                                    # the matched user is the user who has what you want
         match[:matched_user] = resource_match.user_has_id
         match[:i_have] = false
         match[:resource_id] = resource_match.resource_id
@@ -177,15 +170,11 @@ class UsersController < ApplicationController
     return matches
   end
 
-  def two_users_matched user1, user2
-    # gather the relevant data entries.  there's probably a better way to do this
-    resource_matches = (ResourcesUser.where(user_wants_id:user1.id, user_has_id:user2.id) +
-      ResourcesUser.where(user_wants_id:user2.id, user_has_id:user1.id))
-    # start by assuming a match exists
-    match = true
+  def two_users_matched? user1, user2                  # gather the relevant data entries.
+    resource_matches = (ResourcesUser.where(user_wants_id:user1.id, user_has_id:user2.id) + ResourcesUser.where(user_wants_id:user2.id, user_has_id:user1.id))
+    match = true                                      # start by assuming a match exists
     match = false if resource_matches.empty?
-    resource_matches.each do |resource_match|
-      # unless like_accept = false
+    resource_matches.each do |resource_match|         # unless like_accept = false
       match = false unless resource_match.like_accept
     end
     return match

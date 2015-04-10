@@ -7,7 +7,7 @@
 
     <% if @user == @session_user %>
       <h2>This '<%= @resource.category %>' shareable is being offered by you</h2>
-      <h3><%= link_to "Edit", edit_user_resource_path(@user, @resource) %> Description:</h3>
+      <h3><%= link_to "Edit", edit_user_resource_path(@user, @resource) %> Description:</h3>        <!-- only access edit page if I am the owner -->
     <% else %>
       <h2>This '<%= @resource.category %>' shareable is being offered by <%= @user.name %></h2>
       <h3>Description:</h3>
@@ -19,7 +19,7 @@
 
       <div class="col-md-6">
         <br><br>
-        <!-- don't allow a user to create reviews for himself -->
+        <!-- don't allow a user to create reviews for themselves -->
         <% unless @user.id == session[:user_id] %>
           <!-- only allow users who have matched with the profile user to enter comments -->
           <% if @match && !(ResourcesUser.where(user_wants_id:session[:user_id], user_has_id:@user.id, resource_category:"#{@resource.category}", like_accept:true).empty?) %>

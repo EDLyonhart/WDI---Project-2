@@ -1,3 +1,25 @@
+SHAREit was created by George Navas, Jenni Choi, Ryan Willson and Eli Lyonhart.
+
+The goal was to create a Tinder-like app which would match people based on shared resources and interests.
+
+To display all users which fulfill a want of mine, but to give preferential treatment to people who share stronger commonality of interest (and proximity).
+
+In the span of a single week we created this fullstack app.
+It is currently in its demo stage.
+
+In the goodness of time, we would/will:
+  - Add richer interests
+    - More catagories
+    - Allow users to adjust wieght to specific catagories. 
+  - Consider how high traffic would affect the app
+    - Currently whe interests are updated, the entire database gets hit to update the users_interests table.
+  - Continue Styling
+  - Allow a user to view other users offered/wanted resources
+  - Allow a user to reject a resource rather than a user
+
+
+
+
 == README
 
 This README would normally document whatever steps are necessary to get the

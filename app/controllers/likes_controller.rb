@@ -3,7 +3,7 @@ class LikesController < ApplicationController
 require 'mandrill'
 mandrill = Mandrill::API.new ENV["MANDRIL_APIKEY"]
 
-def like
+def like                                    # if user liked, acknowledge it.
   @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
   @resources_user.first.update_attribute(:like_request, true)
   # like_email
@@ -11,70 +11,46 @@ def like
   render nothing: true
 end
 
-def accept
+def accept                                  # if 'like' is accepted update resources_user table.
   @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
   @resources_user.first.update_attribute(:like_accept, true)
   render nothing: true
 end
 
-def reject_has
-@resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
-@resources_user.first.update_attribute(:like_reject, true)
-render nothing: true
+def reject_has                              # if 'like' is rejected update resources_user table && carousel (from likes.js).
+  @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
+  @resources_user.first.update_attribute(:like_reject, true)
+  render nothing: true
 end
 
-def reject_wants
+def reject_wants                            # if 'like' is rejected update resources_user table && carousel (from likes.js).
   @resources_user = ResourcesUser.where(user_wants_id: params["values"]["user_wants_id"],user_has_id: params["values"]["user_has_id"],resource_category:params["values"]["resource_category"] )
   @resources_user.first.update_attribute(:like_reject, true)
   render nothing: true
 end
 
 def email
-@send_to_email = params[:user][:email]
-@sent_from_email = User.find(params[:from]).email
-# @sent_from_email = "liescott@gmail.com"
-@message = params[:user][:first_name]
-@user1 = User.find(session[:user_id])
-require 'mandrill'
-  m = Mandrill::API.new
-  message = {
-   :subject=> "Request to share from, #{@user1.first_name}!",
-   :from_name=> "The SHAREit Team",
-   :text=>"Sharing is caring!",
-   :to=> [email:@send_to_email],
-   :html=>"<html><h1>#{@message}<a href='https://coolest-tinder-for-sharing-app.herokuapp.com/users/#{params[:send_to]}/show'> See #{@user1.first_name}'s profile!</a> </h1></html>",
-   :from_email=>@sent_from_email
-  }
-  sending = m.messages.send message
-  puts sending
+  @send_to_email = params[:user][:email]
+  @sent_from_email = User.find(params[:from]).email
+  # @sent_from_email = "liescott@gmail.com"
+  @message = params[:user][:first_name]
+  @user1 = User.find(session[:user_id])
+  require 'mandrill'
+    m = Mandrill::API.new
+    message = {                                                       # this is the function which sends an email from within the app.
+     :subject=> "Request to share from, #{@user1.first_name}!",
+     :from_name=> "The SHAREit Team",
+     :text=>"Sharing is caring!",
+     :to=> [email:@send_to_email],
+     :html=>"<html><h1>#{@message}<a href='https://coolest-tinder-for-sharing-app.herokuapp.com/users/#{params[:send_to]}/show'> See #{@user1.first_name}'s profile!</a> </h1></html>",
+     :from_email=>@sent_from_email
+    }
+    sending = m.messages.send message
+    puts sending
 
-flash[:alert] =  "Message Sent!"
-redirect_to user_show_path (params[:send_to])
+  flash[:alert] =  "Message Sent!"
+  redirect_to user_show_path (params[:send_to])
 end
-
-# def like_check
-#   #checks to see if there isr a match
-# @likee = User.find(params[:lrikee_id])
-# @likee_likes = @likee.likes
-#   if @likee_likes.exists?(likee: params[:id])
-#     #if there is now a match - create new row in likes with boolean true; change other row's boolean to true as well
-#       @like = Like.new(user_id:params[:id],likee:params[:likee_id],is_matched:true)
-#       @like.save
-#       Like.find_by(user_id:params[:likee_id]).update_attribute(:is_matched, true)
-#       #redirect to profile page - New Match/Send out Match Email
-#       flash[:alert] = "You have a match!"
-#       redirect_to user_home_path (params[:id])
-#       match_email
-#   else
-#       #if there is no match yet - add row to likes table and redirect back into the carousel
-#       @like = Like.new(user_id:params[:id],likee:params[:likee_id],is_matched:false)
-#       @like.save
-#       #Redirect back to carousel page
-#       redirect_to user_matches_path (params[:id])
-#       #send like_email
-#       like_email
-#   end
-# end
 
 # Likes will be rejected via boolean column 'rejected'.  No need to ever delete a like.
 # Saving the lwike will allow us to manage which users are shown on the carousel and
@@ -93,38 +69,20 @@ def update
 end
 
 private
-#match email will no longer be necessary
-# def match_email
-
-# require 'mandrill'
-# m = Mandrill::API.new
-# @user1 = User.find(params[:likee_id])
-# message = {
-#  :subject=> "#{@user1.first_name}, you have a new match!",
-#  :from_name=> "The SHAREit Team",
-#  :text=>"New Match!",
-#  :to=> [email:@user1.email],
-#  :html=>"<html><h1> Check out your new match! <a href='https://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
-#  :from_email=>"gannavas@gmail.com"
-# }
-# sending = m.messages.send message
-# puts sending
+# def like_email                          # not currently in use. could be implemented to inform users that they have been 'liked'
+#   require 'mandrill'
+#   m = Mandrill::API.new
+#   @user1 = User.find(params["values"]["user_has_id"])
+#   message = {
+#    :subject=> "#{@user1.first_name}, someone liked your profile!",
+#    :from_name=> "The SHAREit Team",
+#    :text=>"New Like!",
+#    :to=> [email:@user1.email],
+#    :html=>"<html><h1> Someone has liked your profile! <a href='https://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
+#    :from_email=>"gannavas@gmail.com"
+#   }
+#   sending = m.messages.send message
+#   puts sending
 # end
-
-def like_email
-  require 'mandrill'
-  m = Mandrill::API.new
-  @user1 = User.find(params["values"]["user_has_id"])
-  message = {
-   :subject=> "#{@user1.first_name}, someone liked your profile!",
-   :from_name=> "The SHAREit Team",
-   :text=>"New Like!",
-   :to=> [email:@user1.email],
-   :html=>"<html><h1> Someone has liked your profile! <a href='https://localhost:3000/users/#{@user1.id}'>Start Sharing Now!</a> </h1></html>",
-   :from_email=>"gannavas@gmail.com"
-  }
-  sending = m.messages.send message
-  puts sending
-end
 
 end
