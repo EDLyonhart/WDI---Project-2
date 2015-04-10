@@ -120,7 +120,7 @@ class UsersController < ApplicationController
   # redirect_to user_home_path(@user)
   # end
 
-  private
+private
 
   #
   # 'find_matches' returns an array of objects
@@ -141,8 +141,8 @@ class UsersController < ApplicationController
        else
         location_weight = 0.75
        end
-      x.update_attribute(:score, (@user_has.interests & @user_wants.interests).length*(location_weight/@user_wants.interests.length) *100) 
-    end  
+      x.update_attribute(:score, (@user_has.interests & @user_wants.interests).length*(location_weight/@user_wants.interests.length) *100)
+    end
     end
   end
 

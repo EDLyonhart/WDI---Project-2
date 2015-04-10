@@ -77,7 +77,8 @@ class ResourcesController < ApplicationController
     @resource = Resource.find params[:id]               # find the specific resource
   end
 
-  def create                                            # if form is left blank, flash message
+
+  def create
     if params["resource"]["category"] == ""
       flash[:alert] = "Please enter a resource."
       redirect_to :back
